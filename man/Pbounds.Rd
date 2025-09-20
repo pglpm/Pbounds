@@ -12,15 +12,26 @@ Pbounds(target, ...)
 \item{...}{Probability constraints (see Details).}
 }
 \value{
-A vector of \code{min} and \code{max} values of the desired probability.
+A vector of \code{min} and \code{max} values of the target probability, or \code{NA} if the constraints are mutually contradictory. If \code{min} and \code{max} are \code{0} and \code{1} it means that the constraints do not restrict the target probability in any way.
 }
 \description{
 Compute the minimum and maximum value that the probability of a logical formula conditional on another one, given numerical or equality constraints for the conditional probabilities of other logical formulae.
 }
 \details{
-This function takes as first argument the desired probability expression, and as subsequent arguments the known probability constraints.
+The function takes as first argument the expression of the probability of a propositional-logic expression, and as subsequent arguments the constraints on the probabilities of other propositional-logic expressions. Logic expressions can appear in the proposal in the conditional of the probabilities.
 
-The constraints can be of the form \verb{P(...|...) == [number]} or \code{P(...|...) == P(...|...)}, even with inequalities instead of equalities.
+Each constraint can have one of these four forms:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{P(...|...) == [number]
+
+P(...|...) == P(...|...)
+
+P(...|...) == P(...|...) * [number]
+
+P(...|...) == P(...|...) / [number]
+}\if{html}{\out{</div>}}
+
+where \code{...} are (possibly different) propositional-logic expressions. Inequalities \code{<=} \code{>=} are also allowed instead of equalities.
 
 All probability expressions must start with \code{P} or \code{p} or \code{Pr} followed by parentheses. The symbol for the conditional bar and the logical connectives are as follows:
 \itemize{
@@ -28,8 +39,10 @@ All probability expressions must start with \code{P} or \code{p} or \code{Pr} fo
 \item Not: \code{!}
 \item And: \code{&&} or \code{&}
 \item Or: \code{||} or \code{|}
-\item If-then: \verb{\%>}
+\item If-then: \verb{\%>\%}
 }
+
+The function uses the \code{lpSolve::lp()} function from the \href{https://cran.r-project.org/package=lpSolve}{\strong{lpSolve}} package.
 }
 \examples{
 Pbounds(
