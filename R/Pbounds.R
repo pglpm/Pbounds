@@ -26,12 +26,18 @@
 #' - Or: `||` or `|`
 #' - If-then: `%>%`
 #'
+#' The expressions otherwise follow the standard rules for R logical expressions.
+#' For instance, "P(¬(a ∨ b) ⇒ c | c ∧ I)" is written
+#' ```
+#' P( !(a | b) %>% c ~ c & I )
+#' ```
+#' 
 #' The function uses the `lpSolve::lp()` function from the [**lpSolve**](https://cran.r-project.org/package=lpSolve) package.
 #'
 #' @param target The desired probability expression.
 #' @param ... Probability constraints (see Details).
 #'
-#' @return A vector of `min` and `max` values of the target probability, or `NA` if the constraints are mutually contradictory. If `min` and `max` are `0` and `1` it means that the constraints do not restrict the target probability in any way.
+#' @return A vector of `min` and `max` values of the target probability, or `NA` if the constraints are mutually contradictory. If `min` and `max` are `0` and `1` then the constraints do not restrict the target probability in any way.
 #'
 #' @import lpSolve
 #'

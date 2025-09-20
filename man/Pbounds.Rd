@@ -12,7 +12,7 @@ Pbounds(target, ...)
 \item{...}{Probability constraints (see Details).}
 }
 \value{
-A vector of \code{min} and \code{max} values of the target probability, or \code{NA} if the constraints are mutually contradictory. If \code{min} and \code{max} are \code{0} and \code{1} it means that the constraints do not restrict the target probability in any way.
+A vector of \code{min} and \code{max} values of the target probability, or \code{NA} if the constraints are mutually contradictory. If \code{min} and \code{max} are \code{0} and \code{1} then the constraints do not restrict the target probability in any way.
 }
 \description{
 Compute the minimum and maximum value that the probability of a logical formula conditional on another one, given numerical or equality constraints for the conditional probabilities of other logical formulae.
@@ -41,6 +41,12 @@ All probability expressions must start with \code{P} or \code{p} or \code{Pr} fo
 \item Or: \code{||} or \code{|}
 \item If-then: \verb{\%>\%}
 }
+
+The expressions otherwise follow the standard rules for R logical expressions.
+For instance, "P(¬(a ∨ b) ⇒ c | c ∧ I)" is written
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{P( !(a | b) \%>\% c ~ c & I )
+}\if{html}{\out{</div>}}
 
 The function uses the \code{lpSolve::lp()} function from the \href{https://cran.r-project.org/package=lpSolve}{\strong{lpSolve}} package.
 }
