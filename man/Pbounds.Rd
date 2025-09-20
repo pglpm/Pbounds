@@ -39,7 +39,7 @@ All probability expressions must start with \code{P} or \code{p} or \code{Pr} fo
 \item Not: \code{!}
 \item And: \code{&&} or \code{&}
 \item Or: \code{||} or \code{|}
-\item If-then: \verb{\%>\%}
+\item If-then: \verb{\%>\%} (internally \code{a \%>\% b} is defined as \code{b || !a})
 }
 
 The expressions otherwise follow the standard rules for R logical expressions.

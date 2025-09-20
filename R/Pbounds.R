@@ -24,7 +24,7 @@
 #' - Not: `!`
 #' - And: `&&` or `&`
 #' - Or: `||` or `|`
-#' - If-then: `%>%`
+#' - If-then: `%>%` (internally `a %>% b` is defined as `b || !a`)
 #'
 #' The expressions otherwise follow the standard rules for R logical expressions.
 #' For instance, "P(¬(a ∨ b) ⇒ c | c ∧ I)" is written
