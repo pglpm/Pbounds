@@ -15,20 +15,20 @@ Pbounds(target, ...)
 A vector of \code{min} and \code{max} values of the target probability, or \code{NA} if the constraints are mutually contradictory. If \code{min} and \code{max} are \code{0} and \code{1} then the constraints do not restrict the target probability in any way.
 }
 \description{
-Compute the minimum and maximum value that the probability of a logical formula conditional on another one, given numerical or equality constraints for the conditional probabilities of other logical formulae.
+Compute the minimum and maximum allowed values of the probability of a propositional-logic expression conditional on another one, given numerical or equality constraints for the conditional probabilities of other propositional-logic expressions.
 }
 \details{
-The function takes as first argument the expression of the probability of a propositional-logic expression, and as subsequent arguments the constraints on the probabilities of other propositional-logic expressions. Logic expressions can appear in the proposal in the conditional of the probabilities.
+The function takes as first argument the probability of apropositional-logic expression, conditional on another expression, and as subsequent arguments the constraints on the probabilities of other propositional-logic expressions.
 
 Each constraint can have one of these four forms:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{P(...|...) == [number]
+\if{html}{\out{<div class="sourceCode">}}\preformatted{P(...|...) = [number]
 
-P(...|...) == P(...|...)
+P(...|...) = P(...|...)
 
-P(...|...) == P(...|...) * [number]
+P(...|...) = P(...|...) * [number]
 
-P(...|...) == P(...|...) / [number]
+P(...|...) = P(...|...) / [number]
 }\if{html}{\out{</div>}}
 
 where \code{...} are (possibly different) propositional-logic expressions. Inequalities \code{<=} \code{>=} are also allowed instead of equalities.
@@ -43,10 +43,14 @@ All probability expressions must start with \code{P} or \code{p} or \code{Pr} fo
 }
 
 The expressions otherwise follow the standard rules for R logical expressions.
-For instance, "P(¬(a ∨ b) ⇒ c | c ∧ I)" is written
+For instance,\cr
+"P(¬(a ∨ b) ⇒ c | c ∧ I)"\cr
+is written (adding spaces for clarity)
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{P( !(a | b) \%>\% c ~ c & I )
+\if{html}{\out{<div class="sourceCode">}}\preformatted{P( !(a | b) \%>\% c  ~  c & I )
 }\if{html}{\out{</div>}}
+
+Note that \emph{all} probabilities appearing in the function are understood to have a common, and-ed sentence "... ∧ I" in their conditional, if such a sentence doesn't appear explicitly. Otherwise the probabilities would be unrelated a priori.
 
 The function uses the \code{lpSolve::lp()} function from the \href{https://cran.r-project.org/package=lpSolve}{\strong{lpSolve}} package.
 }

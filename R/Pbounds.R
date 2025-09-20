@@ -1,20 +1,20 @@
 #' Calculation of lower and upper probability bounds
 #'
 #' @description
-#' Compute the minimum and maximum value that the probability of a logical formula conditional on another one, given numerical or equality constraints for the conditional probabilities of other logical formulae.
+#' Compute the minimum and maximum allowed values of the probability of a propositional-logic expression conditional on another one, given numerical or equality constraints for the conditional probabilities of other propositional-logic expressions.
 #'
 #' @details
-#' The function takes as first argument the expression of the probability of a propositional-logic expression, and as subsequent arguments the constraints on the probabilities of other propositional-logic expressions. Logic expressions can appear in the proposal in the conditional of the probabilities.
+#' The function takes as first argument the probability of apropositional-logic expression, conditional on another expression, and as subsequent arguments the constraints on the probabilities of other propositional-logic expressions.
 #'
 #' Each constraint can have one of these four forms:
 #' ```
-#' P(...|...) == [number]
+#' P(...|...) = [number]
 #'
-#' P(...|...) == P(...|...)
+#' P(...|...) = P(...|...)
 #'
-#' P(...|...) == P(...|...) * [number]
+#' P(...|...) = P(...|...) * [number]
 #'
-#' P(...|...) == P(...|...) / [number]
+#' P(...|...) = P(...|...) / [number]
 #' ```
 #' where `...` are (possibly different) propositional-logic expressions. Inequalities `<=` `>=` are also allowed instead of equalities.
 #'
@@ -27,11 +27,15 @@
 #' - If-then: `%>%` (internally `a %>% b` is defined as `b || !a`)
 #'
 #' The expressions otherwise follow the standard rules for R logical expressions.
-#' For instance, "P(¬(a ∨ b) ⇒ c | c ∧ I)" is written
+#' For instance,\cr
+#' "P(¬(a ∨ b) ⇒ c | c ∧ I)"\cr
+#' is written (adding spaces for clarity)
 #' ```
-#' P( !(a | b) %>% c ~ c & I )
+#' P( !(a | b) %>% c  ~  c & I )
 #' ```
-#' 
+#'
+#' Note that *all* probabilities appearing in the function are understood to have a common, and-ed sentence "... ∧ I" in their conditional, if such a sentence doesn't appear explicitly. Otherwise the probabilities would be unrelated a priori.
+#'
 #' The function uses the `lpSolve::lp()` function from the [**lpSolve**](https://cran.r-project.org/package=lpSolve) package.
 #'
 #' @param target The desired probability expression.
