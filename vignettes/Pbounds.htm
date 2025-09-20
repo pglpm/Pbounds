@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Probability bounds of logical expressions</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Probability bounds of logical
+expressions</h1>
+
+
+
+<p><span class="math inline">\(\renewcommand{\P}{\mathrm{P}}\)</span>
+<span class="math inline">\(\renewcommand{\|}{\:\vert\:\mathopen{}}\)</span>
+<span class="math inline">\(\newcommand{\mo}{\mathrel{\!=\!}}\)</span></p>
+<div id="introduction" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<p>The probability calculus is an extension of the calculus of
+propositional logic. Besides considering the <em>truth</em> or
+<em>falsity</em> of propositions, translated into <em>certainty</em> and
+<em>impossibility</em>, the probability calculus also considers a
+continuum of degrees of certainty – probabilities – between these two
+extremes. Just as propositional logic gives a set of rules to derive the
+truth or falsity of some propositions from the truth or falsity of
+others, so the probability calculus gives a set of rules to derive the
+probability of some propositions from the probability of others; these
+rules include the logical ones as a special case.</p>
+<p>There are different <a href="https://plato.stanford.edu/archives/spr2023/entries/natural-deduction">deduction
+systems</a> (each with many dialects) to express the rules of
+propositional logic; one of them is the <em>sequent calculus</em>. The
+probability calculus has many analogies with the sequent calculus.</p>
+<p>In sequent calculus we express that proposition <span class="math inline">\(a\)</span> is true within a set of axioms <span class="math inline">\(I\)</span> by the notation</p>
+<p><span class="math display">\[
+I \vdash a
+\]</span></p>
+<p>The same is expressed in the probability calculus by the notation</p>
+<p><span class="math display">\[
+\P(a \| I) = 1
+\]</span></p>
+<p>but in this case we can also consider degrees of certainty different
+from <span class="math inline">\(1\)</span>.</p>
+<p>The common “random variable” calculus is just a particular
+application of the probability calculus: an expression such as “<span class="math inline">\(X\mo x\)</span>” means “The quantity <span class="math inline">\(X\)</span> is measured to have value <span class="math inline">\(x\)</span>” – which is just a proposition. Also
+“causal calculus” is just a particular application: an expression such
+as “<span class="math inline">\(\mathrm{do}(X\mo x)\)</span>” means “The
+quantity <span class="math inline">\(X\)</span> has been <em>set</em>
+equal to <span class="math inline">\(x\)</span>” – which is also just a
+proposition. In the probability calculus we can in fact even consider
+more general propositions, such as “The quantity <span class="math inline">\(X\)</span> has been <em>reported</em> to be equal
+to <span class="math inline">\(x\)</span>”.</p>
+<p><br />
+</p>
+</div>
+<div id="probabilistic-inferences" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Probabilistic
+inferences</h1>
+<p>In propositional logic, suppose we assert that:</p>
+<ul>
+<li>proposition <span class="math inline">\(a\)</span> is true given a
+set of axioms <span class="math inline">\(I\)</span>,</li>
+<li>proposition <span class="math inline">\(b \lor \lnot a\)</span>
+given the set of axioms <span class="math inline">\(I\)</span> augmented
+with the proposition <span class="math inline">\(c\)</span>.</li>
+</ul>
+<p>Then we can also assert that <span class="math inline">\(b\)</span>
+is true given the set of axioms <span class="math inline">\(c \land
+I\)</span>. This is a logical deduction. In the notation of sequent
+calculus it is written as follows:</p>
+<p><span class="math display">\[
+\frac{
+I \vdash a \enspace,\enspace I \land c \vdash b \lor \lnot a
+}{
+I \land c \vdash b
+}
+\]</span></p>
+<p>The conclusion follows by the application of inference rules,
+starting from the initial assertions.</p>
+<p>In the probability calculus the same inference can be expressed as
+follows:</p>
+<p><span class="math display">\[
+\frac{
+\P(a \| I) = 1\enspace,\enspace \P(b \lor \lnot a \| c \land I) = 1
+}{
+\P(b \| c \land I) = 1
+}
+\]</span></p>
+<p>This final probability can be shown to follow from the initial ones
+by the well-known probability rules, valid for any sentences <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>:</p>
+<ul>
+<li><p><span class="math inline">\(\P(\lnot a \| I) = 1 - \P(a \|
+I)\)</span></p></li>
+<li><p><span class="math inline">\(\P(a \land b \| I) = \P(a \| b \land
+I)\cdot\P(b \| I)
+= \P(b \| a \land I)\cdot\P(a \| I)\)</span></p></li>
+<li><p><span class="math inline">\(\P(a \lor b \| I) = \P(a \| I) + \P(b
+\| I) - \P(a \land b \| I)\)</span></p></li>
+<li><p><span class="math inline">\(\P(a \| a \land I) =
+1\)</span></p></li>
+</ul>
+<p>Another simple probability inference, which immediately follows from
+the rules, is for example</p>
+<p><span class="math display">\[
+\frac{
+\P(a \| I) = 0.3\enspace,\enspace \P(b \| a \land I) = 0.2
+}{
+\P(a \land b \| I) = 0.06
+}
+\]</span></p>
+<p><br />
+</p>
+<p>The probability rules effectively imply the rules of propositional
+logic as special cases.</p>
+<p>What’s remarkable is that <strong>the probability rules allow us to
+determine the <em>lower</em> and <em>upper</em> values that a
+probability can have, under the assertion of the values of other
+probabilities</strong>. It is well-known, for instance, that if</p>
+<p><span class="math display">\[
+\P(a \| I) = 0.2\,,
+\P(b \| I) = 0.7
+\]</span></p>
+<p>then the probability <span class="math inline">\(\P(a \land b \|
+I)\)</span> cannot be larger than the minimum of the two above, that
+is,</p>
+<p><span class="math display">\[
+\P(a \land b \| I) \in [0, 0.2]
+\]</span></p>
+<p>It has been shown that finding such bounds is equivalent to solving a
+linear-optimization problem. The most relevant texts about this
+equivalence are those by Hailperin, given in the references.</p>
+</div>
+<div id="the-function-pbounds" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> The function
+<code>Pbounds()</code></h1>
+<p>The function <code>Pbounds()</code> implements the
+linear-optimization algorithm just mentioned. As a first argument, named
+<code>target =</code>, it takes the probability of an expression of
+propositional logic, conditional on another one; as subsequent arguments
+it takes constraints about the probabilities of other
+propositional-logic expressions, for example their numerical values, as
+in the examples above.</p>
+<p>The notation used in the function conforms to R’s notation for
+logical operators, and uses the operator <code>~</code> as notation for
+the conditional bar “<span class="math inline">\({}\|{}\)</span>”:</p>
+<ul>
+<li>Conditional bar: <code>~</code></li>
+<li>Not: <code>!</code></li>
+<li>And: <code>&amp;</code> or <code>&amp;&amp;</code></li>
+<li>Or: <code>|</code> or <code>||</code></li>
+<li>If-then: <code>%&gt;%</code> (note that “if <span class="math inline">\(a\)</span> then <span class="math inline">\(b\)</span>”, <code>a %&gt;% b</code>, is
+equivalent to <span class="math inline">\(b \lor \lnot a\)</span>)</li>
+</ul>
+</div>
+<div id="appendix" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Appendices</h1>
+<div id="references" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> References</h2>
+<div id="referencesexchang" class="section level3" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> On
+<em>exchangeability</em>:</h3>
+<ul>
+<li><p>Bernardo, Smith: <a href="https://doi.org/10.1002/9780470316870"><em>Bayesian
+Theory</em></a> (repr. 2000). See especially §§ 4.2–4.3, 4.6.</p></li>
+<li><p>Dawid: <a href="https://doi.org/10.1093/acprof:oso/9780199695607.003.0002"><em>Exchangeability
+and its ramifications</em></a> (2013).</p></li>
+<li><p>de Finetti: <a href="https://www.numdam.org/item/AIHP_1937__7_1_1_0"><em>La prévision:
+ses lois logiques, ses sources subjectives</em></a> (1937).</p></li>
+<li><p>Heath, Sudderth: <a href="https://doi.org/10.1080/00031305.1976.10479175"><em>De Finetti’s
+theorem on exchangeable variables</em></a> (1976).</p></li>
+<li><p>Hewitt, Savage: <a href="https://doi.org/10.1090/S0002-9947-1955-0076206-8"><em>Symmetric
+measures on Cartesian products</em></a> (1955).</p></li>
+<li><p>Lindley, Novick: <a href="https://doi.org/10.1214/aos/1176345331"><em>The role of
+exchangeability in inference</em></a> (1981).</p></li>
+<li><p><strong><em>inferno</em></strong> accompanying manual: <a href="https://github.com/pglpm/inferno/raw/main/development/manual/optimal_predictor_machine.pdf"><em>Foundations
+of inference under symmetry</em></a> (draft).</p></li>
+</ul>
+</div>
+<div id="referencesbayes" class="section level3" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> On Bayesian theory
+in general:</h3>
+<ul>
+<li><p>Jaynes: <a href="https://doi.org/10.1017/CBO9780511790423"><em>Probability
+Theory</em></a> (2003).</p></li>
+<li><p>MacKay: <a href="https://www.inference.org.uk/itila/book.html"><em>Information
+Theory, Inference, and Learning Algorithms</em></a> (2005).</p></li>
+<li><p><a href="https://pglpm.github.io/ADA511"><em>ADA 511: Foundations
+of data science</em></a>.</p></li>
+</ul>
+</div>
+<div id="referencesmedical" class="section level3" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> On medical
+decision-making:</h3>
+<ul>
+<li><p>Sox, Higgins, Owens, Sanders Schmidler: <a href="https://doi.org/10.1002/9781119627876"><em>Medical Decision
+Making</em></a> (3rd ed. 2024).</p></li>
+<li><p>Hunink, Weinstein, Wittenberg, Drummond, Pliskin, Wong, Glasziou:
+<a href="https://doi.org/10.1017/CBO9781139506779"><em>Decision Making
+in Health and Medicine: Integrating Evidence and Values</em></a> (2nd
+ed. 2014).</p></li>
+</ul>
+<p><br />
+</p>
+</div>
+</div>
+<div id="format" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Format for data and
+metadata files and their contents</h2>
+<p>The functions of the <strong><em>inferno</em></strong> package accept
+CSV files formatted as follows:</p>
+<ul>
+<li>Decimal values should be separated by a <em>dot</em>; no comma
+should be used to separate thousands etc. Example:
+<code>86342.75</code> .</li>
+<li>Character and names should be quoted in single or double quotes.
+Example: <code>&quot;female&quot;</code>.</li>
+<li>Values should be separated by <em>commas</em>, not by tabs or
+semicolons.</li>
+<li>Missing values should be simply <em>empty</em>, not denoted by “NA”,
+“missing”, “-”, or similar.</li>
+</ul>
+<p>Names of variates and character variate values should be strings
+conforming to <a href="https://cran.r-project.org/doc/FAQ/R-FAQ.html#What-are-valid-names_003f">R’s
+rules</a>.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

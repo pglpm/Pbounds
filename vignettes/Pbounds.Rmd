@@ -1,0 +1,171 @@
+---
+title: "Probability bounds of logical expressions"
+output:
+  rmarkdown::html_vignette:
+    number_sections: true
+vignette: >
+  %\VignetteIndexEntry{Probability bounds of logical expressions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+$\renewcommand{\P}{\mathrm{P}}$
+$\renewcommand{\|}{\:\vert\:\mathopen{}}$
+$\newcommand{\mo}{\mathrel{\!=\!}}$
+
+# Introduction
+
+The probability calculus is an extension of the calculus of propositional logic. Besides considering the *truth* or *falsity* of propositions, translated into *certainty* and *impossibility*, the probability calculus also considers a continuum of degrees of certainty -- probabilities -- between these two extremes. Just as propositional logic gives a set of rules to derive the truth or falsity of some propositions from the truth or falsity of others, so the probability calculus gives a set of rules to derive the probability of some propositions from the probability of others; these rules include the logical ones as a special case.
+
+There are different [deduction systems](https://plato.stanford.edu/archives/spr2023/entries/natural-deduction) (each with many dialects) to express the rules of propositional logic; one of them is the *sequent calculus*. The probability calculus has many analogies with the sequent calculus.
+
+In sequent calculus we express that proposition $a$ is true within a set of axioms $I$ by the notation
+
+$$
+I \vdash a
+$$
+
+The same is expressed in the probability calculus by the notation
+
+$$
+\P(a \| I) = 1
+$$
+
+but in this case we can also consider degrees of certainty different from $1$.
+
+The common "random variable" calculus is just a particular application of the probability calculus: an expression such as "$X\mo x$" means "The quantity $X$ is measured to have value $x$" -- which is just a proposition. Also "causal calculus" is just a particular application: an expression such as "$\mathrm{do}(X\mo x)$" means "The quantity $X$ has been *set* equal to $x$" -- which is also just a proposition. In the probability calculus we can in fact even consider more general propositions, such as "The quantity $X$ has been *reported* to be equal to $x$".
+
+\
+
+
+# Probabilistic inferences
+
+In propositional logic, suppose we assert that:
+
+- proposition $a$ is true given a set of axioms $I$,
+- proposition $b \lor \lnot a$ given the set of axioms $I$ augmented with the proposition $c$.
+
+Then we can also assert that $b$ is true given the set of axioms $c \land I$. This is a logical deduction. In the notation of sequent calculus it is written as follows:
+
+$$
+\frac{
+I \vdash a \enspace,\enspace I \land c \vdash b \lor \lnot a
+}{
+I \land c \vdash b
+}
+$$
+
+The conclusion follows by the application of inference rules, starting from the initial assertions.
+
+In the probability calculus the same inference can be expressed as follows:
+
+$$
+\frac{
+\P(a \| I) = 1\enspace,\enspace \P(b \lor \lnot a \| c \land I) = 1
+}{
+\P(b \| c \land I) = 1
+}
+$$
+
+This final probability can be shown to follow from the initial ones by the well-known probability rules, valid for any sentences $a$, $b$:
+
+- $\P(\lnot a \| I) = 1 - \P(a \| I)$
+
+- $\P(a \land b \| I) = \P(a \| b \land I)\cdot\P(b \| I)
+= \P(b \| a \land I)\cdot\P(a \| I)$
+
+- $\P(a \lor b \| I) = \P(a \| I) + \P(b \| I) - \P(a \land b \| I)$
+
+- $\P(a \| a \land I) = 1$
+
+
+Another simple probability inference, which immediately follows from the rules, is for example
+
+$$
+\frac{
+\P(a \| I) = 0.3\enspace,\enspace \P(b \| a \land I) = 0.2
+}{
+\P(a \land b \| I) = 0.06
+}
+$$
+
+\
+
+The probability rules effectively imply the rules of propositional logic as special cases.
+
+What's remarkable is that **the probability rules allow us to determine the *lower* and *upper* values that a probability can have, under the assertion of the values of other probabilities**. It is well-known, for instance, that if
+
+$$
+\P(a \| I) = 0.2\,,
+\P(b \| I) = 0.7
+$$
+
+then the probability $\P(a \land b \| I)$ cannot be larger than the minimum of the two above, that is,
+
+$$
+\P(a \land b \| I) \in [0, 0.2]
+$$
+
+It has been shown that finding such bounds is equivalent to solving a linear-optimization problem. The most relevant texts about this equivalence are those by Hailperin, given in the references.
+
+# The function `Pbounds()`
+
+The function `Pbounds()` implements the linear-optimization algorithm just mentioned. As a first argument, named `target =`, it takes the probability of an expression of propositional logic, conditional on another one; as subsequent arguments it takes constraints about the probabilities of other propositional-logic expressions, for example their numerical values, as in the examples above.
+
+The notation used in the function conforms to R's notation for logical operators, and uses the operator `~` as notation for the conditional bar "${}\|{}$":
+
+- Conditional bar: `~`
+- Not: `!`
+- And: `&` or `&&`
+- Or: `|` or `||`
+- If-then: `%>%` (note that "if $a$ then $b$", `a %>% b`, is equivalent to $b \lor \lnot a$)
+
+
+# Appendices {#appendix}
+
+## References {#references}
+
+### On *exchangeability*: {#referencesexchang}
+
+- Bernardo, Smith: [*Bayesian Theory*](https://doi.org/10.1002/9780470316870) (repr. 2000). See especially §§ 4.2--4.3, 4.6.
+
+- Dawid: [*Exchangeability and its ramifications*](https://doi.org/10.1093/acprof:oso/9780199695607.003.0002) (2013).
+
+- de Finetti: [*La prévision: ses lois logiques, ses sources subjectives*](https://www.numdam.org/item/AIHP_1937__7_1_1_0) (1937).
+
+- Heath, Sudderth: [*De Finetti's theorem on exchangeable variables*](https://doi.org/10.1080/00031305.1976.10479175) (1976).
+
+- Hewitt, Savage: [*Symmetric measures on Cartesian products*](https://doi.org/10.1090/S0002-9947-1955-0076206-8) (1955).
+
+- Lindley, Novick: [*The role of exchangeability in inference*](https://doi.org/10.1214/aos/1176345331) (1981).
+
+- ***inferno*** accompanying manual: [*Foundations of inference under symmetry*](https://github.com/pglpm/inferno/raw/main/development/manual/optimal_predictor_machine.pdf) (draft).
+
+### On Bayesian theory in general: {#referencesbayes}
+
+- Jaynes: [*Probability Theory*](https://doi.org/10.1017/CBO9780511790423) (2003).
+
+- MacKay: [*Information Theory, Inference, and Learning Algorithms*](https://www.inference.org.uk/itila/book.html) (2005).
+
+- [*ADA 511: Foundations of data science*](https://pglpm.github.io/ADA511).
+
+### On medical decision-making: {#referencesmedical}
+
+- Sox, Higgins, Owens, Sanders Schmidler: [*Medical Decision Making*](https://doi.org/10.1002/9781119627876) (3rd ed. 2024).
+
+- Hunink, Weinstein, Wittenberg, Drummond, Pliskin, Wong, Glasziou: [*Decision Making in Health and Medicine: Integrating Evidence and Values*](https://doi.org/10.1017/CBO9781139506779) (2nd ed. 2014).
+
+\
+
+## Format for data and metadata files and their contents {#format}
+
+The functions of the ***inferno*** package accept CSV files formatted as follows:
+
+- Decimal values should be separated by a *dot*; no comma should be used to separate thousands etc. Example: `86342.75` .
+- Character and names should be quoted in single or double quotes. Example: `"female"`.
+- Values should be separated by *commas*, not by tabs or semicolons.
+- Missing values should be simply *empty*, not denoted by "NA", "missing", "-", or similar.
+
+Names of variates and character variate values should be strings conforming to [R's rules](https://cran.r-project.org/doc/FAQ/R-FAQ.html#What-are-valid-names_003f).
+
