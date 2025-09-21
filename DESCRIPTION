@@ -16,3 +16,4 @@ Depends:
 Imports:
     lpSolve
 VignetteBuilder: knitr
+URL: https://pglpm.github.io/Pinference/
