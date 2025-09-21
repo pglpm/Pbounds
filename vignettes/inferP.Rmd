@@ -16,7 +16,7 @@ $\newcommand{\mo}{\mathrel{\!=\!}}$
 
 # Introduction
 
-The probability calculus is an extension of the calculus of propositional logic. Besides the *truth* or *falsity* of propositions, the probability calculus also considers a continuum of degrees of credibility -- probabilities -- between those two extremes. Just as propositional logic gives a set of rules to derive the truth or falsity of some propositions from the truth or falsity of others, so the probability calculus gives a set of rules to derive the probability of some propositions from the probability of others; these rules include the logical ones as a special case.
+The probability calculus is an extension of the calculus of propositional logic. Besides the *truth* or *falsity* of propositions, the probability calculus also considers a continuum of degrees of credibility -- probabilities -- between those two extremes. Just as propositional logic gives a set of rules to derive the truth or falsity of some propositions from the truth or falsity of others, so the probability calculus gives a set of rules to derive the probability for some propositions from the probability for others; these rules include the logical ones as a special case.
 
 There are different [deduction systems](https://plato.stanford.edu/archives/spr2023/entries/natural-deduction) (each with many dialects) to express the rules of propositional logic; one of them is the *sequent calculus*. The probability calculus has many analogies with the sequent calculus (Takeuti 1987).
 
@@ -135,7 +135,7 @@ library('Pinference')
 
 Here are some examples, from more trivial to more complex.
 
-- The probability of a sentence $a$ can a priori be anything between 0 and 1:
+- The probability for a sentence $a$ can a priori be anything between 0 and 1:
 
 ``` r
 inferP(
