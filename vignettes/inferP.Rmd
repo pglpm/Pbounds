@@ -10,9 +10,9 @@ vignette: >
 ---
 
 
-$\renewcommand{\P}{\mathrm{P}}$
-$\renewcommand{\|}{\:\vert\:\mathopen{}}$
-$\newcommand{\mo}{\mathrel{\!=\!}}$
+\renewcommand{\P}{\mathrm{P}}
+\renewcommand{\|}{\:\vert\:\mathopen{}}
+\newcommand{\mo}{\mathrel{\!=\!}}
 
 # Introduction
 

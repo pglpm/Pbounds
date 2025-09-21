@@ -342,9 +342,6 @@ expressions</h1>
 
 
 
-<p><span class="math inline">\(\renewcommand{\P}{\mathrm{P}}\)</span>
-<span class="math inline">\(\renewcommand{\|}{\:\vert\:\mathopen{}}\)</span>
-<span class="math inline">\(\newcommand{\mo}{\mathrel{\!=\!}}\)</span></p>
 <div id="introduction" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Introduction</h1>
 <p>The probability calculus is an extension of the calculus of
@@ -367,18 +364,19 @@ I \vdash a
 \]</span></p>
 <p>The same is expressed in the probability calculus by the notation</p>
 <p><span class="math display">\[
-\P(a \| I) = 1
+\mathrm{P}(a \:\vert\:\mathopen{} I) = 1
 \]</span></p>
 <p>but in this case we can also consider degrees of credibility
 different from <span class="math inline">\(1\)</span>.</p>
 <p>The theory of “random variables” is a particular application of the
-probability calculus: an expression such as “<span class="math inline">\(X\mo x\)</span>” means “The quantity <span class="math inline">\(X\)</span> is measured to have value <span class="math inline">\(x\)</span>” – which is just a proposition. Also
+probability calculus: an expression such as “<span class="math inline">\(X\mathrel{\!=\!}x\)</span>” means “The quantity
+<span class="math inline">\(X\)</span> is measured to have value <span class="math inline">\(x\)</span>” – which is just a proposition. Also
 the “causal calculus” is a particular application: an expression such as
-“<span class="math inline">\(\mathrm{do}(X \mo x)\)</span>” means “The
-quantity <span class="math inline">\(X\)</span> has been <em>set</em>
-equal to <span class="math inline">\(x\)</span>” – which is also just a
-proposition. In the probability calculus we can in fact even consider
-more general propositions, such as “The quantity <span class="math inline">\(X\)</span> has been <em>reported</em> to be equal
+“<span class="math inline">\(\mathrm{do}(X \mathrel{\!=\!}x)\)</span>”
+means “The quantity <span class="math inline">\(X\)</span> has been
+<em>set</em> equal to <span class="math inline">\(x\)</span>” – which is
+also just a proposition. In the probability calculus we can in fact even
+consider more general propositions, such as “The quantity <span class="math inline">\(X\)</span> has been <em>reported</em> to be equal
 to <span class="math inline">\(x\)</span>”.</p>
 <p><br />
 </p>
@@ -415,31 +413,38 @@ of a set of inference rules.</p>
 follows:</p>
 <p><span class="math display">\[
 \frac{
-\P(a \| I) = 1\enspace,\enspace \P(b \lor \lnot a \| c \land I) = 1
+\mathrm{P}(a \:\vert\:\mathopen{} I) = 1\enspace,\enspace \mathrm{P}(b
+\lor \lnot a \:\vert\:\mathopen{} c \land I) = 1
 }{
-\P(b \| c \land I) = 1
+\mathrm{P}(b \:\vert\:\mathopen{} c \land I) = 1
 }
 \]</span></p>
 <p>This final probability can be shown to follow from the initial ones
 by the well-known probability rules, valid for any sentences <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>:</p>
 <ul>
-<li><p><span class="math inline">\(\P(\lnot a \| I) = 1 - \P(a \|
+<li><p><span class="math inline">\(\mathrm{P}(\lnot a
+\:\vert\:\mathopen{} I) = 1 - \mathrm{P}(a \:\vert\:\mathopen{}
 I)\)</span></p></li>
-<li><p><span class="math inline">\(\P(a \land b \| I) = \P(a \| b \land
-I)\cdot\P(b \| I)
-= \P(b \| a \land I)\cdot\P(a \| I)\)</span></p></li>
-<li><p><span class="math inline">\(\P(a \lor b \| I) = \P(a \| I) + \P(b
-\| I) - \P(a \land b \| I)\)</span></p></li>
-<li><p><span class="math inline">\(\P(a \| a \land I) =
-1\)</span></p></li>
+<li><p><span class="math inline">\(\mathrm{P}(a \land b
+\:\vert\:\mathopen{} I) = \mathrm{P}(a \:\vert\:\mathopen{} b \land
+I)\cdot\mathrm{P}(b \:\vert\:\mathopen{} I)
+= \mathrm{P}(b \:\vert\:\mathopen{} a \land I)\cdot\mathrm{P}(a
+\:\vert\:\mathopen{} I)\)</span></p></li>
+<li><p><span class="math inline">\(\mathrm{P}(a \lor b
+\:\vert\:\mathopen{} I) = \mathrm{P}(a \:\vert\:\mathopen{} I) +
+\mathrm{P}(b \:\vert\:\mathopen{} I) - \mathrm{P}(a \land b
+\:\vert\:\mathopen{} I)\)</span></p></li>
+<li><p><span class="math inline">\(\mathrm{P}(a \:\vert\:\mathopen{} a
+\land I) = 1\)</span></p></li>
 </ul>
 <p>Another example of a simple probability inference, which immediately
 follows by the probability rules, is</p>
 <p><span class="math display">\[
 \frac{
-\P(a \| I) = 0.3\enspace,\enspace \P(b \| a \land I) = 0.2
+\mathrm{P}(a \:\vert\:\mathopen{} I) = 0.3\enspace,\enspace \mathrm{P}(b
+\:\vert\:\mathopen{} a \land I) = 0.2
 }{
-\P(a \land b \| I) = 0.06
+\mathrm{P}(a \land b \:\vert\:\mathopen{} I) = 0.06
 }
 \]</span></p>
 <p><br />
@@ -451,14 +456,14 @@ determine the <em>lower</em> and <em>upper</em> values that a
 probability can have, under the assertion of the values of other
 probabilities</strong>. It is well-known, for instance, that if</p>
 <p><span class="math display">\[
-\P(a \| I) = 0.2\,,\enspace
-\P(b \| I) = 0.7
+\mathrm{P}(a \:\vert\:\mathopen{} I) = 0.2\,,\enspace
+\mathrm{P}(b \:\vert\:\mathopen{} I) = 0.7
 \]</span></p>
-<p>then the probability <span class="math inline">\(\P(a \land b \|
-I)\)</span> cannot be larger than the minimum of the two above, that
-is,</p>
+<p>then the probability <span class="math inline">\(\mathrm{P}(a \land b
+\:\vert\:\mathopen{} I)\)</span> cannot be larger than the minimum of
+the two above, that is,</p>
 <p><span class="math display">\[
-\P(a \land b \| I) \in [0, 0.2]
+\mathrm{P}(a \land b \:\vert\:\mathopen{} I) \in [0, 0.2]
 \]</span></p>
 <p>Finding such bounds is equivalent to solving a linear-optimization
 problem. The most relevant texts about this equivalence are those by
@@ -477,7 +482,7 @@ logical expressions.</p>
 <p>The notation used in the function parallels the mathematical notation
 used above, with the following differences:</p>
 <ul>
-<li>Conditional solidus “<span class="math inline">\({}\|{}\)</span>”:
+<li>Conditional solidus “<span class="math inline">\({}\:\vert\:\mathopen{}{}\)</span>”:
 <code>~</code></li>
 <li>Not: <code>!</code></li>
 <li>And: <code>&amp;</code> or <code>&amp;&amp;</code></li>
