@@ -30,9 +30,9 @@ options(knitr.kable.NA = '')
 
 # Introduction
 
-The probability calculus is an extension of the calculus of propositional logic. Besides considering the *truth* or *falsity* of propositions, translated into *certainty* and *impossibility*, the probability calculus also considers a continuum of degrees of certainty -- probabilities -- between these two extremes. Just as propositional logic gives a set of rules to derive the truth or falsity of some propositions from the truth or falsity of others, so the probability calculus gives a set of rules to derive the probability of some propositions from the probability of others; these rules include the logical ones as a special case.
+The probability calculus is an extension of the calculus of propositional logic. Besides the *truth* or *falsity* of propositions, the probability calculus also considers a continuum of degrees of credibility -- probabilities -- between those two extremes. Just as propositional logic gives a set of rules to derive the truth or falsity of some propositions from the truth or falsity of others, so the probability calculus gives a set of rules to derive the probability of some propositions from the probability of others; these rules include the logical ones as a special case.
 
-There are different [deduction systems](https://plato.stanford.edu/archives/spr2023/entries/natural-deduction) (each with many dialects) to express the rules of propositional logic; one of them is the *sequent calculus*. The probability calculus has many analogies with the sequent calculus.
+There are different [deduction systems](https://plato.stanford.edu/archives/spr2023/entries/natural-deduction) (each with many dialects) to express the rules of propositional logic; one of them is the *sequent calculus*. The probability calculus has many analogies with the sequent calculus (Takeuti 1987).
 
 In sequent calculus we express that proposition $a$ is true within a set of axioms $I$ by the notation
 
@@ -52,7 +52,7 @@ The theory of "random variables" is a particular application of the probability 
 
 \
 
-The view of the probability calculus as an extension of the logical calculus goes back at least to Boole, possibly to Laplace.
+The view of the probability calculus as an extension of the logical calculus goes back at least to Boole, possibly to Laplace. More about the formalism and history in Hailperin 1996, Jaynes 2003, Jeffreys 1983, Johnson 1924.
 
 
 # Probabilistic inferences
@@ -449,7 +449,6 @@ inferP(
 
 ### On Bayesian theory in general: {#referencesbayes}
 
-- Jaynes: [*Probability Theory*](https://doi.org/10.1017/CBO9780511790423) (2003).
 
 - MacKay: [*Information Theory, Inference, and Learning Algorithms*](https://www.inference.org.uk/itila/book.html) (2005).
 
@@ -460,6 +459,18 @@ inferP(
 - Sox, Higgins, Owens, Sanders Schmidler: [*Medical Decision Making*](https://doi.org/10.1002/9781119627876) (3rd ed. 2024).
 
 - Hunink, Weinstein, Wittenberg, Drummond, Pliskin, Wong, Glasziou: [*Decision Making in Health and Medicine: Integrating Evidence and Values*](https://doi.org/10.1017/CBO9781139506779) (2nd ed. 2014).
+
+- Jaynes (2003): [*Probability Theory: The Logic of Science*](https://doi.org/10.1017/CBO9780511790423) (Cambridge University Press).
+
+- Jeffreys (1983): [*Theory of Probability*](10.1093/oso/9780198503682.001.0001) (3rd ed. Oxford University Press).
+
+- Johnson (1924): [*Logic. Part III: The Logical Foundations of Science*](https://archive.org/details/logic03john) (Cambridge University Press).
+
+- Hailperin (1965): [*Best Possible Inequalities for the Probability of a Logical Function of Events*](https://doi.org/10.1080/00029890.1965.11970533) (Am. Math. Monthly 72(4): 343).
+
+- Hailperin (1996): [*Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications*](https://archive.org/details/hailperin1996-Sentential_probability_logic) (Associated University Presses).
+
+- Takeuti (1987): *Proof Theory* (2nd ed. North-Holland).
 
 \
 

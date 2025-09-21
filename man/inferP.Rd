@@ -7,52 +7,79 @@
 inferP(target, ...)
 }
 \arguments{
-\item{target}{The desired probability expression.}
+\item{target}{The target probability expression.}
 
 \item{...}{Probability constraints (see Details).}
 }
 \value{
-A vector of \code{min} and \code{max} values of the target probability, or \code{NA} if the constraints are mutually contradictory. If \code{min} and \code{max} are \code{0} and \code{1} then the constraints do not restrict the target probability in any way.
+A vector of \code{min} and \code{max} values for the target probability, or \code{NA} if the constraints are mutually contradictory. If \code{min} and \code{max} are \code{0} and \code{1} then the constraints do not restrict the target probability in any way.
 }
 \description{
 Compute the minimum and maximum allowed values of the probability of a propositional-logic expression conditional on another one, given numerical or equality constraints for the conditional probabilities of other propositional-logic expressions.
 }
 \details{
-The function takes as first argument the probability of apropositional-logic expression, conditional on another expression, and as subsequent arguments the constraints on the probabilities of other propositional-logic expressions.
+The function takes as first argument the probability of a logical expression, conditional on another expression, and as subsequent (optional) arguments the constraints on the probabilities of other logical expressions. Propositional logic is intended here.
 
-Each constraint can have one of these four forms:
+The function uses the \code{lpSolve::lp()} function from the \href{https://cran.r-project.org/package=lpSolve}{\strong{lpSolve}} package.
+\subsection{Logical expressions}{
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{P(...|...) = [number]
+A propositional-logic expression is a combination of atomic propositions by means of logical connectives. Atomic propositions can have any name that satisfies \href{https://cran.r-project.org/doc/FAQ/R-FAQ.html#What-are-valid-names_003f}{R syntax for \emph{object names}}; examples:
 
-P(...|...) = P(...|...)
-
-P(...|...) = P(...|...) * [number]
-
-P(...|...) = P(...|...) / [number]
+\if{html}{\out{<div class="sourceCode">}}\preformatted{a
+A
+hypothesis1
+coin.lands.tails
+coin_lands_heads
+`tomorrow it rains` # note the backticks
 }\if{html}{\out{</div>}}
 
-where \code{...} are (possibly different) propositional-logic expressions. Inequalities \code{<=} \code{>=} are also allowed instead of equalities.
-
-All probability expressions must start with \code{P} or \code{p} or \code{Pr} followed by parentheses. The symbol for the conditional bar and the logical connectives are as follows:
+Available logical connectives are "not" (negation, "¬"), "and" (conjunction, "∨"), "or" (disjunction, "∨"), "if-then" (implication, "⇒"). The first three follow the standard R syntax for \href{logical}{logical operators}:
 \itemize{
-\item Conditional bar: \code{~}
 \item Not: \code{!}
 \item And: \code{&&} or \code{&}
 \item Or: \code{||} or \code{|}
-\item If-then: \verb{\%>\%} (internally \code{a \%>\% b} is defined as \code{b || !a})
 }
 
-The expressions otherwise follow the standard rules for R logical expressions.
-For instance,\cr
-"P(¬(a ∨ b) ⇒ c | c ∧ I)"\cr
-is written (adding spaces for clarity)
+The "if-then" connective is represented by the infix operator \verb{\%>\%}; internally \code{x \%>\% y} is simply defined as \code{x || !y}.
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{P( !(a | b) \%>\% c  ~  c & I )
+Examples of logical expressions:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{a
+a && b
+(a || hypothesis1) & !A
+red.ball && ((a \%>\% b) || c)
+}\if{html}{\out{</div>}}
+}
+
+\subsection{Probabilities of logical expressions}{
+
+The probability of an expression \enq{X} conditional on an expression \eqn{Y}, usually denoted \eqn{\mathrm{P}(X \vert Y)}{P(X|Y)}, is entered by using \code{~} instead of the solidus "|". For instance
+
+\eqn{\mathrm{P}(\lnot a \lor b \:\vert\: c \land H)}{P(¬a ∨ b | c ∧ H)}    
+    
+is entered as (extra spaces added just for clarity)
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{P(!a || b  ~  c && H)
 }\if{html}{\out{</div>}}
 
-Note that \emph{all} probabilities appearing in the function are understood to have a common, and-ed sentence "... ∧ I" in their conditional, if such a sentence doesn't appear explicitly. Otherwise the probabilities would be unrelated a priori.
+It is also possible to use \code{p} or \code{Pr} or \code{pr} instead of \code{P}.
+}
 
-The function uses the \code{lpSolve::lp()} function from the \href{https://cran.r-project.org/package=lpSolve}{\strong{lpSolve}} package.
+\subsection{Probability constraints}{
+
+Each probability constraint can have one of these four forms:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{P(X ~ Z) = [number between 0 and 1]
+
+P(X ~ Z) = P(Y ~ Z)
+
+P(X ~ Z) = P(Y ~ Z) * [positive number]
+
+P(X ~ Z) = P(Y ~ Z) / [positive number]
+}\if{html}{\out{</div>}}
+
+where \code{X}, \code{Y}, \code{Z} are logical expressions. Note that the conditionals on the left and right sides must be the same. Inequalities \code{<=} \code{>=} are also allowed instead of equalities.
+}
 }
 \examples{
 inferP(
@@ -71,32 +98,28 @@ inferP(
 ##  min  max
 ## 0.06 0.06
 
-## Solution to the Monty Hall problem:
+## Solution to the Monty Hall problem (see accompanying vignette):
 inferP(
-  target = P(car1 ~ you1 & host2 & I),
-  P(car1 | car2 | car3 ~ I) == 1,
-  P(car1 & car2 ~ I) == 0,
-  P(car1 & car3 ~ I) == 0,
-  P(car2 & car3 ~ I) == 0,
-  P(host1 & you1 ~ I) == 0,
-  P(host2 & you2 ~ I) == 0,
-  P(host3 & you3 ~ I) == 0,
-  P(host1 & car1 ~ I) == 0,
-  P(host2 & car2 ~ I) == 0,
-  P(host3 & car3 ~ I) == 0,
-  P(host1 & host2 ~ I) == 0,
-  P(host1 & host3 ~ I) == 0,
-  P(host2 & host3 ~ I) == 0,
-  P(host1 | host2 | host3 ~ I) == 1,
-  P(host2 ~ car1 & you1 & I) == P(host3 ~ car1 & you1 & I),
-  P(car1 ~ I) == 1/3,
-  P(car2 ~ I) == 1/3,
-  P(car3 ~ I) == 1/3,
-  P(car1 ~ you1 & I) == 1/3,
-  P(car2 ~ you1 & I) == 1/3,
-  P(car3 ~ you1 & I) == 1/3
+    target = P(car2  ~  you1 & host3 & I),
+    ##
+    P(car1 & car2  ~  I) == 0,
+    P(car1 & car3  ~  I) == 0,
+    P(car2 & car3  ~  I) == 0,
+    P(car1 | car2 | car3  ~  I) == 1,
+    P(host1 & host2 ~ I) == 0,
+    P(host1 & host3 ~ I) == 0,
+    P(host2 & host3 ~ I) == 0,
+    P(host1 | host2 | host3  ~  I) == 1,
+    P(host1  ~  you1 & I) == 0,
+    P(host2  ~  car2 & I) == 0,
+    P(host3  ~  car3 & I) == 0,
+    P(car1  ~  I) == P(car2  ~  I),
+    P(car2  ~  I) == P(car3  ~  I),
+    P(car1  ~  you1 & I) == P(car2  ~  you1 & I),
+    P(car2  ~  you1 & I) == P(car3  ~  you1 & I),
+    P(host2  ~  you1 & car1 & I) == P(host3  ~  you1 & car1 & I)
 )
 ##      min      max
-## 0.333333 0.333333
+## 0.666667 0.666667
 
 }
