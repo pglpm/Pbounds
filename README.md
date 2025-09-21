@@ -22,7 +22,7 @@ $$
 $$
 
 With the `infeP()` this probabilistic inference problem is posed as follows:
-```{r}
+```
 inferP(
     target = P(a & b  ~  c),
     P(a  ~  c) == 0.2,
