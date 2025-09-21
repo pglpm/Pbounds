@@ -348,19 +348,19 @@ expressions</h1>
 <div id="introduction" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Introduction</h1>
 <p>The probability calculus is an extension of the calculus of
-propositional logic. Besides considering the <em>truth</em> or
-<em>falsity</em> of propositions, translated into <em>certainty</em> and
-<em>impossibility</em>, the probability calculus also considers a
-continuum of degrees of certainty – probabilities – between these two
-extremes. Just as propositional logic gives a set of rules to derive the
-truth or falsity of some propositions from the truth or falsity of
-others, so the probability calculus gives a set of rules to derive the
-probability of some propositions from the probability of others; these
-rules include the logical ones as a special case.</p>
+propositional logic. Besides the <em>truth</em> or <em>falsity</em> of
+propositions, the probability calculus also considers a continuum of
+degrees of credibility – probabilities – between those two extremes.
+Just as propositional logic gives a set of rules to derive the truth or
+falsity of some propositions from the truth or falsity of others, so the
+probability calculus gives a set of rules to derive the probability of
+some propositions from the probability of others; these rules include
+the logical ones as a special case.</p>
 <p>There are different <a href="https://plato.stanford.edu/archives/spr2023/entries/natural-deduction">deduction
 systems</a> (each with many dialects) to express the rules of
 propositional logic; one of them is the <em>sequent calculus</em>. The
-probability calculus has many analogies with the sequent calculus.</p>
+probability calculus has many analogies with the sequent calculus
+(Takeuti 1987).</p>
 <p>In sequent calculus we express that proposition <span class="math inline">\(a\)</span> is true within a set of axioms <span class="math inline">\(I\)</span> by the notation</p>
 <p><span class="math display">\[
 I \vdash a
@@ -383,7 +383,9 @@ to <span class="math inline">\(x\)</span>”.</p>
 <p><br />
 </p>
 <p>The view of the probability calculus as an extension of the logical
-calculus goes back at least to Boole, possibly to Laplace.</p>
+calculus goes back at least to Boole, possibly to Laplace. For more
+information about the formalism and history see e.g. Hailperin 1996,
+Jaynes 2003, Jeffreys 1983, Johnson 1924.</p>
 </div>
 <div id="probabilistic-inferences" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Probabilistic
@@ -398,8 +400,8 @@ with the proposition <span class="math inline">\(c\)</span>.</li>
 </ul>
 <p>Then we can also assert that <span class="math inline">\(b\)</span>
 is true given the set of axioms <span class="math inline">\(c \land
-I\)</span>. This is a logical deduction. In the notation of sequent
-calculus it is written as follows:</p>
+I\)</span>. This is a logical inference. In the notation of sequent
+calculus (Takeuti 1987) it is written as follows:</p>
 <p><span class="math display">\[
 \frac{
 I \vdash a \enspace,\enspace I \land c \vdash b \lor \lnot a
@@ -407,8 +409,8 @@ I \vdash a \enspace,\enspace I \land c \vdash b \lor \lnot a
 I \land c \vdash b
 }
 \]</span></p>
-<p>The conclusion follows by the application of inference rules,
-starting from the initial assertions.</p>
+<p>The conclusion follows from the initial assertions by the application
+of a set of inference rules.</p>
 <p>In the probability calculus the same inference can be expressed as
 follows:</p>
 <p><span class="math display">\[
@@ -431,8 +433,8 @@ I)\cdot\P(b \| I)
 <li><p><span class="math inline">\(\P(a \| a \land I) =
 1\)</span></p></li>
 </ul>
-<p>Another simple probability inference, which immediately follows from
-the rules, is for example</p>
+<p>Another example of a simple probability inference, which immediately
+follows by the probability rules, is</p>
 <p><span class="math display">\[
 \frac{
 \P(a \| I) = 0.3\enspace,\enspace \P(b \| a \land I) = 0.2
@@ -449,7 +451,7 @@ determine the <em>lower</em> and <em>upper</em> values that a
 probability can have, under the assertion of the values of other
 probabilities</strong>. It is well-known, for instance, that if</p>
 <p><span class="math display">\[
-\P(a \| I) = 0.2\,,
+\P(a \| I) = 0.2\,,\enspace
 \P(b \| I) = 0.7
 \]</span></p>
 <p>then the probability <span class="math inline">\(\P(a \land b \|
@@ -458,25 +460,25 @@ is,</p>
 <p><span class="math display">\[
 \P(a \land b \| I) \in [0, 0.2]
 \]</span></p>
-<p>It has been shown that finding such bounds is equivalent to solving a
-linear-optimization problem. The most relevant texts about this
-equivalence are those by Hailperin, given in the references.</p>
+<p>Finding such bounds is equivalent to solving a linear-optimization
+problem. The most relevant texts about this equivalence are those by
+Hailperin 1965 and Hailperin 1996.</p>
 </div>
 <div id="the-function-inferp" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> The function
 <code>inferP()</code></h1>
-<p>The function <code>inferP()</code> implements the linear-optimization
-algorithm just mentioned. As a first argument, named
-<code>target =</code>, it takes the probability of an expression of
-propositional logic, conditional on another one; as optional subsequent
-arguments it takes constraints about the probabilities of other
-propositional-logic expressions, for example their numerical values, as
-in the examples above.</p>
-<p>The notation used in the function conforms to R’s notation for
-logical operators, and uses the operator <code>~</code> as notation for
-the conditional bar “<span class="math inline">\({}\|{}\)</span>”:</p>
+<p>The function <code>inferP()</code> finds the bounds of a target
+probability by implementing the linear-optimization algorithm mentioned
+in the previous section.</p>
+<p>As a first argument,<code>target =</code>, it takes the conditional
+probability of two logical expressions; as optional subsequent arguments
+it takes constraints about the conditional probabilities of other
+logical expressions.</p>
+<p>The notation used in the function parallels the mathematical notation
+used above, with the following differences:</p>
 <ul>
-<li>Conditional bar: <code>~</code></li>
+<li>Conditional solidus “<span class="math inline">\({}\|{}\)</span>”:
+<code>~</code></li>
 <li>Not: <code>!</code></li>
 <li>And: <code>&amp;</code> or <code>&amp;&amp;</code></li>
 <li>Or: <code>|</code> or <code>||</code></li>
@@ -490,7 +492,7 @@ equivalent to <span class="math inline">\(b \lor \lnot a\)</span>)</li>
 <p>Here are some examples, from more trivial to more complex.</p>
 <ul>
 <li>The probability of a sentence <span class="math inline">\(a\)</span>
-can be anything between 0 and 1:</li>
+can a priori be anything between 0 and 1:</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a  <span class="sc">~</span>  I)</span>
@@ -728,16 +730,16 @@ behind the door you chose:</p>
 <p>The well-known result is 2/3. You can also check the obvious result
 for <code>car3</code>, which is 0.</p>
 </div>
-<div id="omitting-probability-constraints" class="section level2" number="4.5">
-<h2><span class="header-section-number">4.5</span> Omitting probability
-constraints</h2>
+<div id="omitting-some-probability-constraints" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Omitting some
+probability constraints</h2>
 <p>It is interesting to see what happens to the bounds of the target
-probability when some constraints are omitted. For instance, suppose
-that we omit the constraint<br />
+probability when some constraints are omitted. Suppose for instance that
+we omit the constraint<br />
 <code>P(host2  ~  you1 &amp; car1 &amp; I) == P(host3  ~  you1 &amp; car1 &amp; I)</code><br />
-which stated that we have no reason to believe the host would choose
+which states that we have no reason to believe the host would choose
 door No. 2 more than No. 3 or vice versa, when the car is behind door
-No. 1:</p>
+No. 1. The bounds of the target probability become</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(car2  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> host3 <span class="sc">&amp;</span> I),</span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    <span class="do">##</span></span>
@@ -764,10 +766,11 @@ No. 1:</p>
 <span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a>)</span>
 <span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a><span class="co"># min max </span></span>
 <span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a><span class="co"># 0.5 1.0</span></span></code></pre></div>
-<p>The probability that the car is behind door No. 2 is in this case
-undetermined, but it must be more than 1/2. The conclusion is that it is
-still best to switch door (if you want the car), but our degree of
-certainty in winning is not 2/3.</p>
+<p>In this case the constraints do not determine a single value for the
+probability that the car is behind door No. 2, but they still constrain
+it to be more than 1/2. The conclusion is that it is still best to
+switch door (if you want the car), but the credibility of winning is not
+2/3.</p>
 </div>
 <div id="variations" class="section level2" number="4.6">
 <h2><span class="header-section-number">4.6</span> Variations</h2>
@@ -843,8 +846,6 @@ of inference under symmetry</em></a> (draft).</p></li>
 <h3><span class="header-section-number">5.1.2</span> On Bayesian theory
 in general:</h3>
 <ul>
-<li><p>Jaynes: <a href="https://doi.org/10.1017/CBO9780511790423"><em>Probability
-Theory</em></a> (2003).</p></li>
 <li><p>MacKay: <a href="https://www.inference.org.uk/itila/book.html"><em>Information
 Theory, Inference, and Learning Algorithms</em></a> (2005).</p></li>
 <li><p><a href="https://pglpm.github.io/ADA511"><em>ADA 511: Foundations
@@ -861,6 +862,21 @@ Making</em></a> (3rd ed. 2024).</p></li>
 <a href="https://doi.org/10.1017/CBO9781139506779"><em>Decision Making
 in Health and Medicine: Integrating Evidence and Values</em></a> (2nd
 ed. 2014).</p></li>
+<li><p>Jaynes (2003): <a href="https://doi.org/10.1017/CBO9780511790423"><em>Probability Theory:
+The Logic of Science</em></a> (Cambridge University Press).</p></li>
+<li><p>Jeffreys (1983): <a href="10.1093/oso/9780198503682.001.0001"><em>Theory of
+Probability</em></a> (3rd ed. Oxford University Press).</p></li>
+<li><p>Johnson (1924): <a href="https://archive.org/details/logic03john"><em>Logic. Part III: The
+Logical Foundations of Science</em></a> (Cambridge University
+Press).</p></li>
+<li><p>Hailperin (1965): <a href="https://doi.org/10.1080/00029890.1965.11970533"><em>Best Possible
+Inequalities for the Probability of a Logical Function of
+Events</em></a> (Am. Math. Monthly 72(4): 343).</p></li>
+<li><p>Hailperin (1996): <a href="https://archive.org/details/hailperin1996-Sentential_probability_logic"><em>Sentential
+Probability Logic: Origins, Development, Current Status, and Technical
+Applications</em></a> (Associated University Presses).</p></li>
+<li><p>Takeuti (1987): <em>Proof Theory</em> (2nd
+ed. North-Holland).</p></li>
 </ul>
 <p><br />
 </p>
