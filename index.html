@@ -67,7 +67,13 @@
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∧</mo><mi>b</mi><mo stretchy="false" form="postfix">|</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>0</mn><mo>,</mo><mn>2</mn><mo stretchy="true" form="postfix">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \mathrm{P}(a \land b  \vert  c) \in [0, 0,2]  .
 </annotation></semantics></math></p>
-<p>With the <code>infeP()</code> this probabilistic inference problem is posed as follows: <code>{r} inferP(     target = P(a &amp; b  ~  c),     P(a  ~  c) == 0.2,     P(b  ~  c) == 0.7 )</code> and yields the answer</p>
+<p>With the <code>infeP()</code> this probabilistic inference problem is posed as follows:</p>
+<pre><code><span><span class="fu"><a href="reference/inferP.html">inferP</a></span><span class="op">(</span></span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">b</span>  <span class="op">~</span>  <span class="va">c</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">~</span>  <span class="va">c</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.2</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">~</span>  <span class="va">c</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.7</span></span>
+<span><span class="op">)</span></span></code></pre>
+<p>and yields the answer</p>
 <pre><code>min  max
 0.0  0.2</code></pre>
 <p>More information about notation and constraints is available in the help function <code><a href="reference/inferP.html">help('inferP')</a></code>. More interesting examples are given in the package’s vignette.</p>
