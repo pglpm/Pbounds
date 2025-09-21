@@ -42,3 +42,5 @@ The package can be installed with
 remotes::install_github('pglpm/Pinference')
 ```
 
+It requires the [**lpSolve**](https://cran.r-project.org/package=lpSolve) package.
+
