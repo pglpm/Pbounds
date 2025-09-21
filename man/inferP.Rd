@@ -15,15 +15,15 @@ inferP(target, ...)
 A vector of \code{min} and \code{max} values for the target probability, or \code{NA} if the constraints are mutually contradictory. If \code{min} and \code{max} are \code{0} and \code{1} then the constraints do not restrict the target probability in any way.
 }
 \description{
-Compute the minimum and maximum allowed values of the probability of a propositional-logic expression conditional on another one, given numerical or equality constraints for the conditional probabilities of other propositional-logic expressions.
+Compute the minimum and maximum allowed values of the probability for a propositional-logic expression conditional on another one, given numerical or equality constraints for the conditional probabilities for other propositional-logic expressions.
 }
 \details{
-The function takes as first argument the probability of a logical expression, conditional on another expression, and as subsequent (optional) arguments the constraints on the probabilities of other logical expressions. Propositional logic is intended here.
+The function takes as first argument the probability for a logical expression, conditional on another expression, and as subsequent (optional) arguments the constraints on the probabilities for other logical expressions. Propositional logic is intended here.
 
 The function uses the \code{lpSolve::lp()} function from the \href{https://cran.r-project.org/package=lpSolve}{\strong{lpSolve}} package.
 \subsection{Logical expressions}{
 
-A propositional-logic expression is a combination of atomic propositions by means of logical connectives. Atomic propositions can have any name that satisfies \href{https://cran.r-project.org/doc/FAQ/R-FAQ.html#What-are-valid-names_003f}{R syntax for \emph{object names}}; examples:
+A propositional-logic expression is a combination of atomic propositions by means of logical connectives. Atomic propositions can have any name that satisfies \href{https://cran.r-project.org/doc/FAQ/R-FAQ.html#What-are-valid-names_003f}{R syntax for \emph{object names}}. Examples:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{a
 A
@@ -79,9 +79,12 @@ P(X ~ Z) = P(Y ~ Z) / [positive number]
 }\if{html}{\out{</div>}}
 
 where \code{X}, \code{Y}, \code{Z} are logical expressions. Note that the conditionals on the left and right sides must be the same. Inequalities \code{<=} \code{>=} are also allowed instead of equalities.
+
+See \href{inferP.html}{vignette} for more interesting examples.
 }
 }
 \examples{
+
 inferP(
   target = P(a & b ~ h), # P(a ∧ b | h) in standard notation
   P(a ~ h) == 0.3,

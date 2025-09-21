@@ -35,7 +35,7 @@ min  max
 0.0  0.2
 ```
 
-More interesting examples are given in the package's vignette.
+More information about notation and constraints is available in the help function `help('inferP')`. More interesting examples are given in the package's vignette.
 \
 
 The package can be installed with

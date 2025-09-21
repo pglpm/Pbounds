@@ -1,17 +1,17 @@
 #' Calculation of lower and upper probability bounds
 #'
 #' @description
-#' Compute the minimum and maximum allowed values of the probability of a propositional-logic expression conditional on another one, given numerical or equality constraints for the conditional probabilities of other propositional-logic expressions.
+#' Compute the minimum and maximum allowed values of the probability for a propositional-logic expression conditional on another one, given numerical or equality constraints for the conditional probabilities for other propositional-logic expressions.
 #'
 #' @details
-#' The function takes as first argument the probability of a logical expression, conditional on another expression, and as subsequent (optional) arguments the constraints on the probabilities of other logical expressions. Propositional logic is intended here.
+#' The function takes as first argument the probability for a logical expression, conditional on another expression, and as subsequent (optional) arguments the constraints on the probabilities for other logical expressions. Propositional logic is intended here.
 #'
 #' The function uses the `lpSolve::lp()` function from the [**lpSolve**](https://cran.r-project.org/package=lpSolve) package.
 
 #'
-#' ## Logical expressions
+#' ### Logical expressions
 #'
-#' A propositional-logic expression is a combination of atomic propositions by means of logical connectives. Atomic propositions can have any name that satisfies [R syntax for *object names*](https://cran.r-project.org/doc/FAQ/R-FAQ.html#What-are-valid-names_003f); examples:
+#' A propositional-logic expression is a combination of atomic propositions by means of logical connectives. Atomic propositions can have any name that satisfies [R syntax for *object names*](https://cran.r-project.org/doc/FAQ/R-FAQ.html#What-are-valid-names_003f). Examples:
 #' ```
 #' a
 #' A
@@ -36,7 +36,7 @@
 #' red.ball && ((a %>% b) || c)
 #' ```
 #'
-#' ## Probabilities of logical expressions
+#' ### Probabilities of logical expressions
 #' 
 #' The probability of an expression \eqn{X} conditional on an expression \eqn{Y}, usually denoted \eqn{\mathrm{P}(X \vert Y)}{P(X|Y)}, is entered by using ` ~ ` instead of the solidus "|". For instance
 #'     
@@ -62,6 +62,7 @@
 #' ```
 #' where `X`, `Y`, `Z` are logical expressions. Note that the conditionals on the left and right sides must be the same. Inequalities `<=` `>=` are also allowed instead of equalities.
 #'
+#' See [vignette](inferP.html) for more interesting examples.
 #'
 #' @param target The target probability expression.
 #' 
@@ -72,6 +73,7 @@
 #' @import lpSolve
 #'
 #' @examples
+#' 
 #' inferP(
 #'   target = P(a & b ~ h), # P(a ∧ b | h) in standard notation
 #'   P(a ~ h) == 0.3,
