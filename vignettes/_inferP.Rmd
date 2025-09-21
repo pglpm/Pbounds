@@ -30,7 +30,7 @@ options(knitr.kable.NA = '')
 
 # Introduction
 
-The probability calculus is an extension of the calculus of propositional logic. Besides the *truth* or *falsity* of propositions, the probability calculus also considers a continuum of degrees of credibility -- probabilities -- between those two extremes. Just as propositional logic gives a set of rules to derive the truth or falsity of some propositions from the truth or falsity of others, so the probability calculus gives a set of rules to derive the probability of some propositions from the probability of others; these rules include the logical ones as a special case.
+The probability calculus is an extension of the calculus of propositional logic. Besides the *truth* or *falsity* of propositions, the probability calculus also considers a continuum of degrees of credibility -- probabilities -- between those two extremes. Just as propositional logic gives a set of rules to derive the truth or falsity of some propositions from the truth or falsity of others, so the probability calculus gives a set of rules to derive the probability for some propositions from the probability for others; these rules include the logical ones as a special case.
 
 There are different [deduction systems](https://plato.stanford.edu/archives/spr2023/entries/natural-deduction) (each with many dialects) to express the rules of propositional logic; one of them is the *sequent calculus*. The probability calculus has many analogies with the sequent calculus (Takeuti 1987).
 
@@ -46,13 +46,13 @@ $$
 \P(a \| I) = 1
 $$
 
-but in this case we can also consider degrees of certainty different from $1$.
+but in this case we can also consider degrees of credibility different from $1$.
 
 The theory of "random variables" is a particular application of the probability calculus: an expression such as "$X\mo x$" means "The quantity $X$ is measured to have value $x$" -- which is just a proposition. Also the "causal calculus" is a particular application: an expression such as "$\mathrm{do}(X \mo x)$" means "The quantity $X$ has been *set* equal to $x$" -- which is also just a proposition. In the probability calculus we can in fact even consider more general propositions, such as "The quantity $X$ has been *reported* to be equal to $x$".
 
 \
 
-The view of the probability calculus as an extension of the logical calculus goes back at least to Boole, possibly to Laplace. For more information about the formalism and history see e.g. Hailperin 1996, Jaynes 2003, Jeffreys 1983, Johnson 1924.
+The view of the probability calculus as an extension of the logical calculus goes back at least to Boole, possibly to Laplace. For more information about the formalism and history see e.g. Hailperin 1996, Jaynes 2003, Jeffreys 1983, Johnson 1924, Johnson 1936.
 
 
 # Probabilistic inferences
@@ -148,7 +148,7 @@ library('Pinference')
 
 Here are some examples, from more trivial to more complex.
 
-- The probability of a sentence $a$ can a priori be anything between 0 and 1:
+- The probability for a sentence $a$ can a priori be anything between 0 and 1:
 ```{r}
 inferP(
     target = P(a  ~  I)
@@ -233,7 +233,7 @@ inferP(
 
 ## Combining evidence
 
-Suppose that hypothesis $H$ has probability 0.7 given evidence $E_1$, and probability 0.8 given evidence $E_2$. What is its probability if two pieces of evidence are combined, that is, given their conjunction? An interesting result, proven by Hailperin, is that such probability can be anything:
+Suppose that hypothesis $H$ has probability 0.7 given evidence $E_1$, and probability 0.8 given evidence $E_2$. What is its probability if two pieces of evidence are combined, that is, given their conjunction? An interesting result, proven in Hailperin 2006, is that such probability can be anything:
 ```{r}
 inferP(
     target = P(H  ~  E1 & E2 & I),
@@ -267,24 +267,22 @@ and similarly for the other doors.
 
 We want to know what's the probability that the car is behind the other door, No. 2.
 
-The conditional of the target probability has, besides the game rules $I$, two propositions expressing the information we have: you chose door No. 1, `you1`, and the host opened door No. 3, `host3`.
+The conditional of the target probability has, besides the game rules $I$, three propositions expressing the information we have: you chose door No. 1, `you1`, the host opened door No. 3, `host3`, and there is no car behind door No. 3, `!car3`.
 
-The target probability is thus `P(car2  ~  you1 & host3 & I)`
+The target probability is thus `P(car2  ~  you1 & host3 & !car3 & I)`
 
 ## Given probabilities
 
 We must express the information we have and the game rules in terms of probabilities. Note that there are several equivalent ways to express the probabilistic constraints listed below.
 
-1. We know that there is only one car, and it must be behind one door. This corresponds to four probability constraints:
-    
+1. We know that there is only one car, and it must be behind one door. This corresponds to four probability constraints:    
     `P(car1 & car2  ~  I) == 0`    
     `P(car1 & car3  ~  I) == 0`    
     `P(car2 & car3  ~  I) == 0`    
     `P(car1 | car2 | car3  ~  I) == 1`
 \
 
-2. The host must open one door, and only one door. But the host cannot open the door you chose, and cannot open the door that has the car, but must open one door. This corresponds to seven probability constraints:
-    
+2. The host must open one door, and only one door. But the host cannot open the door you chose, and cannot open the door that has the car, but must open one door. This corresponds to seven probability constraints:    
     `P(host1 & host2  ~  I) == 0`    
     `P(host1 & host3 ~  I) == 0`    
     `P(host2 & host3  ~  I) == 0`    
@@ -294,21 +292,18 @@ We must express the information we have and the game rules in terms of probabili
     `P(host3  ~  car3 & I) == 0`    
 \
 
-3. Let's say that you are initially equally undecided among the three doors:
-    
+3. Let's say that you are initially equally undecided among the three doors:    
     `P(car1  ~  I) == P(car2  ~  I)`    
     `P(car2  ~  I) == P(car3  ~  I)`    
 \
 
-4. The fact, alone, that you picked door No. 1 is irrelevant to the knowledge about the car's position:
-    
+4. The fact, alone, that you picked door No. 1 is irrelevant to the knowledge about the car's position:    
     `P(car1  ~  you1 & I) == P(car2  ~  you1 & I)`    
     `P(car2  ~  you1 & I) == P(car3  ~  you1 & I)`    
 \
 
-4. Finally, we have no reason to believe that the host favours one door over another, when a choice is possible, that is, when the car is behind the door you chose:
-    
-    `P(host2  ~  you1 & car1 & I) == P(host3  ~  you1 & car1 & I)`    
+4. Finally, we have no reason to believe that the host favours one door over another, when a choice is possible, that is, when the car is behind the door you chose:    
+    `P(host2  ~  you1 & car1 & I) == P(host3  ~  you1 & car1 & I)`
 \
 
 ## Result
@@ -317,7 +312,7 @@ We can finally input the desired target and the constraints into `inferP()`:
 
 ```{r}
 inferP(
-    target = P(car2  ~  you1 & host3 & I),
+    target = P(car2  ~  you1 & host3 & !car3 & I),
     ##
     P(car1 & car2  ~  I) == 0,
     P(car1 & car3  ~  I) == 0,
@@ -352,7 +347,7 @@ which states that we have no reason to believe the host would choose door No. 
 
 ```{r}
 inferP(
-    target = P(car2  ~  you1 & host3 & I),
+    target = P(car2  ~  you1 & host3 & !car3 & I),
     ##
     P(car1 & car2  ~  I) == 0,
     P(car1 & car3  ~  I) == 0,
@@ -363,9 +358,9 @@ inferP(
     P(host1 & host3 ~ I) == 0,
     P(host2 & host3 ~ I) == 0,
     P(host1 | host2 | host3  ~  I) == 1,
-    P(host1 & you1  ~  I) == 0,
-    P(host2 & car2  ~  I) == 0,
-    P(host3 & car3  ~  I) == 0,
+    P(host1  ~  you1 & I) == 0,
+    P(host2  ~  car2 & I) == 0,
+    P(host3  ~  car3 & I) == 0,
     ##
     P(car1  ~  I) == P(car2  ~  I),
     P(car2  ~  I) == P(car3  ~  I),
@@ -384,106 +379,68 @@ In this case the constraints do not determine a single value for the probability
 
 The internet offers many variations of the Monty Hall problem. They can also be solved with `inferP()`.
 
+Let's take a "Monty Fall" variation as an example. There is the possibility that the host falls while going to open a door. We represent this with the proposition `fall`.
 
+If the hosts falls, there is a non-zero probability, let's say 10%, that the host will open the door with the car after you choose door No. 1. We can express this by the constraints    
+`P(host2  ~  car2 & fall & you1 & I) == 0.1`    
+`P(host3  ~  car3 & fall & you1 & I) == 0.1`
+
+Finally we still have no reason to believe that the falling host favours one door over another, when the car is behind the door you chose:    
+`P(host2  ~  you1 & car1 & fall & I) == P(host3  ~  you1 & car1 & fall & I)`
+
+The target probability is for the car being behind door No. 2, given that you chose No. 1, the host fell and opened No. 3, but there was no car there:    
+`P(car2  ~  you1 & host3 & !car3 & fall & I)`.
+
+The result is
 ```{r}
 inferP(
-    target = P(car2  ~  you1 & host3 & I),
+   target = P(car2  ~  you1 & host3 & !car3 & fall & I),
     ##
     P(car1 & car2  ~  I) == 0,
     P(car1 & car3  ~  I) == 0,
     P(car2 & car3  ~  I) == 0,
     P(car1 | car2 | car3  ~  I) == 1,
     ##
-    P(you1 & you2  ~  I) == 0,
-    P(you1 & you3  ~  I) == 0,
-    P(you2 & you3  ~  I) == 0,
-    P(you1 | you2 | you3  ~  I) == 1,
-    ##
     P(host1 & host2 ~ I) == 0,
     P(host1 & host3 ~ I) == 0,
     P(host2 & host3 ~ I) == 0,
     P(host1 | host2 | host3  ~  I) == 1,
-    P(host1 & car1  ~ !you1 & I) == 0.01,
-    P(host2 & car2  ~ !you2 &  I) == 0.01,
-    P(host3 & car3  ~ !you3 & I) == 0.01,
-    P(host1 & you1  ~  I) == 0,
-    P(host2 & you2  ~  I) == 0,
-    P(host3 & you3  ~  I) == 0,
+    P(host1  ~  you1 & I) == 0,
+    P(host2  ~  car2 & fall & you1 & I) == 0.1,
+    P(host3  ~  car3 & fall & you1 & I) == 0.1,
     ##
     P(car1  ~  I) == P(car2  ~  I),
     P(car2  ~  I) == P(car3  ~  I),
     ##
     P(car1  ~  you1 & I) == P(car2  ~  you1 & I),
     P(car2  ~  you1 & I) == P(car3  ~  you1 & I),
-    P(car1  ~  you2 & I) == P(car2  ~  you2 & I),
-    P(car2  ~  you2 & I) == P(car3  ~  you2 & I),
-    P(car1  ~  you3 & I) == P(car2  ~  you3 & I),
-    P(car2  ~  you3 & I) == P(car3  ~  you3 & I),
+    P(car1  ~  you1 & fall & I) == P(car2  ~  you1 & fall & I),
+    P(car2  ~  you1 & fall & I) == P(car3  ~  you1 & fall & I),
     ##
-    P(host2  ~  you1 & car1 & I) == P(host3  ~  you1 & car1 & I),
-    P(host1  ~  you2 & car2 & I) == P(host3  ~  you2 & car2 & I),
-    P(host1  ~  you3 & car3 & I) == P(host2  ~  you3 & car3 & I)
+    P(host2  ~  you1 & car1 & fall & I) == P(host3  ~  you1 & car1 & fall & I)
 )
 ```
+roughly a 64% probability that the car is behind door No. 2. You can check that this probability becomes 50% if there's a 50% probability that the falling host opens the door with the car.
+
+An interesting aspects of such variations is to precisely translate the different verbal information into formal propositions and their probability constraints.
 
 
 
+# References
 
-# Appendices {#appendix}
+Jaynes (2003): [*Probability Theory: The Logic of Science*](https://doi.org/10.1017/CBO9780511790423) (Cambridge University Press).
 
-## References {#references}
+Jeffreys (1983): [*Theory of Probability*](https://doi.org/10.1093/oso/9780198503682.001.0001) (3rd ed. Oxford University Press).
 
-### On *exchangeability*: {#referencesexchang}
+Johnson (1924): [*Logic. Part III: The Logical Foundations of Science*](https://archive.org/details/logic03john) (Cambridge University Press).
 
-- Bernardo, Smith: [*Bayesian Theory*](https://doi.org/10.1002/9780470316870) (repr. 2000). See especially §§ 4.2--4.3, 4.6.
+Johnson (1932): [*Probability: The Relations of Proposal to Supposal*](https://doi.org/10.1093/mind/XLI.161.1) (Mind 41(161):1).
 
-- Dawid: [*Exchangeability and its ramifications*](https://doi.org/10.1093/acprof:oso/9780199695607.003.0002) (2013).
+Hailperin (1965): [*Best Possible Inequalities for the Probability of a Logical Function of Events*](https://doi.org/10.1080/00029890.1965.11970533) (Am. Math. Monthly 72(4):343).
 
-- de Finetti: [*La prévision: ses lois logiques, ses sources subjectives*](https://www.numdam.org/item/AIHP_1937__7_1_1_0) (1937).
+Hailperin (1996): [*Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications*](https://archive.org/details/hailperin1996-Sentential_probability_logic) (Associated University Presses).
 
-- Heath, Sudderth: [*De Finetti's theorem on exchangeable variables*](https://doi.org/10.1080/00031305.1976.10479175) (1976).
+Hailperin (2006): [*Probability logic and combining evidence*](https://doi.org/10.1080/01445340600616289) (Hist. Philos. Log. 27(3):249).
 
-- Hewitt, Savage: [*Symmetric measures on Cartesian products*](https://doi.org/10.1090/S0002-9947-1955-0076206-8) (1955).
-
-- Lindley, Novick: [*The role of exchangeability in inference*](https://doi.org/10.1214/aos/1176345331) (1981).
-
-- ***inferno*** accompanying manual: [*Foundations of inference under symmetry*](https://github.com/pglpm/inferno/raw/main/development/manual/optimal_predictor_machine.pdf) (draft).
-
-### On Bayesian theory in general: {#referencesbayes}
-
-
-- MacKay: [*Information Theory, Inference, and Learning Algorithms*](https://www.inference.org.uk/itila/book.html) (2005).
-
-- [*ADA 511: Foundations of data science*](https://pglpm.github.io/ADA511).
-
-### On medical decision-making: {#referencesmedical}
-
-- Sox, Higgins, Owens, Sanders Schmidler: [*Medical Decision Making*](https://doi.org/10.1002/9781119627876) (3rd ed. 2024).
-
-- Hunink, Weinstein, Wittenberg, Drummond, Pliskin, Wong, Glasziou: [*Decision Making in Health and Medicine: Integrating Evidence and Values*](https://doi.org/10.1017/CBO9781139506779) (2nd ed. 2014).
-
-- Jaynes (2003): [*Probability Theory: The Logic of Science*](https://doi.org/10.1017/CBO9780511790423) (Cambridge University Press).
-
-- Jeffreys (1983): [*Theory of Probability*](10.1093/oso/9780198503682.001.0001) (3rd ed. Oxford University Press).
-
-- Johnson (1924): [*Logic. Part III: The Logical Foundations of Science*](https://archive.org/details/logic03john) (Cambridge University Press).
-
-- Hailperin (1965): [*Best Possible Inequalities for the Probability of a Logical Function of Events*](https://doi.org/10.1080/00029890.1965.11970533) (Am. Math. Monthly 72(4): 343).
-
-- Hailperin (1996): [*Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications*](https://archive.org/details/hailperin1996-Sentential_probability_logic) (Associated University Presses).
-
-- Takeuti (1987): *Proof Theory* (2nd ed. North-Holland).
-
-\
-
-## Format for data and metadata files and their contents {#format}
-
-The functions of the ***inferno*** package accept CSV files formatted as follows:
-
-- Decimal values should be separated by a *dot*; no comma should be used to separate thousands etc. Example: `86342.75` .
-- Character and names should be quoted in single or double quotes. Example: `"female"`.
-- Values should be separated by *commas*, not by tabs or semicolons.
-- Missing values should be simply *empty*, not denoted by "NA", "missing", "-", or similar.
-
-Names of variates and character variate values should be strings conforming to [R's rules](https://cran.r-project.org/doc/FAQ/R-FAQ.html#What-are-valid-names_003f).
+Takeuti (1987): *Proof Theory* (2nd ed. North-Holland).
 
