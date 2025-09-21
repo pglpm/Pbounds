@@ -21,7 +21,7 @@ $$
 \mathrm{P}(a \land b  \vert  c) \in [0, 0,2]  .
 $$
 
-With the `infeP()` this probabilistic inference problem is posed as follows:
+With the `inferP()` function this probabilistic inference problem is posed as follows:
 ```
 inferP(
     target = P(a & b  ~  c),
