@@ -36,7 +36,6 @@ min  max
 ```
 
 More information about notation and constraints is available in the help function `help('inferP')`. More interesting examples are given in the package's vignette.
-\
 
 The package can be installed with
 ```
