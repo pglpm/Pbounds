@@ -38,7 +38,7 @@
 #'
 #' ## Probabilities of logical expressions
 #' 
-#' The probability of an expression \enq{X} conditional on an expression \eqn{Y}, usually denoted \eqn{\mathrm{P}(X \vert Y)}{P(X|Y)}, is entered by using ` ~ ` instead of the solidus "|". For instance
+#' The probability of an expression \eqn{X} conditional on an expression \eqn{Y}, usually denoted \eqn{\mathrm{P}(X \vert Y)}{P(X|Y)}, is entered by using ` ~ ` instead of the solidus "|". For instance
 #'     
 #' \eqn{\mathrm{P}(\lnot a \lor b \:\vert\: c \land H)}{P(¬a ∨ b | c ∧ H)}    
 #'     
