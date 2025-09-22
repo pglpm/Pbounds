@@ -478,17 +478,30 @@ in the previous section.</p>
 probability of two logical expressions; as optional subsequent arguments
 it takes constraints about the conditional probabilities of other
 logical expressions.</p>
-<p>The notation used in the function parallels the mathematical notation
-used above, with the following differences:</p>
+<p>The main notation used in the function (corresponding to the default
+argument <code>solidus = TRUE</code>) parallels the mathematical
+notation used above, with the following differences:</p>
+<ul>
+<li>Not: <code>!</code> or <code>-</code></li>
+<li>And: <code>&amp;</code> or <code>&amp;&amp;</code></li>
+<li>Or: <code>+</code></li>
+<li>If-then: <code>&gt;</code> (“if <span class="math inline">\(a\)</span> then <span class="math inline">\(b\)</span>”, <code>a &gt; b</code>, is simply
+equivalent to <span class="math inline">\(b \lor \lnot a\)</span>)<br />
+</li>
+</ul>
+<p>If an additional argument <code>solidus = FALSE</code> is given in
+<code>inferP()</code>, then a notation is used that differs from the
+above in the conditional symbol and in the “or”-connective:</p>
 <ul>
 <li>Conditional solidus “<span class="math inline">\({}\:\vert\:\mathopen{}{}\)</span>”:
 <code>~</code></li>
-<li>Not: <code>!</code></li>
-<li>And: <code>&amp;</code> or <code>&amp;&amp;</code></li>
-<li>Or: <code>|</code> or <code>||</code></li>
-<li>If-then: <code>%&gt;%</code> (“if <span class="math inline">\(a\)</span> then <span class="math inline">\(b\)</span>”, <code>a %&gt;% b</code>, is simply
-equivalent to <span class="math inline">\(b \lor \lnot a\)</span>)</li>
+<li>Or: <code>+</code> or <code>|</code> or <code>||</code></li>
 </ul>
+<p>This alternative notation allows the user to use proper R syntax for
+the connectives (<code>!</code>, <code>&amp;</code>, <code>|</code>,
+<code>&amp;&amp;</code>, <code>||</code>), in case it were convenient to
+paste them from other R expressions.</p>
+<p>In the following examples the main notation is used.</p>
 <div id="simple-examples" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Simple examples</h2>
 <p>Load the package:</p>
@@ -499,7 +512,7 @@ equivalent to <span class="math inline">\(b \lor \lnot a\)</span>)</li>
 1:</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a  <span class="sc">~</span>  I)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a  <span class="sc">|</span>  I)</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>)</span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># min max </span></span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#   0   1</span></span></code></pre></div>
@@ -510,7 +523,7 @@ equivalent to <span class="math inline">\(b \lor \lnot a\)</span>)</li>
 must be 1:</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a  <span class="sc">~</span>  a <span class="sc">&amp;</span> I)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a  <span class="sc">|</span>  a <span class="sc">&amp;</span> I)</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>)</span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># min max </span></span>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#   1   1</span></span></code></pre></div>
@@ -521,7 +534,7 @@ must be 1:</li>
 must be 0:</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a  <span class="sc">~</span>  <span class="sc">!</span>a <span class="sc">&amp;</span> I)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a  <span class="sc">|</span>  <span class="sc">!</span>a <span class="sc">&amp;</span> I)</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>)</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co"># min max </span></span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#   0   0</span></span></code></pre></div>
@@ -532,7 +545,7 @@ must be 0:</li>
 <span class="math inline">\(b \land \lnot b\)</span>, is undefined:</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a  <span class="sc">~</span>  b <span class="sc">&amp;</span> <span class="sc">!</span>b <span class="sc">&amp;</span> I)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a  <span class="sc">|</span>  b <span class="sc">&amp;</span> <span class="sc">!</span>b <span class="sc">&amp;</span> I)</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>)</span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># min max </span></span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#  NA  NA</span></span></code></pre></div>
@@ -547,9 +560,9 @@ constraints</h2>
 “conjunction” rule:</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a <span class="sc">&amp;</span> b  <span class="sc">~</span>  I),</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    <span class="fu">P</span>(a  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="fl">0.2</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="fu">P</span>(b  <span class="sc">~</span>  a <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fl">0.3</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a <span class="sc">&amp;</span> b  <span class="sc">|</span>  I),</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    <span class="fu">P</span>(a  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="fl">0.2</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="fu">P</span>(b  <span class="sc">|</span>  a <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fl">0.3</span></span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>)</span>
 <span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#  min  max </span></span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co"># 0.06 0.06</span></span></code></pre></div>
@@ -557,9 +570,9 @@ constraints</h2>
 <li>The rule for “conditional probability”:</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(b  <span class="sc">~</span>  a <span class="sc">&amp;</span> I),</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="fu">P</span>(a <span class="sc">&amp;</span> b  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="fl">0.06</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="fu">P</span>(a  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="fl">0.2</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(b  <span class="sc">|</span>  a <span class="sc">&amp;</span> I),</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="fu">P</span>(a <span class="sc">&amp;</span> b  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="fl">0.06</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="fu">P</span>(a  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="fl">0.2</span></span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>)</span>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co"># min max </span></span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co"># 0.3 0.3</span></span></code></pre></div>
@@ -569,10 +582,10 @@ sentences are mutually exclusive and exhaustive, then each must have 0.5
 probability:</li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a  <span class="sc">~</span>  I),</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    <span class="fu">P</span>(a  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="fu">P</span>(b  <span class="sc">~</span>  I),</span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    <span class="fu">P</span>(a <span class="sc">&amp;</span> b  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>    <span class="fu">P</span>(a <span class="sc">|</span> b  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">1</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a  <span class="sc">|</span>  I),</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    <span class="fu">P</span>(a  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="fu">P</span>(b  <span class="sc">|</span>  I),</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    <span class="fu">P</span>(a <span class="sc">&amp;</span> b  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>    <span class="fu">P</span>(a <span class="sc">+</span> b  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">1</span></span>
 <span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>)</span>
 <span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co"># min max </span></span>
 <span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co"># 0.5 0.5</span></span></code></pre></div>
@@ -581,9 +594,9 @@ probability:</li>
 \Rightarrow b\)</span> are true, then <span class="math inline">\(b\)</span> is true:</li>
 </ul>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(b  <span class="sc">~</span>  I),</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="fu">P</span>(a  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">1</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="fu">P</span>(a <span class="sc">%&gt;%</span> b  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">1</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(b  <span class="sc">|</span>  I),</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="fu">P</span>(a  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="fu">P</span>(a <span class="sc">&gt;</span> b  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">1</span></span>
 <span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>)</span>
 <span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co"># min max </span></span>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#   1   1</span></span></code></pre></div>
@@ -591,8 +604,8 @@ probability:</li>
 <li>Under a false proposition, any implication is always true:</li>
 </ul>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a <span class="sc">%&gt;%</span> b  <span class="sc">~</span>  I),</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="fu">P</span>(a  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">0</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a <span class="sc">&gt;</span> b  <span class="sc">|</span>  I),</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="fu">P</span>(a  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">0</span></span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>)</span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="co"># min max </span></span>
 <span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co">#   1   1</span></span></code></pre></div>
@@ -607,9 +620,9 @@ pieces of evidence are combined, that is, given their conjunction? An
 interesting result, proven in Hailperin 2006, is that such probability
 can be anything:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(H  <span class="sc">~</span>  E1 <span class="sc">&amp;</span> E2 <span class="sc">&amp;</span> I),</span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="fu">P</span>(H  <span class="sc">~</span>  E1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fl">0.7</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    <span class="fu">P</span>(H  <span class="sc">~</span>  E2 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fl">0.8</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(H  <span class="sc">|</span>  E1 <span class="sc">&amp;</span> E2 <span class="sc">&amp;</span> I),</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="fu">P</span>(H  <span class="sc">|</span>  E1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fl">0.7</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    <span class="fu">P</span>(H  <span class="sc">|</span>  E2 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fl">0.8</span></span>
 <span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>)</span>
 <span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co"># min max </span></span>
 <span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#   0   1</span></span></code></pre></div>
@@ -653,7 +666,7 @@ the information we have: you chose door No. 1, <code>you1</code>, the
 host opened door No. 3, <code>host3</code>, and there is no car behind
 door No. 3, <code>!car3</code>.</p>
 <p>The target probability is thus
-<code>P(car2  ~  you1 &amp; host3 &amp; !car3 &amp; I)</code></p>
+<code>P(car2  |  you1 &amp; host3 &amp; !car3 &amp; I)</code></p>
 </div>
 <div id="given-probabilities" class="section level2" number="4.3">
 <h2><span class="header-section-number">4.3</span> Given
@@ -664,40 +677,40 @@ the probabilistic constraints listed below.</p>
 <ol style="list-style-type: decimal">
 <li><p>We know that there is only one car, and it must be behind one
 door. This corresponds to four probability constraints:<br />
-<code>P(car1 &amp; car2  ~  I) == 0</code><br />
-<code>P(car1 &amp; car3  ~  I) == 0</code><br />
-<code>P(car2 &amp; car3  ~  I) == 0</code><br />
-<code>P(car1 | car2 | car3  ~  I) == 1</code><br />
+<code>P(car1 &amp; car2  |  I) == 0</code><br />
+<code>P(car1 &amp; car3  |  I) == 0</code><br />
+<code>P(car2 &amp; car3  |  I) == 0</code><br />
+<code>P(car1 + car2 + car3  |  I) == 1</code><br />
 </p></li>
 <li><p>The host must open one door, and only one door. But the host
 cannot open the door you chose, and cannot open the door that has the
 car, but must open one door. This corresponds to seven probability
 constraints:<br />
-<code>P(host1 &amp; host2  ~  I) == 0</code><br />
-<code>P(host1 &amp; host3 ~  I) == 0</code><br />
-<code>P(host2 &amp; host3  ~  I) == 0</code><br />
-<code>P(host1 | host2 | host3  ~  I) == 1</code><br />
-<code>P(host1  ~  you1 &amp; I) == 0</code><br />
-<code>P(host2  ~  car2 &amp; I) == 0</code><br />
-<code>P(host3  ~  car3 &amp; I) == 0</code><br />
+<code>P(host1 &amp; host2  |  I) == 0</code><br />
+<code>P(host1 &amp; host3 |  I) == 0</code><br />
+<code>P(host2 &amp; host3  |  I) == 0</code><br />
+<code>P(host1 + host2 + host3  |  I) == 1</code><br />
+<code>P(host1  |  you1 &amp; I) == 0</code><br />
+<code>P(host2  |  car2 &amp; I) == 0</code><br />
+<code>P(host3  |  car3 &amp; I) == 0</code><br />
 <br />
 </p></li>
 <li><p>Let’s say that you are initially equally undecided among the
 three doors:<br />
-<code>P(car1  ~  I) == P(car2  ~  I)</code><br />
-<code>P(car2  ~  I) == P(car3  ~  I)</code><br />
+<code>P(car1  |  I) == P(car2  |  I)</code><br />
+<code>P(car2  |  I) == P(car3  |  I)</code><br />
 <br />
 </p></li>
 <li><p>The fact, alone, that you picked door No. 1 is irrelevant to the
 knowledge about the car’s position:<br />
-<code>P(car1  ~  you1 &amp; I) == P(car2  ~  you1 &amp; I)</code><br />
-<code>P(car2  ~  you1 &amp; I) == P(car3  ~  you1 &amp; I)</code><br />
+<code>P(car1  |  you1 &amp; I) == P(car2  |  you1 &amp; I)</code><br />
+<code>P(car2  |  you1 &amp; I) == P(car3  |  you1 &amp; I)</code><br />
 <br />
 </p></li>
 <li><p>Finally, we have no reason to believe that the host favours one
 door over another, when a choice is possible, that is, when the car is
 behind the door you chose:<br />
-<code>P(host2  ~  you1 &amp; car1 &amp; I) == P(host3  ~  you1 &amp; car1 &amp; I)</code><br />
+<code>P(host2  |  you1 &amp; car1 &amp; I) == P(host3  |  you1 &amp; car1 &amp; I)</code><br />
 </p></li>
 </ol>
 </div>
@@ -706,28 +719,28 @@ behind the door you chose:<br />
 <p>We can finally input the desired target and the constraints into
 <code>inferP()</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(car2  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> host3 <span class="sc">&amp;</span> <span class="sc">!</span>car3 <span class="sc">&amp;</span> I),</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(car2  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> host3 <span class="sc">&amp;</span> <span class="sc">!</span>car3 <span class="sc">&amp;</span> I),</span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">&amp;</span> car2  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">&amp;</span> car3  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>    <span class="fu">P</span>(car2 <span class="sc">&amp;</span> car3  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">|</span> car2 <span class="sc">|</span> car3  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">&amp;</span> car2  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">&amp;</span> car3  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>    <span class="fu">P</span>(car2 <span class="sc">&amp;</span> car3  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">+</span> car2 <span class="sc">+</span> car3  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">1</span>,</span>
 <span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">&amp;</span> host2 <span class="sc">~</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">&amp;</span> host3 <span class="sc">~</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>    <span class="fu">P</span>(host2 <span class="sc">&amp;</span> host3 <span class="sc">~</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">|</span> host2 <span class="sc">|</span> host3  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">1</span>,</span>
-<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>    <span class="fu">P</span>(host1  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a>    <span class="fu">P</span>(host2  <span class="sc">~</span>  car2 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>    <span class="fu">P</span>(host3  <span class="sc">~</span>  car3 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">&amp;</span> host2 <span class="sc">|</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">&amp;</span> host3 <span class="sc">|</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>    <span class="fu">P</span>(host2 <span class="sc">&amp;</span> host3 <span class="sc">|</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">+</span> host2 <span class="sc">+</span> host3  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>    <span class="fu">P</span>(host1  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a>    <span class="fu">P</span>(host2  <span class="sc">|</span>  car2 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>    <span class="fu">P</span>(host3  <span class="sc">|</span>  car3 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
 <span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>    <span class="fu">P</span>(car1  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="fu">P</span>(car2  <span class="sc">~</span>  I),</span>
-<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>    <span class="fu">P</span>(car2  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="fu">P</span>(car3  <span class="sc">~</span>  I),</span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>    <span class="fu">P</span>(car1  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="fu">P</span>(car2  <span class="sc">|</span>  I),</span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>    <span class="fu">P</span>(car2  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="fu">P</span>(car3  <span class="sc">|</span>  I),</span>
 <span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a>    <span class="fu">P</span>(car1  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car2  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I),</span>
-<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a>    <span class="fu">P</span>(car2  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car3  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I),</span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a>    <span class="fu">P</span>(car1  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car2  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I),</span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a>    <span class="fu">P</span>(car2  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car3  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I),</span>
 <span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a>    <span class="fu">P</span>(host2  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> car1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(host3  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> car1 <span class="sc">&amp;</span> I)</span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a>    <span class="fu">P</span>(host2  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> car1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(host3  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> car1 <span class="sc">&amp;</span> I)</span>
 <span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a>)</span>
 <span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a><span class="co">#      min      max </span></span>
 <span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a><span class="co"># 0.666667 0.666667</span></span></code></pre></div>
@@ -740,33 +753,33 @@ probability constraints</h2>
 <p>It is interesting to see what happens to the bounds of the target
 probability when some constraints are omitted. Suppose for instance that
 we omit the constraint<br />
-<code>P(host2  ~  you1 &amp; car1 &amp; I) == P(host3  ~  you1 &amp; car1 &amp; I)</code><br />
+<code>P(host2  |  you1 &amp; car1 &amp; I) == P(host3  |  you1 &amp; car1 &amp; I)</code><br />
 which states that we have no reason to believe the host would choose
 door No. 2 more than No. 3 or vice versa, when the car is behind door
 No. 1. The bounds of the target probability become</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(car2  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> host3 <span class="sc">&amp;</span> <span class="sc">!</span>car3 <span class="sc">&amp;</span> I),</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(car2  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> host3 <span class="sc">&amp;</span> <span class="sc">!</span>car3 <span class="sc">&amp;</span> I),</span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">&amp;</span> car2  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">&amp;</span> car3  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>    <span class="fu">P</span>(car2 <span class="sc">&amp;</span> car3  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">|</span> car2 <span class="sc">|</span> car3  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">&amp;</span> car2  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">&amp;</span> car3  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>    <span class="fu">P</span>(car2 <span class="sc">&amp;</span> car3  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">+</span> car2 <span class="sc">+</span> car3  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">1</span>,</span>
 <span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">&amp;</span> host2 <span class="sc">~</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">&amp;</span> host3 <span class="sc">~</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>    <span class="fu">P</span>(host2 <span class="sc">&amp;</span> host3 <span class="sc">~</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">|</span> host2 <span class="sc">|</span> host3  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">1</span>,</span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>    <span class="fu">P</span>(host1  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a>    <span class="fu">P</span>(host2  <span class="sc">~</span>  car2 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>    <span class="fu">P</span>(host3  <span class="sc">~</span>  car3 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">&amp;</span> host2 <span class="sc">|</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">&amp;</span> host3 <span class="sc">|</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>    <span class="fu">P</span>(host2 <span class="sc">&amp;</span> host3 <span class="sc">|</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">+</span> host2 <span class="sc">+</span> host3  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a>    <span class="fu">P</span>(host1  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a>    <span class="fu">P</span>(host2  <span class="sc">|</span>  car2 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a>    <span class="fu">P</span>(host3  <span class="sc">|</span>  car3 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
 <span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a>    <span class="fu">P</span>(car1  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="fu">P</span>(car2  <span class="sc">~</span>  I),</span>
-<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a>    <span class="fu">P</span>(car2  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="fu">P</span>(car3  <span class="sc">~</span>  I),</span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a>    <span class="fu">P</span>(car1  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="fu">P</span>(car2  <span class="sc">|</span>  I),</span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a>    <span class="fu">P</span>(car2  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="fu">P</span>(car3  <span class="sc">|</span>  I),</span>
 <span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a>    <span class="fu">P</span>(car1  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car2  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I),</span>
-<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a>    <span class="fu">P</span>(car2  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car3  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I)</span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a>    <span class="fu">P</span>(car1  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car2  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I),</span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a>    <span class="fu">P</span>(car2  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car3  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I)</span>
 <span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a>    <span class="do">## P(host2  ~  you1 &amp; car1 &amp; I) == P(host3  ~  you1 &amp; car1 &amp; I) # omitted</span></span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a>    <span class="do">## P(host2  |  you1 &amp; car1 &amp; I) == P(host3  |  you1 &amp; car1 &amp; I) # omitted</span></span>
 <span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a>)</span>
 <span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a><span class="co"># min max </span></span>
 <span id="cb13-26"><a href="#cb13-26" tabindex="-1"></a><span class="co"># 0.5 1.0</span></span></code></pre></div>
@@ -786,42 +799,42 @@ this with the proposition <code>fall</code>.</p>
 <p>If the hosts falls, there is a non-zero probability, let’s say 10%,
 that the host will open the door with the car after you choose door
 No. 1. We can express this by the constraints<br />
-<code>P(host2  ~  car2 &amp; fall &amp; you1 &amp; I) == 0.1</code><br />
-<code>P(host3  ~  car3 &amp; fall &amp; you1 &amp; I) == 0.1</code></p>
+<code>P(host2  |  car2 &amp; fall &amp; you1 &amp; I) == 0.1</code><br />
+<code>P(host3  |  car3 &amp; fall &amp; you1 &amp; I) == 0.1</code></p>
 <p>Finally we still have no reason to believe that the falling host
 favours one door over another, when the car is behind the door you
 chose:<br />
-<code>P(host2  ~  you1 &amp; car1 &amp; fall &amp; I) == P(host3  ~  you1 &amp; car1 &amp; fall &amp; I)</code></p>
+<code>P(host2  |  you1 &amp; car1 &amp; fall &amp; I) == P(host3  |  you1 &amp; car1 &amp; fall &amp; I)</code></p>
 <p>The target probability is for the car being behind door No. 2, given
 that you chose No. 1, the host fell and opened No. 3, but there was no
 car there:<br />
-<code>P(car2  ~  you1 &amp; host3 &amp; !car3 &amp; fall &amp; I)</code>.</p>
+<code>P(car2  |  you1 &amp; host3 &amp; !car3 &amp; fall &amp; I)</code>.</p>
 <p>The result is</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>   <span class="at">target =</span> <span class="fu">P</span>(car2  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> host3 <span class="sc">&amp;</span> <span class="sc">!</span>car3 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> I),</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>   <span class="at">target =</span> <span class="fu">P</span>(car2  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> host3 <span class="sc">&amp;</span> <span class="sc">!</span>car3 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> I),</span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">&amp;</span> car2  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">&amp;</span> car3  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>    <span class="fu">P</span>(car2 <span class="sc">&amp;</span> car3  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">|</span> car2 <span class="sc">|</span> car3  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">&amp;</span> car2  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">&amp;</span> car3  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>    <span class="fu">P</span>(car2 <span class="sc">&amp;</span> car3  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>    <span class="fu">P</span>(car1 <span class="sc">+</span> car2 <span class="sc">+</span> car3  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">1</span>,</span>
 <span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">&amp;</span> host2 <span class="sc">~</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">&amp;</span> host3 <span class="sc">~</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>    <span class="fu">P</span>(host2 <span class="sc">&amp;</span> host3 <span class="sc">~</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">|</span> host2 <span class="sc">|</span> host3  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="dv">1</span>,</span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>    <span class="fu">P</span>(host1  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>    <span class="fu">P</span>(host2  <span class="sc">~</span>  car2 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fl">0.1</span>,</span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>    <span class="fu">P</span>(host3  <span class="sc">~</span>  car3 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fl">0.1</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">&amp;</span> host2 <span class="sc">|</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">&amp;</span> host3 <span class="sc">|</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>    <span class="fu">P</span>(host2 <span class="sc">&amp;</span> host3 <span class="sc">|</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>    <span class="fu">P</span>(host1 <span class="sc">+</span> host2 <span class="sc">+</span> host3  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a>    <span class="fu">P</span>(host1  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>    <span class="fu">P</span>(host2  <span class="sc">|</span>  car2 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fl">0.1</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>    <span class="fu">P</span>(host3  <span class="sc">|</span>  car3 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fl">0.1</span>,</span>
 <span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a>    <span class="fu">P</span>(car1  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="fu">P</span>(car2  <span class="sc">~</span>  I),</span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>    <span class="fu">P</span>(car2  <span class="sc">~</span>  I) <span class="sc">==</span> <span class="fu">P</span>(car3  <span class="sc">~</span>  I),</span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a>    <span class="fu">P</span>(car1  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="fu">P</span>(car2  <span class="sc">|</span>  I),</span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a>    <span class="fu">P</span>(car2  <span class="sc">|</span>  I) <span class="sc">==</span> <span class="fu">P</span>(car3  <span class="sc">|</span>  I),</span>
 <span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a>    <span class="fu">P</span>(car1  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car2  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I),</span>
-<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a>    <span class="fu">P</span>(car2  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car3  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> I),</span>
-<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a>    <span class="fu">P</span>(car1  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car2  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> I),</span>
-<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a>    <span class="fu">P</span>(car2  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car3  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> I),</span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a>    <span class="fu">P</span>(car1  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car2  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I),</span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a>    <span class="fu">P</span>(car2  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car3  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> I),</span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a>    <span class="fu">P</span>(car1  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car2  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> I),</span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a>    <span class="fu">P</span>(car2  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(car3  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> I),</span>
 <span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a>    <span class="do">##</span></span>
-<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a>    <span class="fu">P</span>(host2  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> car1 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(host3  <span class="sc">~</span>  you1 <span class="sc">&amp;</span> car1 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> I)</span>
+<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a>    <span class="fu">P</span>(host2  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> car1 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> I) <span class="sc">==</span> <span class="fu">P</span>(host3  <span class="sc">|</span>  you1 <span class="sc">&amp;</span> car1 <span class="sc">&amp;</span> fall <span class="sc">&amp;</span> I)</span>
 <span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a>)</span>
 <span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a><span class="co">#      min      max </span></span>
 <span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="co"># 0.642857 0.642857</span></span></code></pre></div>

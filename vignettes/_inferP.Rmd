@@ -131,13 +131,23 @@ The function `inferP()` finds the bounds of a target probability by implementing
 
 As a first argument,`target =`, it takes the conditional probability of two   logical expressions; as optional subsequent arguments it takes constraints about the conditional probabilities of other logical expressions.
 
-The notation used in the function parallels the mathematical notation used above, with the following differences:
+The main notation used in the function (corresponding to the default argument `solidus = TRUE`) parallels the mathematical notation used above, with the following differences:
 
-- Conditional solidus "${}\|{}$": `~`
-- Not: `!`
-- And: `&` or `&&`
-- Or: `|` or `||`
-- If-then: `%>%` ("if $a$ then $b$", `a %>% b`, is simply equivalent to $b \lor \lnot a$)
+- Not: ` !` or ` -`
+- And: ` & ` or ` && `
+- Or: ` + `
+- If-then: ` > ` ("if $a$ then $b$", `a > b`, is simply equivalent to $b \lor \lnot a$)
+\
+
+If an additional argument `solidus = FALSE` is given in `inferP()`, then a notation is used that differs from the above in the conditional symbol and in the "or"-connective:
+
+- Conditional solidus "${}\|{}$": ` ~ `
+- Or: ` + ` or ` | ` or ` || `
+
+This alternative notation allows the user to use proper R syntax for the connectives (`!`, `&`, `|`, `&&`, `||`), in case it were convenient to paste them from other R expressions.
+
+In the following examples the main notation is used.
+
 
 ## Simple examples
 
@@ -151,7 +161,7 @@ Here are some examples, from more trivial to more complex.
 - The probability for a sentence $a$ can a priori be anything between 0 and 1:
 ```{r}
 inferP(
-    target = P(a  ~  I)
+    target = P(a  |  I)
 )
 ```
 
@@ -160,7 +170,7 @@ inferP(
 - But if we assume the truth of that sentence, then its probability must be 1:
 ```{r}
 inferP(
-    target = P(a  ~  a & I)
+    target = P(a  |  a & I)
 )
 ```
 
@@ -169,7 +179,7 @@ inferP(
 - If we assume the negation of that sentence, then its probability must be 0:
 ```{r}
 inferP(
-    target = P(a  ~  !a & I)
+    target = P(a  |  !a & I)
 )
 ```
 
@@ -178,7 +188,7 @@ inferP(
 - A probability conditional on contradictory assumptions, such as $b \land \lnot b$, is undefined:
 ```{r}
 inferP(
-    target = P(a  ~  b & !b & I)
+    target = P(a  |  b & !b & I)
 )
 ```
 
@@ -189,45 +199,45 @@ inferP(
 - This is a statement of the "and" or "multiplication" or "conjunction" rule:
 ```{r}
 inferP(
-    target = P(a & b  ~  I),
-    P(a  ~  I) == 0.2,
-    P(b  ~  a & I) == 0.3
+    target = P(a & b  |  I),
+    P(a  |  I) == 0.2,
+    P(b  |  a & I) == 0.3
 )
 ```
 
 - The rule for "conditional probability":
 ```{r}
 inferP(
-    target = P(b  ~  a & I),
-    P(a & b  ~  I) == 0.06,
-    P(a  ~  I) == 0.2
+    target = P(b  |  a & I),
+    P(a & b  |  I) == 0.06,
+    P(a  |  I) == 0.2
 )
 ```
 
 - If we assert that two sentences have the same probability, and the sentences are mutually exclusive and exhaustive, then each must have 0.5 probability:
 ```{r}
 inferP(
-    target = P(a  ~  I),
-    P(a  ~  I) == P(b  ~  I),
-    P(a & b  ~  I) == 0,
-    P(a | b  ~  I) == 1
+    target = P(a  |  I),
+    P(a  |  I) == P(b  |  I),
+    P(a & b  |  I) == 0,
+    P(a + b  |  I) == 1
 )
 ```
 
 - The logical rule of implication: if $a$ and $a \Rightarrow b$ are true, then $b$ is true:
 ```{r}
 inferP(
-    target = P(b  ~  I),
-    P(a  ~  I) == 1,
-    P(a %>% b  ~  I) == 1
+    target = P(b  |  I),
+    P(a  |  I) == 1,
+    P(a > b  |  I) == 1
 )
 ```
 
 - Under a false proposition, any implication is always true:
 ```{r}
 inferP(
-    target = P(a %>% b  ~  I),
-    P(a  ~  I) == 0
+    target = P(a > b  |  I),
+    P(a  |  I) == 0
 )
 ```
 
@@ -236,9 +246,9 @@ inferP(
 Suppose that hypothesis $H$ has probability 0.7 given evidence $E_1$, and probability 0.8 given evidence $E_2$. What is its probability if two pieces of evidence are combined, that is, given their conjunction? An interesting result, proven in Hailperin 2006, is that such probability can be anything:
 ```{r}
 inferP(
-    target = P(H  ~  E1 & E2 & I),
-    P(H  ~  E1 & I) == 0.7,
-    P(H  ~  E2 & I) == 0.8
+    target = P(H  |  E1 & E2 & I),
+    P(H  |  E1 & I) == 0.7,
+    P(H  |  E2 & I) == 0.8
 )
 ```
 
@@ -269,41 +279,41 @@ We want to know what's the probability that the car is behind the other door, No
 
 The conditional of the target probability has, besides the game rules $I$, three propositions expressing the information we have: you chose door No. 1, `you1`, the host opened door No. 3, `host3`, and there is no car behind door No. 3, `!car3`.
 
-The target probability is thus `P(car2  ~  you1 & host3 & !car3 & I)`
+The target probability is thus `P(car2  |  you1 & host3 & !car3 & I)`
 
 ## Given probabilities
 
 We must express the information we have and the game rules in terms of probabilities. Note that there are several equivalent ways to express the probabilistic constraints listed below.
 
 1. We know that there is only one car, and it must be behind one door. This corresponds to four probability constraints:    
-    `P(car1 & car2  ~  I) == 0`    
-    `P(car1 & car3  ~  I) == 0`    
-    `P(car2 & car3  ~  I) == 0`    
-    `P(car1 | car2 | car3  ~  I) == 1`
+    `P(car1 & car2  |  I) == 0`    
+    `P(car1 & car3  |  I) == 0`    
+    `P(car2 & car3  |  I) == 0`    
+    `P(car1 + car2 + car3  |  I) == 1`
 \
 
 2. The host must open one door, and only one door. But the host cannot open the door you chose, and cannot open the door that has the car, but must open one door. This corresponds to seven probability constraints:    
-    `P(host1 & host2  ~  I) == 0`    
-    `P(host1 & host3 ~  I) == 0`    
-    `P(host2 & host3  ~  I) == 0`    
-    `P(host1 | host2 | host3  ~  I) == 1`    
-    `P(host1  ~  you1 & I) == 0`    
-    `P(host2  ~  car2 & I) == 0`    
-    `P(host3  ~  car3 & I) == 0`    
+    `P(host1 & host2  |  I) == 0`    
+    `P(host1 & host3 |  I) == 0`    
+    `P(host2 & host3  |  I) == 0`    
+    `P(host1 + host2 + host3  |  I) == 1`    
+    `P(host1  |  you1 & I) == 0`    
+    `P(host2  |  car2 & I) == 0`    
+    `P(host3  |  car3 & I) == 0`    
 \
 
 3. Let's say that you are initially equally undecided among the three doors:    
-    `P(car1  ~  I) == P(car2  ~  I)`    
-    `P(car2  ~  I) == P(car3  ~  I)`    
+    `P(car1  |  I) == P(car2  |  I)`    
+    `P(car2  |  I) == P(car3  |  I)`    
 \
 
 4. The fact, alone, that you picked door No. 1 is irrelevant to the knowledge about the car's position:    
-    `P(car1  ~  you1 & I) == P(car2  ~  you1 & I)`    
-    `P(car2  ~  you1 & I) == P(car3  ~  you1 & I)`    
+    `P(car1  |  you1 & I) == P(car2  |  you1 & I)`    
+    `P(car2  |  you1 & I) == P(car3  |  you1 & I)`    
 \
 
 4. Finally, we have no reason to believe that the host favours one door over another, when a choice is possible, that is, when the car is behind the door you chose:    
-    `P(host2  ~  you1 & car1 & I) == P(host3  ~  you1 & car1 & I)`
+    `P(host2  |  you1 & car1 & I) == P(host3  |  you1 & car1 & I)`
 \
 
 ## Result
@@ -312,28 +322,28 @@ We can finally input the desired target and the constraints into `inferP()`:
 
 ```{r}
 inferP(
-    target = P(car2  ~  you1 & host3 & !car3 & I),
+    target = P(car2  |  you1 & host3 & !car3 & I),
     ##
-    P(car1 & car2  ~  I) == 0,
-    P(car1 & car3  ~  I) == 0,
-    P(car2 & car3  ~  I) == 0,
-    P(car1 | car2 | car3  ~  I) == 1,
+    P(car1 & car2  |  I) == 0,
+    P(car1 & car3  |  I) == 0,
+    P(car2 & car3  |  I) == 0,
+    P(car1 + car2 + car3  |  I) == 1,
     ##
-    P(host1 & host2 ~ I) == 0,
-    P(host1 & host3 ~ I) == 0,
-    P(host2 & host3 ~ I) == 0,
-    P(host1 | host2 | host3  ~  I) == 1,
-    P(host1  ~  you1 & I) == 0,
-    P(host2  ~  car2 & I) == 0,
-    P(host3  ~  car3 & I) == 0,
+    P(host1 & host2 | I) == 0,
+    P(host1 & host3 | I) == 0,
+    P(host2 & host3 | I) == 0,
+    P(host1 + host2 + host3  |  I) == 1,
+    P(host1  |  you1 & I) == 0,
+    P(host2  |  car2 & I) == 0,
+    P(host3  |  car3 & I) == 0,
     ##
-    P(car1  ~  I) == P(car2  ~  I),
-    P(car2  ~  I) == P(car3  ~  I),
+    P(car1  |  I) == P(car2  |  I),
+    P(car2  |  I) == P(car3  |  I),
     ##
-    P(car1  ~  you1 & I) == P(car2  ~  you1 & I),
-    P(car2  ~  you1 & I) == P(car3  ~  you1 & I),
+    P(car1  |  you1 & I) == P(car2  |  you1 & I),
+    P(car2  |  you1 & I) == P(car3  |  you1 & I),
     ##
-    P(host2  ~  you1 & car1 & I) == P(host3  ~  you1 & car1 & I)
+    P(host2  |  you1 & car1 & I) == P(host3  |  you1 & car1 & I)
 )
 ```
 
@@ -342,33 +352,33 @@ The well-known result is 2/3. You can also check the obvious result for `car3`, 
 ## Omitting some probability constraints
 
 It is interesting to see what happens to the bounds of the target probability when some constraints are omitted. Suppose for instance that we omit the constraint\
-`P(host2  ~  you1 & car1 & I) == P(host3  ~  you1 & car1 & I)`\
+`P(host2  |  you1 & car1 & I) == P(host3  |  you1 & car1 & I)`\
 which states that we have no reason to believe the host would choose door No. 2 more than No. 3 or vice versa, when the car is behind door No. 1. The bounds of the target probability become
 
 ```{r}
 inferP(
-    target = P(car2  ~  you1 & host3 & !car3 & I),
+    target = P(car2  |  you1 & host3 & !car3 & I),
     ##
-    P(car1 & car2  ~  I) == 0,
-    P(car1 & car3  ~  I) == 0,
-    P(car2 & car3  ~  I) == 0,
-    P(car1 | car2 | car3  ~  I) == 1,
+    P(car1 & car2  |  I) == 0,
+    P(car1 & car3  |  I) == 0,
+    P(car2 & car3  |  I) == 0,
+    P(car1 + car2 + car3  |  I) == 1,
     ##
-    P(host1 & host2 ~ I) == 0,
-    P(host1 & host3 ~ I) == 0,
-    P(host2 & host3 ~ I) == 0,
-    P(host1 | host2 | host3  ~  I) == 1,
-    P(host1  ~  you1 & I) == 0,
-    P(host2  ~  car2 & I) == 0,
-    P(host3  ~  car3 & I) == 0,
+    P(host1 & host2 | I) == 0,
+    P(host1 & host3 | I) == 0,
+    P(host2 & host3 | I) == 0,
+    P(host1 + host2 + host3  |  I) == 1,
+    P(host1  |  you1 & I) == 0,
+    P(host2  |  car2 & I) == 0,
+    P(host3  |  car3 & I) == 0,
     ##
-    P(car1  ~  I) == P(car2  ~  I),
-    P(car2  ~  I) == P(car3  ~  I),
+    P(car1  |  I) == P(car2  |  I),
+    P(car2  |  I) == P(car3  |  I),
     ##
-    P(car1  ~  you1 & I) == P(car2  ~  you1 & I),
-    P(car2  ~  you1 & I) == P(car3  ~  you1 & I)
+    P(car1  |  you1 & I) == P(car2  |  you1 & I),
+    P(car2  |  you1 & I) == P(car3  |  you1 & I)
     ##
-    ## P(host2  ~  you1 & car1 & I) == P(host3  ~  you1 & car1 & I) # omitted
+    ## P(host2  |  you1 & car1 & I) == P(host3  |  you1 & car1 & I) # omitted
 )
 ```
 
@@ -382,42 +392,42 @@ The internet offers many variations of the Monty Hall problem. They can also be 
 Let's take a "Monty Fall" variation as an example. There is the possibility that the host falls while going to open a door. We represent this with the proposition `fall`.
 
 If the hosts falls, there is a non-zero probability, let's say 10%, that the host will open the door with the car after you choose door No. 1. We can express this by the constraints    
-`P(host2  ~  car2 & fall & you1 & I) == 0.1`    
-`P(host3  ~  car3 & fall & you1 & I) == 0.1`
+`P(host2  |  car2 & fall & you1 & I) == 0.1`    
+`P(host3  |  car3 & fall & you1 & I) == 0.1`
 
 Finally we still have no reason to believe that the falling host favours one door over another, when the car is behind the door you chose:    
-`P(host2  ~  you1 & car1 & fall & I) == P(host3  ~  you1 & car1 & fall & I)`
+`P(host2  |  you1 & car1 & fall & I) == P(host3  |  you1 & car1 & fall & I)`
 
 The target probability is for the car being behind door No. 2, given that you chose No. 1, the host fell and opened No. 3, but there was no car there:    
-`P(car2  ~  you1 & host3 & !car3 & fall & I)`.
+`P(car2  |  you1 & host3 & !car3 & fall & I)`.
 
 The result is
 ```{r}
 inferP(
-   target = P(car2  ~  you1 & host3 & !car3 & fall & I),
+   target = P(car2  |  you1 & host3 & !car3 & fall & I),
     ##
-    P(car1 & car2  ~  I) == 0,
-    P(car1 & car3  ~  I) == 0,
-    P(car2 & car3  ~  I) == 0,
-    P(car1 | car2 | car3  ~  I) == 1,
+    P(car1 & car2  |  I) == 0,
+    P(car1 & car3  |  I) == 0,
+    P(car2 & car3  |  I) == 0,
+    P(car1 + car2 + car3  |  I) == 1,
     ##
-    P(host1 & host2 ~ I) == 0,
-    P(host1 & host3 ~ I) == 0,
-    P(host2 & host3 ~ I) == 0,
-    P(host1 | host2 | host3  ~  I) == 1,
-    P(host1  ~  you1 & I) == 0,
-    P(host2  ~  car2 & fall & you1 & I) == 0.1,
-    P(host3  ~  car3 & fall & you1 & I) == 0.1,
+    P(host1 & host2 | I) == 0,
+    P(host1 & host3 | I) == 0,
+    P(host2 & host3 | I) == 0,
+    P(host1 + host2 + host3  |  I) == 1,
+    P(host1  |  you1 & I) == 0,
+    P(host2  |  car2 & fall & you1 & I) == 0.1,
+    P(host3  |  car3 & fall & you1 & I) == 0.1,
     ##
-    P(car1  ~  I) == P(car2  ~  I),
-    P(car2  ~  I) == P(car3  ~  I),
+    P(car1  |  I) == P(car2  |  I),
+    P(car2  |  I) == P(car3  |  I),
     ##
-    P(car1  ~  you1 & I) == P(car2  ~  you1 & I),
-    P(car2  ~  you1 & I) == P(car3  ~  you1 & I),
-    P(car1  ~  you1 & fall & I) == P(car2  ~  you1 & fall & I),
-    P(car2  ~  you1 & fall & I) == P(car3  ~  you1 & fall & I),
+    P(car1  |  you1 & I) == P(car2  |  you1 & I),
+    P(car2  |  you1 & I) == P(car3  |  you1 & I),
+    P(car1  |  you1 & fall & I) == P(car2  |  you1 & fall & I),
+    P(car2  |  you1 & fall & I) == P(car3  |  you1 & fall & I),
     ##
-    P(host2  ~  you1 & car1 & fall & I) == P(host3  ~  you1 & car1 & fall & I)
+    P(host2  |  you1 & car1 & fall & I) == P(host3  |  you1 & car1 & fall & I)
 )
 ```
 roughly a 64% probability that the car is behind door No. 2. You can check that this probability becomes 50% if there's a 50% probability that the falling host opens the door with the car.

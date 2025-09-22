@@ -22,29 +22,37 @@
 #' ```
 #'
 #' Available logical connectives are "not" (negation, "\eqn{\lnot}"), "and" (conjunction, "\eqn{\land}"), "or" (disjunction, "\eqn{\lor}"), "if-then" (implication, "\eqn{\Rightarrow}"). The first three follow the standard R syntax for logical operators (see [base::logical]):
-#' - Not: `!`
-#' - And: `&&` or `&`
-#' - Or: `||` or `|`
+#' - Not: ` !` or ` -`
+#' - And: ` & ` or ` && `
+#' - Or: ` + `; if argument `solidus = FALSE`, also ` || ` or ` | ` are allowed.
 #'
-#' The "if-then" connective is represented by the infix operator ` %>% `; internally `x %>% y` is simply defined as `x || !y`.
+#' The "if-then" connective is represented by the infix operator ` > `; internally `x > y` is simply defined as `x or not-y`.
 #'
 #' Examples of logical expressions:
 #' ```
 #' a
-#' a && b
-#' (a || hypothesis1) & !A
-#' red.ball && ((a %>% b) || c)
+#' a & b
+#' (a + hypothesis1) & -A
+#' red.ball & ((a > !b) + c)
 #' ```
 #'
 #' ### Probabilities of logical expressions
 #' 
-#' The probability of an expression \eqn{X} conditional on an expression \eqn{Y}, usually denoted \eqn{\mathrm{P}(X \vert Y)}{P(X|Y)}, is entered by using ` ~ ` instead of the solidus "|". For instance
+#' The probability of an expression \eqn{X} conditional on an expression \eqn{Y}in entered with syntax similar to the common mathematical notation \eqn{\mathrm{P}(X \vert Y)}{P(X|Y)}. The solidus "` | `" is used to separate the conditional (note that in usual R syntax such symbol stands for logical "or" instead). If the argument `solidus = FALSE` is given in the function, then the tilde  "` ~ `" is used instead of the solidus (note that in usual R syntax such symbol introduces a formula instead). For instance
 #'     
 #' \eqn{\mathrm{P}(\lnot a \lor b \:\vert\: c \land H)}{P(not-a or b | c and H)}    
 #'     
-#' is entered as (extra spaces added just for clarity)
+#' can be entered in the following ways, among others (extra spaces added just for clarity):
 #' ```
-#' P(!a || b  ~  c && H)
+#' P(!a + b  |  c & H)
+#' P(-a + b  |  c && H)
+#' P(!a + b  |  c & H)
+#' ```
+#' or, if argument  `solidus = FALSE`, in the following ways:
+#' ```
+#' P(!a | b  ~  c & H)
+#' P(-a + b  ~  c && H)
+#' P(!a || b  ~  c & H)
 #' ```
 #' It is also possible to use `p` or `Pr` or `pr` instead of `P`.
 #'
@@ -52,21 +60,23 @@
 #'
 #' Each probability constraint can have one of these four forms:
 #' ```
-#' P(X ~ Z) = [number between 0 and 1]
+#' P(X | Z) = [number between 0 and 1]
 #'
-#' P(X ~ Z) = P(Y ~ Z)
+#' P(X | Z) = P(Y | Z)
 #'
-#' P(X ~ Z) = P(Y ~ Z) * [positive number]
+#' P(X | Z) = P(Y | Z) * [positive number]
 #'
-#' P(X ~ Z) = P(Y ~ Z) / [positive number]
+#' P(X | Z) = P(Y | Z) / [positive number]
 #' ```
 #' where `X`, `Y`, `Z` are logical expressions. Note that the conditionals on the left and right sides must be the same. Inequalities `<=` `>=` are also allowed instead of equalities.
 #'
 #' See the accompanying vignette for more interesting examples.
 #'
-#' @param target The target probability expression.
-#' 
+#' @param target The target probability expression (see Details).
+#'
 #' @param ... Probability constraints (see Details).
+#'
+#' @param solidus logical. If `TRUE` (default), the symbol `|` is used to introduce the conditional in the probability; in this case any use of `||` for the 'or'-connective will lead to an error. If `FALSE`, the symbol `~` is used to introduce the conditional; in this case the symbols `|`, `||` can be used for the 'or`-connective.
 #'
 #' @returns A vector of `min` and `max` values for the target probability, or `NA` if the constraints are mutually contradictory. If `min` and `max` are `0` and `1` then the constraints do not restrict the target probability in any way.
 #'
@@ -83,9 +93,9 @@
 #' ## The probability of an "and" is always less
 #' ## than the probabilities of the and-ed propositions:
 #' inferP(
-#'   target = P(a & b ~ h),
-#'   P(a ~ h) == 0.3,
-#'   P(b ~ h) == 0.6
+#'   target = P(a & b | h),
+#'   P(a | h) == 0.3,
+#'   P(b | h) == 0.6
 #' )
 #' ## min max
 #' ## 0.0 0.3
@@ -93,41 +103,65 @@
 #' ## P(a & b | h) is completely determined
 #' ## by P(a | h) and P(b | a & h):
 #' inferP(
-#'     target = P(a & b ~ h),
-#'     P(a ~ h) == 0.3,
-#'     P(b ~ a & h) == 0.2
+#'     target = P(a & b | h),
+#'     P(a | h) == 0.3,
+#'     P(b | a & h) == 0.2
 #' )
 #' ##  min  max
 #' ## 0.06 0.06
 #'
 #' ## Solution to the Monty Hall problem (see accompanying vignette):
 #' inferP(
-#'     target = P(car2  ~  you1 & host3 & I),
+#'     target = P(car2  |  you1 & host3 & I),
 #'     ##
-#'     P(car1 & car2  ~  I) == 0,
-#'     P(car1 & car3  ~  I) == 0,
-#'     P(car2 & car3  ~  I) == 0,
-#'     P(car1 | car2 | car3  ~  I) == 1,
-#'     P(host1 & host2 ~ I) == 0,
-#'     P(host1 & host3 ~ I) == 0,
-#'     P(host2 & host3 ~ I) == 0,
-#'     P(host1 | host2 | host3  ~  I) == 1,
-#'     P(host1  ~  you1 & I) == 0,
-#'     P(host2  ~  car2 & I) == 0,
-#'     P(host3  ~  car3 & I) == 0,
-#'     P(car1  ~  I) == P(car2  ~  I),
-#'     P(car2  ~  I) == P(car3  ~  I),
-#'     P(car1  ~  you1 & I) == P(car2  ~  you1 & I),
-#'     P(car2  ~  you1 & I) == P(car3  ~  you1 & I),
-#'     P(host2  ~  you1 & car1 & I) == P(host3  ~  you1 & car1 & I)
+#'     P(car1 & car2  |  I) == 0,
+#'     P(car1 & car3  |  I) == 0,
+#'     P(car2 & car3  |  I) == 0,
+#'     P(car1 + car2 + car3  |  I) == 1,
+#'     P(host1 & host2 | I) == 0,
+#'     P(host1 & host3 | I) == 0,
+#'     P(host2 & host3 | I) == 0,
+#'     P(host1 + host2 + host3  |  I) == 1,
+#'     P(host1  |  you1 & I) == 0,
+#'     P(host2  |  car2 & I) == 0,
+#'     P(host3  |  car3 & I) == 0,
+#'     P(car1  |  I) == P(car2  |  I),
+#'     P(car2  |  I) == P(car3  |  I),
+#'     P(car1  |  you1 & I) == P(car2  |  you1 & I),
+#'     P(car2  |  you1 & I) == P(car3  |  you1 & I),
+#'     P(host2  |  you1 & car1 & I) == P(host3  |  you1 & car1 & I)
 #' )
 #' ##      min      max
 #' ## 0.666667 0.666667
 #'
 #' @export
-inferP <- function(target, ...) {
-    ## Define if-then logical connective
-    `%>%` <- function(a, b){b || !a}
+inferP <- function(target, ..., solidus = TRUE) {
+    ## Logical connectives
+    if(solidus){
+        connectives <- list(
+            `&` = .Primitive("&&"),
+            `+` = .Primitive("||"),
+            `-` = .Primitive("!"),
+            `>` = function(x, y){y || !x}
+        )
+        bar <- '|'
+        ## Check if "||" is used
+        if(!all( gregexpr(' || ',
+            deparse(as.formula(substitute(~ alist(target, ...)))),
+            fixed = TRUE)[[1]] == -1 )){
+            stop("When argument 'solidus = TRUE', use of '||' is not allowed")
+            }
+
+    } else {
+        connectives <- list(
+            `&` = .Primitive("&&"),
+            `+` = .Primitive("||"),
+            `-` = .Primitive("!"),
+            `>` = function(x, y){y || !x}
+        )
+        bar <- '~'
+    }
+    barmatch <- paste0(' ', bar, ' ')
 
     ## number of constraints
     nc <- length(substitute(alist(...)))
@@ -151,27 +185,29 @@ inferP <- function(target, ...) {
     ## accepted relation symbols
     Esyms <- c('==', '<=', '>=', '<', '>')
 
-### Target probability
-    Tsupp <- substitute(target)
-
-    ## Syntax check
-    if(
-        !(length(Tsupp) == 2) || !(deparse(Tsupp[[1]]) %in% Psyms)
-    ) {
-        stop('invalid first argument')
-    }
-    Tsupp <- Tsupp[[2]]
-
     ## Below:
     ## E: matrix of constraint coefficients
     ## F: vector of numerical values of constraints
     ## D: vector of equality/inequality constraint directions
 
-    if(length(Tsupp) < 3 || !(deparse(Tsupp[[1]]) == '~')){
+### Target probability
+    Tsupp <- substitute(target)
+
+    ## Syntax check
+    if(
+        !(length(Tsupp) == 2) ||
+            !(deparse(Tsupp[[1]]) %in% Psyms) ||
+             length(gregexpr(barmatch, deparse(Tsupp), fixed = TRUE)[[1]]) > 1
+    ) {
+        stop('invalid target')
+    }
+    Tsupp <- Tsupp[[2]]
+
+    if(length(Tsupp) < 3 || !(deparse(Tsupp[[1]]) == bar)){
         ## it doesn't have a conditional
         extraE <- NULL
         Obj <- 1L * apply(combos, 1, function(zz){
-            eval(Tsupp, as.list(zz))
+            eval(Tsupp, c(connectives, as.list(zz)))
         })
         E <- matrix(1, nc + na, na)
         F <- numeric(nc + na)
@@ -186,7 +222,7 @@ inferP <- function(target, ...) {
         Tcond <- Tsupp[[3]]
         Obj <- c(
             1L * apply(combos, 1, function(zz){
-                eval(Tsupp, as.list(zz))
+                eval(Tsupp, c(connectives, as.list(zz)))
             }),
             0)
         E <- matrix(1, nc + na + 2, na + 1)
@@ -196,7 +232,7 @@ inferP <- function(target, ...) {
         ## last constraint involves the conditional of target prob.
         E[nc + 1, ] <- c(
             1L * apply(combos, 1, function(zz){
-                eval(Tcond, as.list(zz))
+                eval(Tcond, c(connectives, as.list(zz)))
             }),
             0)
         F[nc + 1] <- 1
@@ -219,7 +255,9 @@ inferP <- function(target, ...) {
 
         ## Syntax check
         if(
-            !(length(left) == 2) || !(deparse(left[[1]]) %in% Psyms)
+            !(length(left) == 2) ||
+                !(deparse(left[[1]]) %in% Psyms) ||
+                 length(gregexpr(barmatch, deparse(left), fixed = TRUE)[[1]]) > 1
         ) {
             stop('invalid left side in argument ', i)
         }
@@ -237,7 +275,8 @@ inferP <- function(target, ...) {
             if(length(right) == 2) {
                 ## right side is a probability
                 if(
-                    !(deparse(right[[1]]) %in% Psyms)
+                    !(deparse(right[[1]]) %in% Psyms) ||
+                        length(gregexpr(barmatch, deparse(right), fixed = TRUE)[[1]]) > 1
                 ) {
                     stop('invalid right side in argument ', i)
                 }
@@ -259,8 +298,8 @@ inferP <- function(target, ...) {
             Esuppl <- left[[2]]
             Esuppr <- right[[2]]
             if(
-                !(length(Esuppl) < 3 || !(deparse(Esuppl[[1]]) == '~')) ||
-                !(length(Esuppr) < 3 || !(deparse(Esuppr[[1]]) == '~'))
+                !(length(Esuppl) < 3 || !(deparse(Esuppl[[1]]) == bar)) ||
+                !(length(Esuppr) < 3 || !(deparse(Esuppr[[1]]) == bar))
             ) {
                 ## both probabilities have conditional
                 ## we use the rule of cond. prob.
@@ -273,9 +312,9 @@ inferP <- function(target, ...) {
 
             E[i, ] <- c(
                 1L * apply(combos, 1, function(zz){
-                    eval(Esuppl, as.list(zz))
+                    eval(Esuppl, c(connectives, as.list(zz)))
                 }) - coeff * apply(combos, 1, function(zz){
-                    eval(Esuppr, as.list(zz))
+                    eval(Esuppr, c(connectives, as.list(zz)))
                 }),
                 extraE)
         } else {
@@ -286,11 +325,11 @@ inferP <- function(target, ...) {
             }
 
             Esupp <- left[[2]]
-            if(length(Esupp) < 3 || !(deparse(Esupp[[1]]) == '~')) {
+            if(length(Esupp) < 3 || !(deparse(Esupp[[1]]) == bar)) {
                 ## probability has no conditional
                 E[i, ] <- c(
                     1L * apply(combos, 1, function(zz){
-                        eval(Esupp, as.list(zz))
+                        eval(Esupp, c(connectives, as.list(zz)))
                     }) - coeff,
                     extraE)
             } else {
@@ -299,10 +338,10 @@ inferP <- function(target, ...) {
                 Econd <- Esupp[[3]]
                 E[i, ] <- c(
                     1L * apply(combos, 1, function(zz){
-                        eval(Esupp, as.list(zz))
+                        eval(Esupp, c(connectives, as.list(zz)))
                     }) -
                         coeff * apply(combos, 1, function(zz){
-                            eval(Econd, as.list(zz))
+                            eval(Econd, c(connectives, as.list(zz)))
                         }),
                     extraE)
             }
