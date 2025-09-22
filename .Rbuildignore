@@ -4,5 +4,6 @@
 ^pkgdown$
 ^\.github$
 ^vignettes/_.+$
+^.+/__.+$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
