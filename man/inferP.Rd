@@ -80,7 +80,7 @@ P(X ~ Z) = P(Y ~ Z) / [positive number]
 
 where \code{X}, \code{Y}, \code{Z} are logical expressions. Note that the conditionals on the left and right sides must be the same. Inequalities \code{<=} \code{>=} are also allowed instead of equalities.
 
-See \href{inferP.html}{vignette} for more interesting examples.
+See the accompanying vignette for more interesting examples.
 }
 }
 \examples{
@@ -131,7 +131,7 @@ inferP(
 
 }
 \references{
-T. Hailperin: \href{https://doi.org/10.1080/00029890.1965.11970533}{\emph{Best Possible Inequalities for the Probability of a Logical Function of Events}}. Am. Math. Monthly 72(4):343, 1965.
+T. Hailperin: \emph{Best Possible Inequalities for the Probability of a Logical Function of Events}. Am. Math. Monthly 72(4):343, 1965 \if{html}{\out{<\doi{doi:https://doi.org/10.1080/00029890.1965.11970533}>}}.
 
-T. Hailperin: \href{https://archive.org/details/hailperin1996-Sentential_probability_logic}{\emph{Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications}}. Associated University Presses, 1996.
+T. Hailperin: \emph{Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications}. Associated University Presses, 1996 \url{https://archive.org/details/hailperin1996-Sentential_probability_logic/}.
 }

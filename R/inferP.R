@@ -62,7 +62,7 @@
 #' ```
 #' where `X`, `Y`, `Z` are logical expressions. Note that the conditionals on the left and right sides must be the same. Inequalities `<=` `>=` are also allowed instead of equalities.
 #'
-#' See [vignette](inferP.html) for more interesting examples.
+#' See the accompanying vignette for more interesting examples.
 #'
 #' @param target The target probability expression.
 #' 
@@ -73,9 +73,9 @@
 #' @import lpSolve
 #'
 #' @references
-#' T. Hailperin: [*Best Possible Inequalities for the Probability of a Logical Function of Events*](https://doi.org/10.1080/00029890.1965.11970533). Am. Math. Monthly 72(4):343, 1965.
+#' T. Hailperin: *Best Possible Inequalities for the Probability of a Logical Function of Events*. Am. Math. Monthly 72(4):343, 1965 <\doi{doi:https://doi.org/10.1080/00029890.1965.11970533}>.
 #'
-#' T. Hailperin: [*Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications*](https://archive.org/details/hailperin1996-Sentential_probability_logic). Associated University Presses, 1996.
+#' T. Hailperin: *Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications*. Associated University Presses, 1996 <https://archive.org/details/hailperin1996-Sentential_probability_logic/>.
 #'
 #'
 #' @examples

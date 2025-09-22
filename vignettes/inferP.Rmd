@@ -18,7 +18,7 @@ vignette: >
 
 The probability calculus is an extension of the calculus of propositional logic. Besides the *truth* or *falsity* of propositions, the probability calculus also considers a continuum of degrees of credibility -- probabilities -- between those two extremes. Just as propositional logic gives a set of rules to derive the truth or falsity of some propositions from the truth or falsity of others, so the probability calculus gives a set of rules to derive the probability for some propositions from the probability for others; these rules include the logical ones as a special case.
 
-There are different [deduction systems](https://plato.stanford.edu/archives/spr2023/entries/natural-deduction) (each with many dialects) to express the rules of propositional logic; one of them is the *sequent calculus*. The probability calculus has many analogies with the sequent calculus (Takeuti 1987).
+There are different deduction systems (Pelletier & Hazen 2023), each with many dialects, to express the rules of propositional logic; one of them is the *sequent calculus*. The probability calculus has many analogies with the sequent calculus (Takeuti 1987).
 
 In sequent calculus we express that proposition $a$ is true within a set of axioms $I$ by the notation
 
@@ -454,19 +454,21 @@ An interesting aspects of such variations is to precisely translate the differen
 
 # References
 
-Jaynes (2003): [*Probability Theory: The Logic of Science*](https://doi.org/10.1017/CBO9780511790423) (Cambridge University Press).
+Jaynes (2003): *Probability Theory: The Logic of Science* (Cambridge University Press) <\doi{doi:10.1017/CBO9780511790423}>.
 
-Jeffreys (1983): [*Theory of Probability*](https://doi.org/10.1093/oso/9780198503682.001.0001) (3rd ed. Oxford University Press).
+Jeffreys (1983): *Theory of Probability* (3rd ed. Oxford University Press) <\doi{doi:10.1093/oso/9780198503682.001.0001}>.
 
-Johnson (1924): [*Logic. Part III: The Logical Foundations of Science*](https://archive.org/details/logic03john) (Cambridge University Press).
+Johnson (1924): *Logic. Part III: The Logical Foundations of Science* (Cambridge University Press) <https://archive.org/details/logic03john>.
 
-Johnson (1932): [*Probability: The Relations of Proposal to Supposal*](https://doi.org/10.1093/mind/XLI.161.1) (Mind 41(161):1).
+Johnson (1932): *Probability: The Relations of Proposal to Supposal* (Mind 41(161):1) <\doi{doi:10.1093/mind/XLI.161.1}>.
 
-Hailperin (1965): [*Best Possible Inequalities for the Probability of a Logical Function of Events*](https://doi.org/10.1080/00029890.1965.11970533) (Am. Math. Monthly 72(4):343).
+Hailperin (1965): *Best Possible Inequalities for the Probability of a Logical Function of Events* (Am. Math. Monthly 72(4):343) <\doi{doi:10.1080/00029890.1965.11970533}>.
 
-Hailperin (1996): [*Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications*](https://archive.org/details/hailperin1996-Sentential_probability_logic) (Associated University Presses).
+Hailperin (1996): *Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications* (Associated University Presses) <https://archive.org/details/hailperin1996-Sentential_probability_logic/>.
 
-Hailperin (2006): [*Probability logic and combining evidence*](https://doi.org/10.1080/01445340600616289) (Hist. Philos. Log. 27(3):249).
+Hailperin (2006): *Probability logic and combining evidence* (Hist. Philos. Log. 27(3):249) <\doi{doi:10.1080/01445340600616289}>.
+
+Pelletier, Hazen 2023: *Natural Deduction Systems in Logic* (Stanford Encyclopedia of Philosophy) <https://plato.stanford.edu/archives/spr2023/entries/natural-deduction/>.
 
 Takeuti (1987): *Proof Theory* (2nd ed. North-Holland).
 
