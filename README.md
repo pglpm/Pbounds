@@ -24,9 +24,9 @@ $$
 With the `inferP()` function this probabilistic inference problem is posed as follows:
 ```
 inferP(
-    target = P(a & b  ~  c),
-    P(a  ~  c) == 0.2,
-    P(b  ~  c) == 0.7
+    target = P(a & b  |  c),
+    P(a  |  c) == 0.2,
+    P(b  |  c) == 0.7
 )
 ```
 and yields the answer
