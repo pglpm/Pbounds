@@ -212,26 +212,40 @@ in the previous section.</p>
 probability of two logical expressions; as optional subsequent arguments
 it takes constraints about the conditional probabilities of other
 logical expressions.</p>
-<p>The notation used in the function parallels the mathematical notation
-used above, with the following differences:</p>
+<p>The main notation used in the function (corresponding to the default
+argument <code>solidus = TRUE</code>) parallels the mathematical
+notation used above, with the following differences:</p>
+<ul>
+<li>Not: <code>!</code> or <code>-</code>
+</li>
+<li>And: <code>&amp;</code> or <code>&amp;&amp;</code>
+</li>
+<li>Or: <code>+</code>
+</li>
+<li>If-then: <code>&gt;</code> (“if
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>
+then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>b</mi><annotation encoding="application/x-tex">b</annotation></semantics></math>”,
+<code>a &gt; b</code>, is simply equivalent to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">b \lor \lnot a</annotation></semantics></math>)<br>
+</li>
+</ul>
+<p>If an additional argument <code>solidus = FALSE</code> is given in
+<code><a href="../reference/inferP.html">inferP()</a></code>, then a notation is used that differs from the
+above in the conditional symbol and in the “or”-connective:</p>
 <ul>
 <li>Conditional solidus
 “<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow></mrow><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mrow></mrow></mrow><annotation encoding="application/x-tex">{}\:\vert\:\mathopen{}{}</annotation></semantics></math>”:
 <code>~</code>
 </li>
-<li>Not: <code>!</code>
+<li>Or: <code>+</code> or <code>|</code> or <code>||</code>
 </li>
-<li>And: <code>&amp;</code> or <code>&amp;&amp;</code>
-</li>
-<li>Or: <code>|</code> or <code>||</code>
-</li>
-<li>If-then: <code>%&gt;%</code> (“if
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>
-then
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>b</mi><annotation encoding="application/x-tex">b</annotation></semantics></math>”,
-<code>a %&gt;% b</code>, is simply equivalent to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">b \lor \lnot a</annotation></semantics></math>)</li>
 </ul>
+<p>This alternative notation allows the user to use proper R syntax for
+the connectives (<code>!</code>, <code>&amp;</code>, <code>|</code>,
+<code>&amp;&amp;</code>, <code>||</code>), in case it were convenient to
+paste them from other R expressions.</p>
+<p>In the following examples the main notation is used.</p>
 <div class="section level3">
 <h3 id="simple-examples">Simple examples<a class="anchor" aria-label="anchor" href="#simple-examples"></a>
 </h3>
@@ -246,7 +260,7 @@ can a priori be anything between 0 and 1:</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span></span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># min max </span></span>
 <span><span class="co">#   0   1</span></span></code></pre></div>
@@ -257,7 +271,7 @@ must be 1:</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">~</span>  <span class="va">a</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span></span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">a</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># min max </span></span>
 <span><span class="co">#   1   1</span></span></code></pre></div>
@@ -268,7 +282,7 @@ must be 0:</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">~</span>  <span class="op">!</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span></span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="op">!</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># min max </span></span>
 <span><span class="co">#   0   0</span></span></code></pre></div>
@@ -280,7 +294,7 @@ is undefined:</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">~</span>  <span class="va">b</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">b</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span></span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">b</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">b</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># min max </span></span>
 <span><span class="co">#  NA  NA</span></span></code></pre></div>
@@ -295,9 +309,9 @@ is undefined:</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">b</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.2</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">~</span>  <span class="va">a</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.3</span></span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">b</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.2</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">|</span>  <span class="va">a</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.3</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#  min  max </span></span>
 <span><span class="co"># 0.06 0.06</span></span></code></pre></div>
@@ -306,9 +320,9 @@ is undefined:</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">~</span>  <span class="va">a</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">b</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.06</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.2</span></span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">|</span>  <span class="va">a</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">b</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.06</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.2</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># min max </span></span>
 <span><span class="co"># 0.3 0.3</span></span></code></pre></div>
@@ -319,10 +333,10 @@ probability:</li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">b</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">|</span> <span class="va">b</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span></span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">b</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">+</span> <span class="va">b</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># min max </span></span>
 <span><span class="co"># 0.5 0.5</span></span></code></pre></div>
@@ -337,9 +351,9 @@ is true:</li>
 </ul>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">%&gt;%</span> <span class="va">b</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span></span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&gt;</span> <span class="va">b</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># min max </span></span>
 <span><span class="co">#   1   1</span></span></code></pre></div>
@@ -348,8 +362,8 @@ is true:</li>
 </ul>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">%&gt;%</span> <span class="va">b</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span></span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&gt;</span> <span class="va">b</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># min max </span></span>
 <span><span class="co">#   1   1</span></span></code></pre></div>
@@ -368,9 +382,9 @@ given their conjunction? An interesting result, proven in Hailperin
 2006, is that such probability can be anything:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">H</span>  <span class="op">~</span>  <span class="va">E1</span> <span class="op">&amp;</span> <span class="va">E2</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">H</span>  <span class="op">~</span>  <span class="va">E1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.7</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">H</span>  <span class="op">~</span>  <span class="va">E2</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.8</span></span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">H</span>  <span class="op">|</span>  <span class="va">E1</span> <span class="op">&amp;</span> <span class="va">E2</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">H</span>  <span class="op">|</span>  <span class="va">E1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.7</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">H</span>  <span class="op">|</span>  <span class="va">E2</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.8</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># min max </span></span>
 <span><span class="co">#   0   1</span></span></code></pre></div>
@@ -420,7 +434,7 @@ No. 1, <code>you1</code>, the host opened door No. 3,
 <code>host3</code>, and there is no car behind door No. 3,
 <code>!car3</code>.</p>
 <p>The target probability is thus
-<code>P(car2  ~  you1 &amp; host3 &amp; !car3 &amp; I)</code></p>
+<code>P(car2  |  you1 &amp; host3 &amp; !car3 &amp; I)</code></p>
 </div>
 <div class="section level3">
 <h3 id="given-probabilities">Given probabilities<a class="anchor" aria-label="anchor" href="#given-probabilities"></a>
@@ -430,18 +444,18 @@ of probabilities. Note that there are several equivalent ways to express
 the probabilistic constraints listed below.</p>
 <ol style="list-style-type: decimal">
 <li><p>We know that there is only one car, and it must be behind one
-door. This corresponds to four probability constraints:<br><code>P(car1 &amp; car2  ~  I) == 0</code><br><code>P(car1 &amp; car3  ~  I) == 0</code><br><code>P(car2 &amp; car3  ~  I) == 0</code><br><code>P(car1 | car2 | car3  ~  I) == 1</code><br></p></li>
+door. This corresponds to four probability constraints:<br><code>P(car1 &amp; car2  |  I) == 0</code><br><code>P(car1 &amp; car3  |  I) == 0</code><br><code>P(car2 &amp; car3  |  I) == 0</code><br><code>P(car1 + car2 + car3  |  I) == 1</code><br></p></li>
 <li><p>The host must open one door, and only one door. But the host
 cannot open the door you chose, and cannot open the door that has the
 car, but must open one door. This corresponds to seven probability
-constraints:<br><code>P(host1 &amp; host2  ~  I) == 0</code><br><code>P(host1 &amp; host3 ~  I) == 0</code><br><code>P(host2 &amp; host3  ~  I) == 0</code><br><code>P(host1 | host2 | host3  ~  I) == 1</code><br><code>P(host1  ~  you1 &amp; I) == 0</code><br><code>P(host2  ~  car2 &amp; I) == 0</code><br><code>P(host3  ~  car3 &amp; I) == 0</code><br><br></p></li>
+constraints:<br><code>P(host1 &amp; host2  |  I) == 0</code><br><code>P(host1 &amp; host3 |  I) == 0</code><br><code>P(host2 &amp; host3  |  I) == 0</code><br><code>P(host1 + host2 + host3  |  I) == 1</code><br><code>P(host1  |  you1 &amp; I) == 0</code><br><code>P(host2  |  car2 &amp; I) == 0</code><br><code>P(host3  |  car3 &amp; I) == 0</code><br><br></p></li>
 <li><p>Let’s say that you are initially equally undecided among the
-three doors:<br><code>P(car1  ~  I) == P(car2  ~  I)</code><br><code>P(car2  ~  I) == P(car3  ~  I)</code><br><br></p></li>
+three doors:<br><code>P(car1  |  I) == P(car2  |  I)</code><br><code>P(car2  |  I) == P(car3  |  I)</code><br><br></p></li>
 <li><p>The fact, alone, that you picked door No. 1 is irrelevant to the
-knowledge about the car’s position:<br><code>P(car1  ~  you1 &amp; I) == P(car2  ~  you1 &amp; I)</code><br><code>P(car2  ~  you1 &amp; I) == P(car3  ~  you1 &amp; I)</code><br><br></p></li>
+knowledge about the car’s position:<br><code>P(car1  |  you1 &amp; I) == P(car2  |  you1 &amp; I)</code><br><code>P(car2  |  you1 &amp; I) == P(car3  |  you1 &amp; I)</code><br><br></p></li>
 <li><p>Finally, we have no reason to believe that the host favours one
 door over another, when a choice is possible, that is, when the car is
-behind the door you chose:<br><code>P(host2  ~  you1 &amp; car1 &amp; I) == P(host3  ~  you1 &amp; car1 &amp; I)</code><br></p></li>
+behind the door you chose:<br><code>P(host2  |  you1 &amp; car1 &amp; I) == P(host3  |  you1 &amp; car1 &amp; I)</code><br></p></li>
 </ol>
 </div>
 <div class="section level3">
@@ -451,28 +465,28 @@ behind the door you chose:<br><code>P(host2  ~  you1 &amp; car1 &amp; I) == P(ho
 <code><a href="../reference/inferP.html">inferP()</a></code>:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">car3</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">car3</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">&amp;</span> <span class="va">car2</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">&amp;</span> <span class="va">car3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span> <span class="op">&amp;</span> <span class="va">car3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">|</span> <span class="va">car2</span> <span class="op">|</span> <span class="va">car3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">&amp;</span> <span class="va">car2</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">&amp;</span> <span class="va">car3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span> <span class="op">&amp;</span> <span class="va">car3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">+</span> <span class="va">car2</span> <span class="op">+</span> <span class="va">car3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">&amp;</span> <span class="va">host2</span> <span class="op">~</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">~</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">~</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">|</span> <span class="va">host2</span> <span class="op">|</span> <span class="va">host3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span>  <span class="op">~</span>  <span class="va">car2</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host3</span>  <span class="op">~</span>  <span class="va">car3</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">&amp;</span> <span class="va">host2</span> <span class="op">|</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">|</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">|</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">+</span> <span class="va">host2</span> <span class="op">+</span> <span class="va">host3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span>  <span class="op">|</span>  <span class="va">car2</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host3</span>  <span class="op">|</span>  <span class="va">car3</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car3</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car3</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">car1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">host3</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">car1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span></span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">car1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">host3</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">car1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#      min      max </span></span>
 <span><span class="co"># 0.666667 0.666667</span></span></code></pre></div>
@@ -484,34 +498,34 @@ for <code>car3</code>, which is 0.</p>
 </h3>
 <p>It is interesting to see what happens to the bounds of the target
 probability when some constraints are omitted. Suppose for instance that
-we omit the constraint<br><code>P(host2  ~  you1 &amp; car1 &amp; I) == P(host3  ~  you1 &amp; car1 &amp; I)</code><br>
+we omit the constraint<br><code>P(host2  |  you1 &amp; car1 &amp; I) == P(host3  |  you1 &amp; car1 &amp; I)</code><br>
 which states that we have no reason to believe the host would choose
 door No. 2 more than No. 3 or vice versa, when the car is behind door
 No. 1. The bounds of the target probability become</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">car3</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">car3</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">&amp;</span> <span class="va">car2</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">&amp;</span> <span class="va">car3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span> <span class="op">&amp;</span> <span class="va">car3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">|</span> <span class="va">car2</span> <span class="op">|</span> <span class="va">car3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">&amp;</span> <span class="va">car2</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">&amp;</span> <span class="va">car3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span> <span class="op">&amp;</span> <span class="va">car3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">+</span> <span class="va">car2</span> <span class="op">+</span> <span class="va">car3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">&amp;</span> <span class="va">host2</span> <span class="op">~</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">~</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">~</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">|</span> <span class="va">host2</span> <span class="op">|</span> <span class="va">host3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span>  <span class="op">~</span>  <span class="va">car2</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host3</span>  <span class="op">~</span>  <span class="va">car3</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">&amp;</span> <span class="va">host2</span> <span class="op">|</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">|</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">|</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">+</span> <span class="va">host2</span> <span class="op">+</span> <span class="va">host3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span>  <span class="op">|</span>  <span class="va">car2</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host3</span>  <span class="op">|</span>  <span class="va">car3</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car3</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span></span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car3</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span></span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="co">## P(host2  ~  you1 &amp; car1 &amp; I) == P(host3  ~  you1 &amp; car1 &amp; I) # omitted</span></span>
+<span>    <span class="co">## P(host2  |  you1 &amp; car1 &amp; I) == P(host3  |  you1 &amp; car1 &amp; I) # omitted</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># min max </span></span>
 <span><span class="co"># 0.5 1.0</span></span></code></pre></div>
@@ -531,40 +545,40 @@ possibility that the host falls while going to open a door. We represent
 this with the proposition <code>fall</code>.</p>
 <p>If the hosts falls, there is a non-zero probability, let’s say 10%,
 that the host will open the door with the car after you choose door
-No. 1. We can express this by the constraints<br><code>P(host2  ~  car2 &amp; fall &amp; you1 &amp; I) == 0.1</code><br><code>P(host3  ~  car3 &amp; fall &amp; you1 &amp; I) == 0.1</code></p>
+No. 1. We can express this by the constraints<br><code>P(host2  |  car2 &amp; fall &amp; you1 &amp; I) == 0.1</code><br><code>P(host3  |  car3 &amp; fall &amp; you1 &amp; I) == 0.1</code></p>
 <p>Finally we still have no reason to believe that the falling host
 favours one door over another, when the car is behind the door you
-chose:<br><code>P(host2  ~  you1 &amp; car1 &amp; fall &amp; I) == P(host3  ~  you1 &amp; car1 &amp; fall &amp; I)</code></p>
+chose:<br><code>P(host2  |  you1 &amp; car1 &amp; fall &amp; I) == P(host3  |  you1 &amp; car1 &amp; fall &amp; I)</code></p>
 <p>The target probability is for the car being behind door No. 2, given
 that you chose No. 1, the host fell and opened No. 3, but there was no
-car there:<br><code>P(car2  ~  you1 &amp; host3 &amp; !car3 &amp; fall &amp; I)</code>.</p>
+car there:<br><code>P(car2  |  you1 &amp; host3 &amp; !car3 &amp; fall &amp; I)</code>.</p>
 <p>The result is</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>   target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">car3</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
+<span>   target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">car3</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">&amp;</span> <span class="va">car2</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">&amp;</span> <span class="va">car3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span> <span class="op">&amp;</span> <span class="va">car3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">|</span> <span class="va">car2</span> <span class="op">|</span> <span class="va">car3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">&amp;</span> <span class="va">car2</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">&amp;</span> <span class="va">car3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span> <span class="op">&amp;</span> <span class="va">car3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span> <span class="op">+</span> <span class="va">car2</span> <span class="op">+</span> <span class="va">car3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">&amp;</span> <span class="va">host2</span> <span class="op">~</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">~</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">~</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">|</span> <span class="va">host2</span> <span class="op">|</span> <span class="va">host3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span>  <span class="op">~</span>  <span class="va">car2</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.1</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host3</span>  <span class="op">~</span>  <span class="va">car3</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.1</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">&amp;</span> <span class="va">host2</span> <span class="op">|</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">|</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">|</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span> <span class="op">+</span> <span class="va">host2</span> <span class="op">+</span> <span class="va">host3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host1</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span>  <span class="op">|</span>  <span class="va">car2</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.1</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host3</span>  <span class="op">|</span>  <span class="va">car3</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.1</span>,</span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car3</span>  <span class="op">~</span>  <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car3</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car3</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car3</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car3</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car1</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">car3</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="co">##</span></span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">car1</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">host3</span>  <span class="op">~</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">car1</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span></span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">host2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">car1</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">host3</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">car1</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#      min      max </span></span>
 <span><span class="co"># 0.642857 0.642857</span></span></code></pre></div>
