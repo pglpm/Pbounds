@@ -262,7 +262,7 @@ T. Hailperin: \emph{Best Possible Inequalities for the Probability of a Logical 
 
 T. Hailperin: \emph{Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications}. Associated University Presses, 1996 \url{https://archive.org/details/hailperin1996-Sentential_probability_logic/}.
 
-T. Hailperin: \emph{Best Possible Inequalities for the Probability of a Logical Function of Events}. Am. Math. Monthly 72(4):343, 1965 \if{html}{\out{<\doi{doi:https://doi.org/10.1080/00029890.1965.11970533}>}}.
+T. Hailperin: \emph{Best Possible Inequalities for the Probability of a Logical Function of Events}. Am. Math. Monthly 72(4):343, 1965 <\doi{doi:https://doi.org/10.1080/00029890.1965.11970533}>.
 
 T. Hailperin: \emph{Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications}. Associated University Presses, 1996 \url{https://archive.org/details/hailperin1996-Sentential_probability_logic/}.
 }
