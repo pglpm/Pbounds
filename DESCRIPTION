@@ -6,7 +6,7 @@ Authors@R: c(
   "pgl@portamana.org", role = c("aut", "cre", "cph"),
   comment = c(ORCID = "0000-0002-6070-0784"))
   )
-Description: Function to calculate the lower and upper bounds of the probability for an expression in propositional logic, given constraints on the probabilities for other expressions.
+Description: Provides a function to calculate the lower and upper bounds of the probability for a propositional-logic expression, given constraints on the probabilities for other expressions. The function also works for truth-valuation in the style of sequent calculus. It requires the 'lpSolve' package.
 License: AGPL (>= 3) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -16,7 +16,7 @@ Depends:
 Imports:
     lpSolve
 VignetteBuilder: knitr
-URL: https://pglpm.github.io/Pinference/
+URL: https://pglpm.github.io/Pinference/, https://github.com/pglpm/Pinference/
 Suggests: 
     knitr,
     rmarkdown

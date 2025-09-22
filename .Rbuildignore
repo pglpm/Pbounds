@@ -3,6 +3,6 @@
 ^docs$
 ^pkgdown$
 ^\.github$
-^vignettes/__.+$
+^vignettes/_.+$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
