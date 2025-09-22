@@ -3,11 +3,11 @@ Title: Probability Inference for Propositional Logic
 Version: 0.1.0
 Authors@R: c(
   person("PierGianLuca", "Porta Mana", ,
-  "pgl@portamana.org", role = c("aut", "cre"),
+  "pgl@portamana.org", role = c("aut", "cre", "cph"),
   comment = c(ORCID = "0000-0002-6070-0784"))
   )
 Description: Function to calculate the lower and upper bounds of the probability for an expression in propositional logic, given constraints on the probabilities for other expressions.
-License: AGPL (>= 3)
+License: AGPL (>= 3) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
@@ -17,3 +17,6 @@ Imports:
     lpSolve
 VignetteBuilder: knitr
 URL: https://pglpm.github.io/Pinference/
+Suggests: 
+    knitr,
+    rmarkdown

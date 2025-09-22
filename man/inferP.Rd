@@ -33,7 +33,7 @@ coin_lands_heads
 `tomorrow it rains` # note the backticks
 }\if{html}{\out{</div>}}
 
-Available logical connectives are "not" (negation, "¬"), "and" (conjunction, "∨"), "or" (disjunction, "∨"), "if-then" (implication, "⇒"). The first three follow the standard R syntax for logical operators (see \link[base:logical]{base::logical}):
+Available logical connectives are "not" (negation, "\eqn{\lnot}"), "and" (conjunction, "\eqn{\land}"), "or" (disjunction, "\eqn{\lor}"), "if-then" (implication, "\eqn{\Rightarrow}"). The first three follow the standard R syntax for logical operators (see \link[base:logical]{base::logical}):
 \itemize{
 \item Not: \code{!}
 \item And: \code{&&} or \code{&}
@@ -55,8 +55,8 @@ red.ball && ((a \%>\% b) || c)
 
 The probability of an expression \eqn{X} conditional on an expression \eqn{Y}, usually denoted \eqn{\mathrm{P}(X \vert Y)}{P(X|Y)}, is entered by using \code{~} instead of the solidus "|". For instance
 
-\eqn{\mathrm{P}(\lnot a \lor b \:\vert\: c \land H)}{P(¬a ∨ b | c ∧ H)}    
-    
+\eqn{\mathrm{P}(\lnot a \lor b \:\vert\: c \land H)}{P(not-a or b | c and H)}
+
 is entered as (extra spaces added just for clarity)
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{P(!a || b  ~  c && H)
@@ -88,15 +88,15 @@ See \href{inferP.html}{vignette} for more interesting examples.
 ## The probability of an "and" is always less
 ## than the probabilities of the and-ed propositions:
 inferP(
-  target = P(a & b ~ h), # P(a ∧ b | h) in standard notation
+  target = P(a & b ~ h),
   P(a ~ h) == 0.3,
   P(b ~ h) == 0.6
 )
 ## min max
 ## 0.0 0.3
 
-## P(a ∧ b | h) is completely determined
-## by P(a | h) and P(b | a ∧ h):
+## P(a & b | h) is completely determined
+## by P(a | h) and P(b | a & h):
 inferP(
     target = P(a & b ~ h),
     P(a ~ h) == 0.3,

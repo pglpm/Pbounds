@@ -21,7 +21,7 @@
 #' `tomorrow it rains` # note the backticks
 #' ```
 #'
-#' Available logical connectives are "not" (negation, "¬"), "and" (conjunction, "∨"), "or" (disjunction, "∨"), "if-then" (implication, "⇒"). The first three follow the standard R syntax for logical operators (see [base::logical]):
+#' Available logical connectives are "not" (negation, "\eqn{\lnot}"), "and" (conjunction, "\eqn{\land}"), "or" (disjunction, "\eqn{\lor}"), "if-then" (implication, "\eqn{\Rightarrow}"). The first three follow the standard R syntax for logical operators (see [base::logical]):
 #' - Not: `!`
 #' - And: `&&` or `&`
 #' - Or: `||` or `|`
@@ -40,7 +40,7 @@
 #' 
 #' The probability of an expression \eqn{X} conditional on an expression \eqn{Y}, usually denoted \eqn{\mathrm{P}(X \vert Y)}{P(X|Y)}, is entered by using ` ~ ` instead of the solidus "|". For instance
 #'     
-#' \eqn{\mathrm{P}(\lnot a \lor b \:\vert\: c \land H)}{P(¬a ∨ b | c ∧ H)}    
+#' \eqn{\mathrm{P}(\lnot a \lor b \:\vert\: c \land H)}{P(not-a or b | c and H)}    
 #'     
 #' is entered as (extra spaces added just for clarity)
 #' ```
@@ -83,15 +83,15 @@
 #' ## The probability of an "and" is always less
 #' ## than the probabilities of the and-ed propositions:
 #' inferP(
-#'   target = P(a & b ~ h), # P(a ∧ b | h) in standard notation
+#'   target = P(a & b ~ h),
 #'   P(a ~ h) == 0.3,
 #'   P(b ~ h) == 0.6
 #' )
 #' ## min max
 #' ## 0.0 0.3
 #'
-#' ## P(a ∧ b | h) is completely determined
-#' ## by P(a | h) and P(b | a ∧ h):
+#' ## P(a & b | h) is completely determined
+#' ## by P(a | h) and P(b | a & h):
 #' inferP(
 #'     target = P(a & b ~ h),
 #'     P(a ~ h) == 0.3,
@@ -134,7 +134,7 @@ inferP <- function(target, ...) {
 
     ## find atomic sentences and prepare truth table for DNF
     tvals <- c(FALSE, TRUE)
-    atoms <- sort(all.vars(as.formula(substitute(~ alist(target, ...)))))
+    atoms <- sort(all.vars(stats::as.formula(substitute(~ alist(target, ...)))))
     ttable <- list()
     for(i in atoms) {
         ttable[[i]] <- tvals
