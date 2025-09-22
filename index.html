@@ -71,9 +71,9 @@
 </annotation></semantics></math></p>
 <p>With the <code><a href="reference/inferP.html">inferP()</a></code> function this probabilistic inference problem is posed as follows:</p>
 <pre><code><span><span class="fu"><a href="reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">b</span>  <span class="op">~</span>  <span class="va">c</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">~</span>  <span class="va">c</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.2</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">~</span>  <span class="va">c</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.7</span></span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">b</span>  <span class="op">|</span>  <span class="va">c</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">c</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.2</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">|</span>  <span class="va">c</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.7</span></span>
 <span><span class="op">)</span></span></code></pre>
 <p>and yields the answer</p>
 <pre><code>min  max
