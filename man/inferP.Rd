@@ -2,7 +2,7 @@
 % Please edit documentation in R/inferP.R
 \name{inferP}
 \alias{inferP}
-\title{Calculation of lower and upper probability bounds}
+\title{Calculate lower and upper probability bounds}
 \usage{
 inferP(target, ...)
 }
@@ -15,12 +15,12 @@ inferP(target, ...)
 A vector of \code{min} and \code{max} values for the target probability, or \code{NA} if the constraints are mutually contradictory. If \code{min} and \code{max} are \code{0} and \code{1} then the constraints do not restrict the target probability in any way.
 }
 \description{
-Compute the minimum and maximum allowed values of the probability for a propositional-logic expression conditional on another one, given numerical or equality constraints for the conditional probabilities for other propositional-logic expressions.
+\code{inferP()} calculates the minimum and maximum allowed values of the probability for a propositional-logic expression conditional on another one, given numerical or equality constraints for the conditional probabilities for other propositional-logic expressions.
 }
 \details{
 The function takes as first argument the probability for a logical expression, conditional on another expression, and as subsequent (optional) arguments the constraints on the probabilities for other logical expressions. Propositional logic is intended here.
 
-The function uses the \code{lpSolve::lp()} function from the \href{https://cran.r-project.org/package=lpSolve}{\strong{lpSolve}} package.
+The function uses the \code{\link[lpSolve:lp]{lpSolve::lp()}} function from the \href{https://cran.r-project.org/package=lpSolve}{\strong{lpSolve}} package.
 \subsection{Logical expressions}{
 
 A propositional-logic expression is a combination of atomic propositions by means of logical connectives. Atomic propositions can have any name that satisfies \href{https://cran.r-project.org/doc/FAQ/R-FAQ.html#What-are-valid-names_003f}{R syntax for \emph{object names}}. Examples:
@@ -33,7 +33,7 @@ coin_lands_heads
 `tomorrow it rains` # note the backticks
 }\if{html}{\out{</div>}}
 
-Available logical connectives are "not" (negation, "¬"), "and" (conjunction, "∨"), "or" (disjunction, "∨"), "if-then" (implication, "⇒"). The first three follow the standard R syntax for \href{logical}{logical operators}:
+Available logical connectives are "not" (negation, "¬"), "and" (conjunction, "∨"), "or" (disjunction, "∨"), "if-then" (implication, "⇒"). The first three follow the standard R syntax for logical operators (see \link[base:logical]{base::logical}):
 \itemize{
 \item Not: \code{!}
 \item And: \code{&&} or \code{&}
@@ -85,6 +85,8 @@ See \href{inferP.html}{vignette} for more interesting examples.
 }
 \examples{
 
+## The probability of an "and" is always less
+## than the probabilities of the and-ed propositions:
 inferP(
   target = P(a & b ~ h), # P(a ∧ b | h) in standard notation
   P(a ~ h) == 0.3,
@@ -93,8 +95,10 @@ inferP(
 ## min max
 ## 0.0 0.3
 
+## P(a ∧ b | h) is completely determined
+## by P(a | h) and P(b | a ∧ h):
 inferP(
-    target = P(a & b ~ h), # P(a ∧ b | h) in standard notation
+    target = P(a & b ~ h),
     P(a ~ h) == 0.3,
     P(b ~ a & h) == 0.2
 )
@@ -125,4 +129,9 @@ inferP(
 ##      min      max
 ## 0.666667 0.666667
 
+}
+\references{
+T. Hailperin: \href{https://doi.org/10.1080/00029890.1965.11970533}{\emph{Best Possible Inequalities for the Probability of a Logical Function of Events}}. Am. Math. Monthly 72(4):343, 1965.
+
+T. Hailperin: \href{https://archive.org/details/hailperin1996-Sentential_probability_logic}{\emph{Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications}}. Associated University Presses, 1996.
 }
