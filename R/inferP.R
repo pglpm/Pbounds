@@ -83,7 +83,7 @@
 #' @import lpSolve
 #'
 #' @references
-#' T. Hailperin: *Best Possible Inequalities for the Probability of a Logical Function of Events*. Am. Math. Monthly 72(4):343, 1965 <\doi{doi:https://doi.org/10.1080/00029890.1965.11970533}>.
+#' T. Hailperin: *Best Possible Inequalities for the Probability of a Logical Function of Events*. Am. Math. Monthly 72(4):343, 1965 <doi:10.1080/00029890.1965.11970533>.
 #'
 #' T. Hailperin: *Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications*. Associated University Presses, 1996 <https://archive.org/details/hailperin1996-Sentential_probability_logic/>.
 #'
@@ -93,6 +93,12 @@
 #' ## No constraints
 #' inferP(
 #'   target = P(a | h)
+#' )
+#'
+#' ## Trivial example with inequality constraint
+#' inferP(
+#'   target = P(a | h),
+#'   P(!a | h) >= 0.2
 #' )
 #'
 #' #' ## The probability of an "and" is always less

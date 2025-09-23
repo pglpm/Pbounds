@@ -123,13 +123,15 @@ $$
 \P(a \land b \| I) \in [0, 0.2]
 $$
 
+In fact this is also possible with inequality constraints. As a very trivial example, if the probability $\P(a \| I) \le 0.3$, then we must have $\P(\lnot a \| I) \ge 0.3$.
+
 Finding such bounds is equivalent to solving a linear-optimization problem. The most relevant texts about this equivalence are those by Hailperin 1965 and Hailperin 1996.
 
 # The function `inferP()`
 
 The function `inferP()` finds the bounds of a target probability by implementing the linear-optimization algorithm mentioned in the previous section.
 
-As a first argument,`target =`, it takes the conditional probability of two   logical expressions; as optional subsequent arguments it takes constraints about the conditional probabilities of other logical expressions.
+As a first argument,`target =`, it takes the conditional probability of two   logical expressions; as optional subsequent arguments it takes equality or inequality constraints about the conditional probabilities of other logical expressions.
 
 The main notation used in the function (corresponding to the default argument `solidus = TRUE`) parallels the mathematical notation used above, with the following differences:
 
@@ -210,6 +212,15 @@ inferP(
     target = P(b  |  a & I),
     P(a & b  |  I) == 0.06,
     P(a  |  I) == 0.2
+)
+```
+
+- Same rule, but with an inequality constraint:
+```{r}
+inferP(
+    target = P(b  |  a & I),
+    P(a & b  |  I) == 0.06,
+    P(a  |  I) <= 0.2
 )
 ```
 
@@ -447,19 +458,19 @@ An interesting aspects of such variations is to precisely translate the differen
 
 # References
 
-Jaynes (2003): *Probability Theory: The Logic of Science* (Cambridge University Press) <\doi{doi:10.1017/CBO9780511790423}>.
+Jaynes (2003): *Probability Theory: The Logic of Science* (Cambridge University Press) <doi:10.1017/CBO9780511790423>.
 
-Jeffreys (1983): *Theory of Probability* (3rd ed. Oxford University Press) <\doi{doi:10.1093/oso/9780198503682.001.0001}>.
+Jeffreys (1983): *Theory of Probability* (3rd ed. Oxford University Press) <doi:10.1093/oso/9780198503682.001.0001>.
 
 Johnson (1924): *Logic. Part III: The Logical Foundations of Science* (Cambridge University Press) <https://archive.org/details/logic03john>.
 
-Johnson (1932): *Probability: The Relations of Proposal to Supposal* (Mind 41(161):1) <\doi{doi:10.1093/mind/XLI.161.1}>.
+Johnson (1932): *Probability: The Relations of Proposal to Supposal* (Mind 41(161):1) <doi:10.1093/mind/XLI.161.1>.
 
-Hailperin (1965): *Best Possible Inequalities for the Probability of a Logical Function of Events* (Am. Math. Monthly 72(4):343) <\doi{doi:10.1080/00029890.1965.11970533}>.
+Hailperin (1965): *Best Possible Inequalities for the Probability of a Logical Function of Events* (Am. Math. Monthly 72(4):343) <doi:10.1080/00029890.1965.11970533>.
 
 Hailperin (1996): *Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications* (Associated University Presses) <https://archive.org/details/hailperin1996-Sentential_probability_logic/>.
 
-Hailperin (2006): *Probability logic and combining evidence* (Hist. Philos. Log. 27(3):249) <\doi{doi:10.1080/01445340600616289}>.
+Hailperin (2006): *Probability logic and combining evidence* (Hist. Philos. Log. 27(3):249) <doi:10.1080/01445340600616289>.
 
 Pelletier, Hazen 2023: *Natural Deduction Systems in Logic* (Stanford Encyclopedia of Philosophy) <https://plato.stanford.edu/archives/spr2023/entries/natural-deduction/>.
 
