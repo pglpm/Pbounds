@@ -1,4 +1,5 @@
 url: https://pglpm.github.io/Pinference/
 template:
   bootstrap: 5
+  bootswatch: united
 

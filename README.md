@@ -5,20 +5,20 @@ This R package offers a function, `inferP()`, that calculates the lower and uppe
 As a trivial example, suppose we want to know the bounds of the probability
 
 $$
-\mathrm{P}(a \land b  \vert  c)
+\mathrm{P}(a \land b\  \vert\  c)
 $$
 
 under the assumption that
 
 $$
-\mathrm{P}(a  \vert  c) = 0.2  ,\enspace
-\mathrm{P}(b  \vert  c) = 0.7  .
+\mathrm{P}(a\  \vert\  c) = 0.2  ,\enspace
+\mathrm{P}(b\  \vert\  c) = 0.7  .
 $$
 
 The result, easy to find, is that the desired probability must be less than $0.2$:
 
 $$
-\mathrm{P}(a \land b  \vert  c) \in [0, 0,2]  .
+\mathrm{P}(a \land b\  \vert\  c) \in [0, 0,2]  .
 $$
 
 With the `inferP()` function this probabilistic inference problem is posed as follows:
