@@ -5,7 +5,7 @@ This R package offers a function, `inferP()`, that calculates the lower and uppe
 As a trivial example, suppose we want to know the bounds of the probability
 
 $$
-\mathrm{P}(a \land b  \vert  c)
+\mathrm{P}(a \land b\  \vert\  c)
 $$
 
 under the assumption that
