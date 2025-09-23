@@ -145,20 +145,20 @@ is true given the set of axioms
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>∧</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">c \land I</annotation></semantics></math>.
 This is a logical inference. In the notation of sequent calculus
 (Takeuti 1987) it is written as follows:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi>I</mi><mo>⊢</mo><mi>a</mi><mspace width="1.0em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><mi>c</mi><mo>∧</mo><mi>I</mi><mo>⊢</mo><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi></mrow><mrow><mi>I</mi><mo>∧</mo><mi>c</mi><mo>⊢</mo><mi>b</mi></mrow></mfrac><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi>I</mi><mo>⊢</mo><mi>a</mi><mspace width="1.0em"></mspace><mspace width="1.0em"></mspace><mi>c</mi><mo>∧</mo><mi>I</mi><mo>⊢</mo><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi></mrow><mrow><mi>c</mi><mo>∧</mo><mi>I</mi><mo>⊢</mo><mi>b</mi></mrow></mfrac><annotation encoding="application/x-tex">
 \frac{
-I \vdash a \quad,\quad c \land I \vdash b \lor \lnot a
+I \vdash a \quad\quad c \land I \vdash b \lor \lnot a
 }{
-I \land c \vdash b
+c \land I \vdash b
 }
 </annotation></semantics></math></p>
 <p>The conclusion follows from the initial assertions by the application
 of a set of inference rules.</p>
 <p>In the probability calculus the same inference can be expressed as
 follows:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn><mspace width="1.0em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>c</mi><mo>∧</mo><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>c</mi><mo>∧</mo><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow></mfrac><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn><mspace width="1.0em"></mspace><mspace width="1.0em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>c</mi><mo>∧</mo><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>c</mi><mo>∧</mo><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow></mfrac><annotation encoding="application/x-tex">
 \frac{
-\mathrm{P}(a \:\vert\:\mathopen{} I) = 1\quad,\quad \mathrm{P}(b \lor \lnot a \:\vert\:\mathopen{} c \land I) = 1
+\mathrm{P}(a \:\vert\:\mathopen{} I) = 1\quad\quad \mathrm{P}(b \lor \lnot a \:\vert\:\mathopen{} c \land I) = 1
 }{
 \mathrm{P}(b \:\vert\:\mathopen{} c \land I) = 1
 }
@@ -176,9 +176,9 @@ by the well-known probability rules, valid for any sentences
 </ul>
 <p>Another example of a simple probability inference, which immediately
 follows by the probability rules, is</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.3</mn><mspace width="0.5em"></mspace><mo>,</mo><mspace width="0.5em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>a</mi><mo>∧</mo><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.2</mn></mrow><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∧</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.06</mn></mrow></mfrac><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.3</mn><mspace width="1.0em"></mspace><mspace width="1.0em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>a</mi><mo>∧</mo><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.2</mn></mrow><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∧</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.06</mn></mrow></mfrac><annotation encoding="application/x-tex">
 \frac{
-\mathrm{P}(a \:\vert\:\mathopen{} I) = 0.3\enspace,\enspace \mathrm{P}(b \:\vert\:\mathopen{} a \land I) = 0.2
+\mathrm{P}(a \:\vert\:\mathopen{} I) = 0.3\quad\quad \mathrm{P}(b \:\vert\:\mathopen{} a \land I) = 0.2
 }{
 \mathrm{P}(a \land b \:\vert\:\mathopen{} I) = 0.06
 }
@@ -190,8 +190,8 @@ logic as special cases.</p>
 algorithmically determine the <em>lower</em> and <em>upper</em> values
 that a probability can have, under the assertion of the values of other
 probabilities</strong>. It is well-known, for instance, that if</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.2</mn><mspace width="0.167em"></mspace><mo>,</mo><mspace width="0.5em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.7</mn></mrow><annotation encoding="application/x-tex">
-\mathrm{P}(a \:\vert\:\mathopen{} I) = 0.2\,,\enspace
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.2</mn><mspace width="0.167em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.7</mn></mrow><annotation encoding="application/x-tex">
+\mathrm{P}(a \:\vert\:\mathopen{} I) = 0.2\,,\quad
 \mathrm{P}(b \:\vert\:\mathopen{} I) = 0.7
 </annotation></semantics></math></p>
 <p>then the probability

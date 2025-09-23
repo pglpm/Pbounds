@@ -77,11 +77,11 @@ I \vdash a
 <li>proposition <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">b \lor \lnot a</annotation></semantics></math> is true given the set of axioms <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>I</mi><annotation encoding="application/x-tex">I</annotation></semantics></math> augmented with the proposition <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>.</li>
 </ul>
 <p>Then we can also assert that <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>b</mi><annotation encoding="application/x-tex">b</annotation></semantics></math> is true given the set of axioms <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>∧</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">c \land I</annotation></semantics></math>. This is a logical inference. In the notation of sequent calculus (Takeuti 1987) it is written as follows:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi>I</mi><mo>⊢</mo><mi>a</mi><mspace width="1.0em"></mspace><mspace width="1.0em"></mspace><mi>c</mi><mo>∧</mo><mi>I</mi><mo>⊢</mo><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi></mrow><mrow><mi>I</mi><mo>∧</mo><mi>c</mi><mo>⊢</mo><mi>b</mi></mrow></mfrac><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi>I</mi><mo>⊢</mo><mi>a</mi><mspace width="1.0em"></mspace><mspace width="1.0em"></mspace><mi>c</mi><mo>∧</mo><mi>I</mi><mo>⊢</mo><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi></mrow><mrow><mi>c</mi><mo>∧</mo><mi>I</mi><mo>⊢</mo><mi>b</mi></mrow></mfrac><annotation encoding="application/x-tex">
 \frac{
 I \vdash a \quad\quad c \land I \vdash b \lor \lnot a
 }{
-I \land c \vdash b
+c \land I \vdash b
 }
 </annotation></semantics></math></p>
 <p>The conclusion follows from the initial assertions by the application of a set of inference rules.</p>
