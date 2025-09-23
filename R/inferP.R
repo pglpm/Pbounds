@@ -23,7 +23,7 @@
 #'
 #' Available logical connectives are "not" (negation, "\eqn{\lnot}"), "and" (conjunction, "\eqn{\land}"), "or" (disjunction, "\eqn{\lor}"), "if-then" (implication, "\eqn{\Rightarrow}"). The first three follow the standard R syntax for logical operators (see [base::logical]):
 #' - Not: ` !` or ` -`
-#' - And: ` & ` or ` && `
+#' - And: ` & ` or ` && ` or ` * `
 #' - Or: ` + `; if argument `solidus = FALSE`, also ` || ` or ` | ` are allowed.
 #'
 #' The "if-then" connective is represented by the infix operator ` > `; internally `x > y` is simply defined as `x or not-y`.
@@ -46,13 +46,13 @@
 #' ```
 #' P(!a + b  |  c & H)
 #' P(-a + b  |  c && H)
-#' P(!a + b  |  c & H)
+#' P(!a + b  |  c * H)
 #' ```
 #' or, if argument  `solidus = FALSE`, in the following ways:
 #' ```
 #' P(!a | b  ~  c & H)
 #' P(-a + b  ~  c && H)
-#' P(!a || b  ~  c & H)
+#' P(!a || b  ~  c * H)
 #' ```
 #' It is also possible to use `p` or `Pr` or `pr` instead of `P`.
 #'
@@ -90,15 +90,18 @@
 #'
 #' @examples
 #'
-#' ## The probability of an "and" is always less
+#' ## No constraints
+#' inferP(
+#'   target = P(a | h)
+#' )
+#'
+#' #' ## The probability of an "and" is always less
 #' ## than the probabilities of the and-ed propositions:
 #' inferP(
 #'   target = P(a & b | h),
 #'   P(a | h) == 0.3,
 #'   P(b | h) == 0.6
 #' )
-#' ## min max
-#' ## 0.0 0.3
 #'
 #' ## P(a & b | h) is completely determined
 #' ## by P(a | h) and P(b | a & h):
@@ -107,8 +110,20 @@
 #'     P(a | h) == 0.3,
 #'     P(b | a & h) == 0.2
 #' )
-#' ##  min  max
-#' ## 0.06 0.06
+#'
+#' ## Logical implication (modus ponens)
+#' inferP(
+#'   target = P(b | I),
+#'   P(a | I) == 1,
+#'   P(a > b | I) == 1
+#' )
+#'
+#' ## Cut rule of sequent calculus
+#' inferP(
+#'   target = P(X + Y | I & J),
+#'   P(A & X | I) == 1,
+#'   P(Y | A & J) == 1
+#' )
 #'
 #' ## Solution to the Monty Hall problem (see accompanying vignette):
 #' inferP(
@@ -131,8 +146,6 @@
 #'     P(car2  |  you1 & I) == P(car3  |  you1 & I),
 #'     P(host2  |  you1 & car1 & I) == P(host3  |  you1 & car1 & I)
 #' )
-#' ##      min      max
-#' ## 0.666667 0.666667
 #'
 #' @export
 inferP <- function(target, ..., solidus = TRUE) {
@@ -140,6 +153,7 @@ inferP <- function(target, ..., solidus = TRUE) {
     if(solidus){
         connectives <- list(
             `&` = .Primitive("&&"),
+            `*` = .Primitive("&&"),
             `+` = .Primitive("||"),
             `-` = .Primitive("!"),
             `>` = function(x, y){y || !x}
@@ -155,6 +169,7 @@ inferP <- function(target, ..., solidus = TRUE) {
     } else {
         connectives <- list(
             `&` = .Primitive("&&"),
+            `*` = .Primitive("&&"),
             `+` = .Primitive("||"),
             `-` = .Primitive("!"),
             `>` = function(x, y){y || !x}

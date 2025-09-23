@@ -24,9 +24,9 @@ $$
 With the `inferP()` function this probabilistic inference problem is posed as follows:
 ```
 inferP(
-    target = P(a & b  |  c),
-    P(a  |  c) == 0.2,
-    P(b  |  c) == 0.7
+  target = P(a & b  |  c),
+  P(a  |  c) == 0.2,
+  P(b  |  c) == 0.7
 )
 ```
 and yields the answer
@@ -34,6 +34,30 @@ and yields the answer
 min  max
 0.0  0.2
 ```
+
+This function can also be used in propositional logic, to check whether a logical formula or sequent from [sequent calculus](https://encyclopediaofmath.org/wiki/Sequent_calculus) follows from other formulae or sequents. For instance *modus ponens* (` > ` stands for if-then $\Rightarrow$):
+```
+inferP(
+  target = P(b | I),
+  P(a > b | I) == 1,
+  P(a | I) == 1
+)
+
+min max 
+  1   1 
+```
+or the *cut rule* of sequent calculus:
+```
+inferP(
+  target = P(X + Y | I & J),
+  P(A & X | I) == 1,
+  P(Y | A & J) == 1
+)
+
+min max 
+  1   1 
+```
+
 
 More information about notation and constraints is available in the help function `help('inferP')`. More interesting examples are given in the package's vignette.
 

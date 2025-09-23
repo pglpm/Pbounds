@@ -38,7 +38,7 @@ coin_lands_heads
 Available logical connectives are "not" (negation, "\eqn{\lnot}"), "and" (conjunction, "\eqn{\land}"), "or" (disjunction, "\eqn{\lor}"), "if-then" (implication, "\eqn{\Rightarrow}"). The first three follow the standard R syntax for logical operators (see \link[base:logical]{base::logical}):
 \itemize{
 \item Not: \verb{ !} or \verb{ -}
-\item And: \code{&} or \code{&&}
+\item And: \code{&} or \code{&&} or \code{*}
 \item Or: \code{+}; if argument \code{solidus = FALSE}, also \code{||} or \code{|} are allowed.
 }
 
@@ -63,14 +63,14 @@ can be entered in the following ways, among others (extra spaces added just for 
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{P(!a + b  |  c & H)
 P(-a + b  |  c && H)
-P(!a + b  |  c & H)
+P(!a + b  |  c * H)
 }\if{html}{\out{</div>}}
 
 or, if argument  \code{solidus = FALSE}, in the following ways:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{P(!a | b  ~  c & H)
 P(-a + b  ~  c && H)
-P(!a || b  ~  c & H)
+P(!a || b  ~  c * H)
 }\if{html}{\out{</div>}}
 
 It is also possible to use \code{p} or \code{Pr} or \code{pr} instead of \code{P}.
@@ -96,15 +96,18 @@ See the accompanying vignette for more interesting examples.
 }
 \examples{
 
-## The probability of an "and" is always less
+## No constraints
+inferP(
+  target = P(a | h)
+)
+
+#' ## The probability of an "and" is always less
 ## than the probabilities of the and-ed propositions:
 inferP(
   target = P(a & b | h),
   P(a | h) == 0.3,
   P(b | h) == 0.6
 )
-## min max
-## 0.0 0.3
 
 ## P(a & b | h) is completely determined
 ## by P(a | h) and P(b | a & h):
@@ -113,8 +116,20 @@ inferP(
     P(a | h) == 0.3,
     P(b | a & h) == 0.2
 )
-##  min  max
-## 0.06 0.06
+
+## Logical implication (modus ponens)
+inferP(
+  target = P(b | I),
+  P(a | I) == 1,
+  P(a > b | I) == 1
+)
+
+## Cut rule of sequent calculus
+inferP(
+  target = P(X + Y | I & J),
+  P(A & X | I) == 1,
+  P(Y | A & J) == 1
+)
 
 ## Solution to the Monty Hall problem (see accompanying vignette):
 inferP(
@@ -137,8 +152,6 @@ inferP(
     P(car2  |  you1 & I) == P(car3  |  you1 & I),
     P(host2  |  you1 & car1 & I) == P(host3  |  you1 & car1 & I)
 )
-##      min      max
-## 0.666667 0.666667
 
 }
 \references{

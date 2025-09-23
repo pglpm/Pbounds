@@ -134,7 +134,7 @@ As a first argument,`target =`, it takes the conditional probability of two   lo
 The main notation used in the function (corresponding to the default argument `solidus = TRUE`) parallels the mathematical notation used above, with the following differences:
 
 - Not: ` !` or ` -`
-- And: ` & ` or ` && `
+- And: ` & ` or ` && ` or ` * `
 - Or: ` + `
 - If-then: ` > ` ("if $a$ then $b$", `a > b`, is simply equivalent to $b \lor \lnot a$)
 \
@@ -191,7 +191,6 @@ inferP(
     target = P(a  |  b & !b & I)
 )
 ```
-
 \
 
 ## Examples with constraints
@@ -224,7 +223,7 @@ inferP(
 )
 ```
 
-- The logical rule of implication: if $a$ and $a \Rightarrow b$ are true, then $b$ is true:
+- The logical rule of implication (*modus ponens*): if $a$ and $a \Rightarrow b$ are true, then $b$ is true:
 ```{r}
 inferP(
     target = P(b  |  I),
@@ -240,6 +239,16 @@ inferP(
     P(a  |  I) == 0
 )
 ```
+
+- A variant of the cut rule of [sequent calculus](https://encyclopediaofmath.org/wiki/Sequent_calculus):
+```{r}
+inferP(
+    target = P(X + Y | I & J),
+    P(A & X | I) == 1,
+    P(Y | A & J) == 1
+)
+```
+\
 
 ## Combining evidence
 
