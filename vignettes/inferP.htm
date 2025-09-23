@@ -403,9 +403,9 @@ I\)</span>. This is a logical inference. In the notation of sequent
 calculus (Takeuti 1987) it is written as follows:</p>
 <p><span class="math display">\[
 \frac{
-I \vdash a \quad,\quad c \land I \vdash b \lor \lnot a
+I \vdash a \quad\quad c \land I \vdash b \lor \lnot a
 }{
-I \land c \vdash b
+c \land I \vdash b
 }
 \]</span></p>
 <p>The conclusion follows from the initial assertions by the application
@@ -414,7 +414,7 @@ of a set of inference rules.</p>
 follows:</p>
 <p><span class="math display">\[
 \frac{
-\mathrm{P}(a \:\vert\:\mathopen{} I) = 1\quad,\quad \mathrm{P}(b \lor
+\mathrm{P}(a \:\vert\:\mathopen{} I) = 1\quad\quad \mathrm{P}(b \lor
 \lnot a \:\vert\:\mathopen{} c \land I) = 1
 }{
 \mathrm{P}(b \:\vert\:\mathopen{} c \land I) = 1
@@ -442,7 +442,7 @@ I)\cdot\mathrm{P}(b \:\vert\:\mathopen{} I)
 follows by the probability rules, is</p>
 <p><span class="math display">\[
 \frac{
-\mathrm{P}(a \:\vert\:\mathopen{} I) = 0.3\enspace,\enspace \mathrm{P}(b
+\mathrm{P}(a \:\vert\:\mathopen{} I) = 0.3\quad\quad \mathrm{P}(b
 \:\vert\:\mathopen{} a \land I) = 0.2
 }{
 \mathrm{P}(a \land b \:\vert\:\mathopen{} I) = 0.06
@@ -457,7 +457,7 @@ algorithmically determine the <em>lower</em> and <em>upper</em> values
 that a probability can have, under the assertion of the values of other
 probabilities</strong>. It is well-known, for instance, that if</p>
 <p><span class="math display">\[
-\mathrm{P}(a \:\vert\:\mathopen{} I) = 0.2\,,\enspace
+\mathrm{P}(a \:\vert\:\mathopen{} I) = 0.2\,,\quad
 \mathrm{P}(b \:\vert\:\mathopen{} I) = 0.7
 \]</span></p>
 <p>then the probability <span class="math inline">\(\mathrm{P}(a \land b

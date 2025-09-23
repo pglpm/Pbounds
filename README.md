@@ -37,7 +37,7 @@ $$
 \frac{
 I \vdash a \quad\quad c \land I \vdash b \lor \lnot a
 }{
-I \land c \vdash b
+c \land I \vdash b
 }
 $$
 
