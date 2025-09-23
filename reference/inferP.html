@@ -3,11 +3,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">Pinference</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +33,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Calculate lower and upper probability bounds</h1>
-      <small class="dont-index">Source: <a href="https://github.com/pglpm/Pinference/blob/v0.2.5/R/inferP.R" class="external-link"><code>R/inferP.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pglpm/Pinference/blob/main/R/inferP.R" class="external-link"><code>R/inferP.R</code></a></small>
       <div class="d-none name"><code>inferP.Rd</code></div>
     </div>
 
@@ -127,7 +127,7 @@
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>T. Hailperin: <em>Best Possible Inequalities for the Probability of a Logical Function of Events</em>. Am. Math. Monthly 72(4):343, 1965 &lt;\doi{doi:https://doi.org/10.1080/00029890.1965.11970533}&gt;.</p>
+    <p>T. Hailperin: <em>Best Possible Inequalities for the Probability of a Logical Function of Events</em>. Am. Math. Monthly 72(4):343, 1965 <a href="doi:10.1080/00029890.1965.11970533">doi:10.1080/00029890.1965.11970533</a>.</p>
 <p>T. Hailperin: <em>Sentential Probability Logic: Origins, Development, Current Status, and Technical Applications</em>. Associated University Presses, 1996 <a href="https://archive.org/details/hailperin1996-Sentential_probability_logic/" class="external-link">https://archive.org/details/hailperin1996-Sentential_probability_logic/</a>.</p>
     </div>
 
@@ -140,6 +140,14 @@
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> min max </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   0   1 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Trivial example with inequality constraint</span></span></span>
+<span class="r-in"><span><span class="fu">inferP</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">|</span> <span class="va">h</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">P</span><span class="op">(</span><span class="op">!</span><span class="va">a</span> <span class="op">|</span> <span class="va">h</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">0.2</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.0 0.8 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#' ## The probability of an "and" is always less</span></span></span>
 <span class="r-in"><span><span class="co">## than the probabilities of the and-ed propositions:</span></span></span>
