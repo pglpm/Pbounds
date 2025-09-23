@@ -77,10 +77,11 @@ falsity of some propositions from the truth or falsity of others, so the
 probability calculus gives a set of rules to derive the probability for
 some propositions from the probability for others; these rules include
 the logical ones as a special case.</p>
-<p>There are different deduction systems (Pelletier &amp; Hazen 2023),
-each with many dialects, to express the rules of propositional logic;
-one of them is the <em>sequent calculus</em>. The probability calculus
-has many analogies with the sequent calculus (Takeuti 1987).</p>
+<p>There are different logical deduction systems (Pelletier &amp; Hazen
+2023), each with many dialects, to express the rules of propositional
+logic. One of them is the <a href="https://encyclopediaofmath.org/wiki/Sequent_calculus" class="external-link"><em>sequent
+calculus</em></a> (Takeuti 1987). The probability calculus has many
+analogies with the sequent calculus</p>
 <p>In sequent calculus we express that proposition
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>
 is true within a set of axioms
@@ -89,7 +90,8 @@ by the notation</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo>⊢</mo><mi>a</mi></mrow><annotation encoding="application/x-tex">
 I \vdash a
 </annotation></semantics></math></p>
-<p>The same is expressed in the probability calculus by the notation</p>
+<p>The same is expressed in the probability calculus by the notation
+(note the reflection)</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">
 \mathrm{P}(a \:\vert\:\mathopen{} I) = 1
 </annotation></semantics></math></p>
@@ -132,7 +134,7 @@ is true given a set of axioms
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>I</mi><annotation encoding="application/x-tex">I</annotation></semantics></math>,</li>
 <li>proposition
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">b \lor \lnot a</annotation></semantics></math>
-given the set of axioms
+is true given the set of axioms
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>I</mi><annotation encoding="application/x-tex">I</annotation></semantics></math>
 augmented with the proposition
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>.</li>
@@ -143,9 +145,9 @@ is true given the set of axioms
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>∧</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">c \land I</annotation></semantics></math>.
 This is a logical inference. In the notation of sequent calculus
 (Takeuti 1987) it is written as follows:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi>I</mi><mo>⊢</mo><mi>a</mi><mspace width="0.5em"></mspace><mo>,</mo><mspace width="0.5em"></mspace><mi>I</mi><mo>∧</mo><mi>c</mi><mo>⊢</mo><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi></mrow><mrow><mi>I</mi><mo>∧</mo><mi>c</mi><mo>⊢</mo><mi>b</mi></mrow></mfrac><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi>I</mi><mo>⊢</mo><mi>a</mi><mspace width="1.0em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><mi>c</mi><mo>∧</mo><mi>I</mi><mo>⊢</mo><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi></mrow><mrow><mi>I</mi><mo>∧</mo><mi>c</mi><mo>⊢</mo><mi>b</mi></mrow></mfrac><annotation encoding="application/x-tex">
 \frac{
-I \vdash a \enspace,\enspace I \land c \vdash b \lor \lnot a
+I \vdash a \quad,\quad c \land I \vdash b \lor \lnot a
 }{
 I \land c \vdash b
 }
@@ -154,9 +156,9 @@ I \land c \vdash b
 of a set of inference rules.</p>
 <p>In the probability calculus the same inference can be expressed as
 follows:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn><mspace width="0.5em"></mspace><mo>,</mo><mspace width="0.5em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>c</mi><mo>∧</mo><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>c</mi><mo>∧</mo><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow></mfrac><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn><mspace width="1.0em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>c</mi><mo>∧</mo><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>c</mi><mo>∧</mo><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow></mfrac><annotation encoding="application/x-tex">
 \frac{
-\mathrm{P}(a \:\vert\:\mathopen{} I) = 1\enspace,\enspace \mathrm{P}(b \lor \lnot a \:\vert\:\mathopen{} c \land I) = 1
+\mathrm{P}(a \:\vert\:\mathopen{} I) = 1\quad,\quad \mathrm{P}(b \lor \lnot a \:\vert\:\mathopen{} c \land I) = 1
 }{
 \mathrm{P}(b \:\vert\:\mathopen{} c \land I) = 1
 }
@@ -185,8 +187,8 @@ follows by the probability rules, is</p>
 <p>The probability rules effectively imply the rules of propositional
 logic as special cases.</p>
 <p>What’s remarkable is that <strong>the probability rules allow us to
-determine the <em>lower</em> and <em>upper</em> values that a
-probability can have, under the assertion of the values of other
+algorithmically determine the <em>lower</em> and <em>upper</em> values
+that a probability can have, under the assertion of the values of other
 probabilities</strong>. It is well-known, for instance, that if</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.2</mn><mspace width="0.167em"></mspace><mo>,</mo><mspace width="0.5em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.7</mn></mrow><annotation encoding="application/x-tex">
 \mathrm{P}(a \:\vert\:\mathopen{} I) = 0.2\,,\enspace
@@ -294,7 +296,7 @@ must be 0:</li>
 <span><span class="co">#   0   0</span></span></code></pre></div>
 <p><br></p>
 <ul>
-<li>A probability conditional on contradictory assumptions, such as
+<li>A probability conditional on contradictory premises, such as
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>∧</mo><mi>¬</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">b \land \lnot b</annotation></semantics></math>,
 is undefined:</li>
 </ul>
@@ -385,8 +387,8 @@ is true:</li>
 <span><span class="co"># min max </span></span>
 <span><span class="co">#   1   1</span></span></code></pre></div>
 <ul>
-<li>A variant of the cut rule of <a href="https://encyclopediaofmath.org/wiki/Sequent_calculus" class="external-link">sequent
-calculus</a>:</li>
+<li>A variant of the <a href="https://ncatlab.org/nlab/show/cut+rule" class="external-link">cut rule</a> of sequent
+calculus:</li>
 </ul>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>

@@ -55,33 +55,78 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="pinference">Pinference<a class="anchor" aria-label="anchor" href="#pinference"></a>
 </h1></div>
-<p>The package can be installed with</p>
-<pre><code><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'pglpm/Pinference'</span><span class="op">)</span></span></code></pre>
-<p>It requires the <a href="https://cran.r-project.org/package=lpSolve" class="external-link"><strong>lpSolve</strong></a> package.</p>
-<p>This R package offers a function, <code><a href="reference/inferP.html">inferP()</a></code>, that calculates the lower and upper bounds of the probability for a proposition conditional on another, given constraints on the conditional probabilities for other propositions.</p>
-<p>As a trivial example, suppose we want to know the bounds of the probability</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∧</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
-\mathrm{P}(a \land b\  \vert\  c)
+<div class="section level2">
+<h2 id="an-explanation-of-what-the-package-is-about">An explanation of what the package is about<a class="anchor" aria-label="anchor" href="#an-explanation-of-what-the-package-is-about"></a>
+</h2>
+<p><em>[This explanation is taken from the <a href="https://pglpm.github.io/Pinference/articles/inferP.html">vignette</a> accompanying the package.]</em></p>
+<p>The probability calculus is an extension of the calculus of propositional logic. Besides the <em>truth</em> or <em>falsity</em> of propositions, the probability calculus also considers a continuum of degrees of credibility – probabilities – between those two extremes. Just as propositional logic gives a set of rules to derive the truth or falsity of some propositions from the truth or falsity of others, so the probability calculus gives a set of rules to derive the probability for some propositions from the probability for others; these rules include the logical ones as a special case.</p>
+<p>There are different <a href="https://plato.stanford.edu/archives/spr2023/entries/natural-deduction/" class="external-link">logical deduction systems</a>, each with many dialects, to express the rules of propositional logic. One of them is the <a href="https://encyclopediaofmath.org/wiki/Sequent_calculus" class="external-link"><em>sequent calculus</em></a>. The probability calculus has many analogies with the sequent calculus.</p>
+<p>In sequent calculus we express that proposition <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math> is true within a set of axioms <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>I</mi><annotation encoding="application/x-tex">I</annotation></semantics></math> by the notation</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo>⊢</mo><mi>a</mi></mrow><annotation encoding="application/x-tex">
+I \vdash a
 </annotation></semantics></math></p>
-<p>under the assumption that</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.2</mn><mo>,</mo><mspace width="0.5em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.7</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
-\mathrm{P}(a\  \vert\  c) = 0.2  ,\enspace
-\mathrm{P}(b\  \vert\  c) = 0.7  .
+<p>The same is expressed in the probability calculus by the notation (note the reflection)</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">
+\mathrm{P}(a \ \vert\  I) = 1
 </annotation></semantics></math></p>
-<p>The result, easy to find, is that the desired probability must be less than <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.2</mn><annotation encoding="application/x-tex">0.2</annotation></semantics></math>:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∧</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>0</mn><mo>,</mo><mn>2</mn><mo stretchy="true" form="postfix">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
-\mathrm{P}(a \land b\  \vert\  c) \in [0, 0,2]  .
+<p>but in this case we can also consider degrees of credibility different from <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math> (see <a href="https://pglpm.github.io/Pinference/articles/inferP.html">vignette</a> for references).</p>
+<p>What about inferences?</p>
+<p>In propositional logic, suppose we assert that:</p>
+<ul>
+<li>proposition <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math> is true given a set of axioms <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>I</mi><annotation encoding="application/x-tex">I</annotation></semantics></math>,</li>
+<li>proposition <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">b \lor \lnot a</annotation></semantics></math> is true given the set of axioms <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>I</mi><annotation encoding="application/x-tex">I</annotation></semantics></math> augmented with the proposition <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>.</li>
+</ul>
+<p>Then we can also assert that <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>b</mi><annotation encoding="application/x-tex">b</annotation></semantics></math> is true given the set of axioms <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>∧</mo><mi>I</mi></mrow><annotation encoding="application/x-tex">c \land I</annotation></semantics></math>. This is a logical inference. In the notation of sequent calculus (Takeuti 1987) it is written as follows:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi>I</mi><mo>⊢</mo><mi>a</mi><mspace width="1.0em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><mi>c</mi><mo>∧</mo><mi>I</mi><mo>⊢</mo><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi></mrow><mrow><mi>I</mi><mo>∧</mo><mi>c</mi><mo>⊢</mo><mi>b</mi></mrow></mfrac><annotation encoding="application/x-tex">
+\frac{
+I \vdash a \quad,\quad c \land I \vdash b \lor \lnot a
+}{
+I \land c \vdash b
+}
 </annotation></semantics></math></p>
-<p>With the <code><a href="reference/inferP.html">inferP()</a></code> function this probabilistic inference problem is posed as follows:</p>
+<p>The conclusion follows from the initial assertions by the application of a set of inference rules.</p>
+<p>In the probability calculus the same inference can be expressed as follows:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn><mspace width="1.0em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mo>∨</mo><mi>¬</mi><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>c</mi><mo>∧</mo><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>c</mi><mo>∧</mo><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn></mrow></mfrac><annotation encoding="application/x-tex">
+\frac{
+\mathrm{P}(a \ \vert\  I) = 1\quad,\quad \mathrm{P}(b \lor \lnot a \ \vert\  c \land I) = 1
+}{
+\mathrm{P}(b \ \vert\  c \land I) = 1
+}
+</annotation></semantics></math></p>
+<p>This final probability can be shown to follow from the initial ones by the well-known probability rules. Another example of a simple probability inference, which immediately follows by the probability rules, is</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.3</mn><mspace width="1.0em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>a</mi><mo>∧</mo><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.2</mn></mrow><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∧</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.06</mn></mrow></mfrac><annotation encoding="application/x-tex">
+\frac{
+\mathrm{P}(a \ \vert\  I) = 0.3\quad,\quad \mathrm{P}(b \ \vert\  a \land I) = 0.2
+}{
+\mathrm{P}(a \land b \ \vert\  I) = 0.06
+}
+</annotation></semantics></math></p>
+<p><br></p>
+<p>The probability rules effectively imply the rules of propositional logic as special cases.</p>
+<p>What’s remarkable is that <strong>the probability rules allow us to algorithmically determine the <em>lower</em> and <em>upper</em> values that a probability can have, under the assertion of the values of other probabilities</strong>. This algorithm is equivalent to solving a (fractional)-linear optimization problem. It is well-known, for instance, that if</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.2</mn><mspace width="0.167em"></mspace><mo>,</mo><mspace width="0.5em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.7</mn></mrow><annotation encoding="application/x-tex">
+\mathrm{P}(a \ \vert\  I) = 0.2\,,\enspace
+\mathrm{P}(b \ \vert\  I) = 0.7
+</annotation></semantics></math></p>
+<p>then the probability <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∧</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathrm{P}(a \land b \ \vert\  I)</annotation></semantics></math> cannot be larger than the minimum of the two above, that is,</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∧</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>0.2</mn><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+\mathrm{P}(a \land b \ \vert\  I) \in [0, 0.2]
+</annotation></semantics></math></p>
+<p>The present package offers the function <a href="https://pglpm.github.io/Pinference/reference/inferP.html"><code>inferP()</code></a>, which implements this algorithm.</p>
+</div>
+<div class="section level2">
+<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+</h2>
+<p>Let’s use <code><a href="reference/inferP.html">inferP()</a></code> for the simple example just discussed:</p>
 <pre><code><span><span class="fu"><a href="reference/inferP.html">inferP</a></span><span class="op">(</span></span>
 <span>  target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">b</span>  <span class="op">|</span>  <span class="va">c</span><span class="op">)</span>,</span>
 <span>  <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">c</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.2</span>,</span>
 <span>  <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">|</span>  <span class="va">c</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.7</span></span>
 <span><span class="op">)</span></span></code></pre>
-<p>and yields the answer</p>
+<p>the answer we obtain is</p>
 <pre><code>min  max
 0.0  0.2</code></pre>
-<p>This function can also be used in propositional logic, to check whether a logical formula or sequent from <a href="https://encyclopediaofmath.org/wiki/Sequent_calculus" class="external-link">sequent calculus</a> follows from other formulae or sequents. For instance <em>modus ponens</em> (<code>&gt;</code> stands for if-then <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>⇒</mo><annotation encoding="application/x-tex">\Rightarrow</annotation></semantics></math>):</p>
+<p>Now let’s check a classical logical inference, <em>modus ponens</em>. The symbol <code>&gt;</code> stands for if-then <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>⇒</mo><annotation encoding="application/x-tex">\Rightarrow</annotation></semantics></math>:</p>
 <pre><code>inferP(
   target = P(b | I),
   P(a &gt; b | I) == 1,
@@ -90,7 +135,14 @@
 
 min max
   1   1 </code></pre>
-<p>or the <em>cut rule</em> of sequent calculus:</p>
+<p>Other example: the probability of a proposition based on contradictory premises (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>∧</mo><mi>¬</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">b \land \lnot b</annotation></semantics></math>) is undefined:</p>
+<pre><code>inferP(
+  target = P(a  |  b &amp; !b)
+)
+
+min max
+ NA  NA</code></pre>
+<p>Let’s check a variant of the <a href="https://ncatlab.org/nlab/show/cut+rule" class="external-link"><em>cut rule</em></a> of sequent calculus:</p>
 <pre><code>inferP(
   target = P(X + Y | I &amp; J),
   P(A &amp; X | I) == 1,
@@ -99,7 +151,15 @@ min max
 
 min max
   1   1 </code></pre>
-<p>More information about notation and constraints is available in the help function <code><a href="reference/inferP.html">help('inferP')</a></code>. More interesting examples are given in the package’s vignette.</p>
+<p>More information about notation and constraints is available in the help function <code><a href="reference/inferP.html">help('inferP')</a></code>. More interesting examples, such as the <em>Monty Hall</em> problem, are given in the package’s vignette.</p>
+</div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>The package can be installed with</p>
+<pre><code><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'pglpm/Pinference'</span><span class="op">)</span></span></code></pre>
+<p>It requires the <a href="https://cran.r-project.org/package=lpSolve" class="external-link"><strong>lpSolve</strong></a> package.</p>
+</div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
