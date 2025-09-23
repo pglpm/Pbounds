@@ -353,15 +353,17 @@ falsity of some propositions from the truth or falsity of others, so the
 probability calculus gives a set of rules to derive the probability for
 some propositions from the probability for others; these rules include
 the logical ones as a special case.</p>
-<p>There are different deduction systems (Pelletier &amp; Hazen 2023),
-each with many dialects, to express the rules of propositional logic;
-one of them is the <em>sequent calculus</em>. The probability calculus
-has many analogies with the sequent calculus (Takeuti 1987).</p>
+<p>There are different logical deduction systems (Pelletier &amp; Hazen
+2023), each with many dialects, to express the rules of propositional
+logic. One of them is the <a href="https://encyclopediaofmath.org/wiki/Sequent_calculus"><em>sequent
+calculus</em></a> (Takeuti 1987). The probability calculus has many
+analogies with the sequent calculus</p>
 <p>In sequent calculus we express that proposition <span class="math inline">\(a\)</span> is true within a set of axioms <span class="math inline">\(I\)</span> by the notation</p>
 <p><span class="math display">\[
 I \vdash a
 \]</span></p>
-<p>The same is expressed in the probability calculus by the notation</p>
+<p>The same is expressed in the probability calculus by the notation
+(note the reflection)</p>
 <p><span class="math display">\[
 \mathrm{P}(a \:\vert\:\mathopen{} I) = 1
 \]</span></p>
@@ -391,9 +393,9 @@ inferences</h1>
 <ul>
 <li>proposition <span class="math inline">\(a\)</span> is true given a
 set of axioms <span class="math inline">\(I\)</span>,</li>
-<li>proposition <span class="math inline">\(b \lor \lnot a\)</span>
-given the set of axioms <span class="math inline">\(I\)</span> augmented
-with the proposition <span class="math inline">\(c\)</span>.</li>
+<li>proposition <span class="math inline">\(b \lor \lnot a\)</span> is
+true given the set of axioms <span class="math inline">\(I\)</span>
+augmented with the proposition <span class="math inline">\(c\)</span>.</li>
 </ul>
 <p>Then we can also assert that <span class="math inline">\(b\)</span>
 is true given the set of axioms <span class="math inline">\(c \land
@@ -401,7 +403,7 @@ I\)</span>. This is a logical inference. In the notation of sequent
 calculus (Takeuti 1987) it is written as follows:</p>
 <p><span class="math display">\[
 \frac{
-I \vdash a \enspace,\enspace I \land c \vdash b \lor \lnot a
+I \vdash a \quad,\quad c \land I \vdash b \lor \lnot a
 }{
 I \land c \vdash b
 }
@@ -412,8 +414,8 @@ of a set of inference rules.</p>
 follows:</p>
 <p><span class="math display">\[
 \frac{
-\mathrm{P}(a \:\vert\:\mathopen{} I) = 1\enspace,\enspace \mathrm{P}(b
-\lor \lnot a \:\vert\:\mathopen{} c \land I) = 1
+\mathrm{P}(a \:\vert\:\mathopen{} I) = 1\quad,\quad \mathrm{P}(b \lor
+\lnot a \:\vert\:\mathopen{} c \land I) = 1
 }{
 \mathrm{P}(b \:\vert\:\mathopen{} c \land I) = 1
 }
@@ -451,8 +453,8 @@ follows by the probability rules, is</p>
 <p>The probability rules effectively imply the rules of propositional
 logic as special cases.</p>
 <p>What’s remarkable is that <strong>the probability rules allow us to
-determine the <em>lower</em> and <em>upper</em> values that a
-probability can have, under the assertion of the values of other
+algorithmically determine the <em>lower</em> and <em>upper</em> values
+that a probability can have, under the assertion of the values of other
 probabilities</strong>. It is well-known, for instance, that if</p>
 <p><span class="math display">\[
 \mathrm{P}(a \:\vert\:\mathopen{} I) = 0.2\,,\enspace
@@ -546,8 +548,7 @@ must be 0:</li>
 <p><br />
 </p>
 <ul>
-<li>A probability conditional on contradictory assumptions, such as
-<span class="math inline">\(b \land \lnot b\)</span>, is undefined:</li>
+<li>A probability conditional on contradictory premises, such as <span class="math inline">\(b \land \lnot b\)</span>, is undefined:</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(a  <span class="sc">|</span>  b <span class="sc">&amp;</span> <span class="sc">!</span>b <span class="sc">&amp;</span> I)</span>
@@ -625,8 +626,8 @@ probability:</li>
 <span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co"># min max </span></span>
 <span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#   1   1</span></span></code></pre></div>
 <ul>
-<li>A variant of the cut rule of <a href="https://encyclopediaofmath.org/wiki/Sequent_calculus">sequent
-calculus</a>:</li>
+<li>A variant of the <a href="https://ncatlab.org/nlab/show/cut+rule">cut rule</a> of sequent
+calculus:</li>
 </ul>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">inferP</span>(</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">P</span>(X <span class="sc">+</span> Y <span class="sc">|</span> I <span class="sc">&amp;</span> J),</span>

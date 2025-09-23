@@ -18,7 +18,7 @@ vignette: >
 
 The probability calculus is an extension of the calculus of propositional logic. Besides the *truth* or *falsity* of propositions, the probability calculus also considers a continuum of degrees of credibility -- probabilities -- between those two extremes. Just as propositional logic gives a set of rules to derive the truth or falsity of some propositions from the truth or falsity of others, so the probability calculus gives a set of rules to derive the probability for some propositions from the probability for others; these rules include the logical ones as a special case.
 
-There are different deduction systems (Pelletier & Hazen 2023), each with many dialects, to express the rules of propositional logic; one of them is the *sequent calculus*. The probability calculus has many analogies with the sequent calculus (Takeuti 1987).
+There are different logical deduction systems (Pelletier & Hazen 2023), each with many dialects, to express the rules of propositional logic. One of them is the [*sequent calculus*](https://encyclopediaofmath.org/wiki/Sequent_calculus) (Takeuti 1987). The probability calculus has many analogies with the sequent calculus
 
 In sequent calculus we express that proposition $a$ is true within a set of axioms $I$ by the notation
 
@@ -26,7 +26,7 @@ $$
 I \vdash a
 $$
 
-The same is expressed in the probability calculus by the notation
+The same is expressed in the probability calculus by the notation (note the reflection)
 
 $$
 \P(a \| I) = 1
@@ -46,13 +46,13 @@ The view of the probability calculus as an extension of the logical calculus goe
 In propositional logic, suppose we assert that:
 
 - proposition $a$ is true given a set of axioms $I$,
-- proposition $b \lor \lnot a$ given the set of axioms $I$ augmented with the proposition $c$.
+- proposition $b \lor \lnot a$ is true given the set of axioms $I$ augmented with the proposition $c$.
 
 Then we can also assert that $b$ is true given the set of axioms $c \land I$. This is a logical inference. In the notation of sequent calculus (Takeuti 1987) it is written as follows:
 
 $$
 \frac{
-I \vdash a \enspace,\enspace I \land c \vdash b \lor \lnot a
+I \vdash a \quad,\quad c \land I \vdash b \lor \lnot a
 }{
 I \land c \vdash b
 }
@@ -64,7 +64,7 @@ In the probability calculus the same inference can be expressed as follows:
 
 $$
 \frac{
-\P(a \| I) = 1\enspace,\enspace \P(b \lor \lnot a \| c \land I) = 1
+\P(a \| I) = 1\quad,\quad \P(b \lor \lnot a \| c \land I) = 1
 }{
 \P(b \| c \land I) = 1
 }
@@ -96,7 +96,7 @@ $$
 
 The probability rules effectively imply the rules of propositional logic as special cases.
 
-What's remarkable is that **the probability rules allow us to determine the *lower* and *upper* values that a probability can have, under the assertion of the values of other probabilities**. It is well-known, for instance, that if
+What's remarkable is that **the probability rules allow us to algorithmically determine the *lower* and *upper* values that a probability can have, under the assertion of the values of other probabilities**. It is well-known, for instance, that if
 
 $$
 \P(a \| I) = 0.2\,,\enspace
@@ -183,7 +183,7 @@ inferP(
 
 \
 
-- A probability conditional on contradictory assumptions, such as $b \land \lnot b$, is undefined:
+- A probability conditional on contradictory premises, such as $b \land \lnot b$, is undefined:
 
 ``` r
 inferP(
@@ -268,7 +268,7 @@ inferP(
 #   1   1
 ```
 
-- A variant of the cut rule of [sequent calculus](https://encyclopediaofmath.org/wiki/Sequent_calculus):
+- A variant of the [cut rule](https://ncatlab.org/nlab/show/cut+rule) of sequent calculus:
 
 ``` r
 inferP(
