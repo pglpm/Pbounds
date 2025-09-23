@@ -57,13 +57,12 @@ This final probability can be shown to follow from the initial ones by the well-
 
 $$
 \frac{
-\mathrm{P}(a \ \vert\  I) = 0.3\quad,\quad \mathrm{P}(b \ \vert\  a \land I) = 0.2
+\mathrm{P}(a \ \vert\  I) = 0.3\quad\quad \mathrm{P}(b \ \vert\  a \land I) = 0.2
 }{
 \mathrm{P}(a \land b \ \vert\  I) = 0.06
 }
 $$
 
-\
 
 The probability rules effectively imply the rules of propositional logic as special cases.
 
