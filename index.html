@@ -71,13 +71,31 @@
 </annotation></semantics></math></p>
 <p>With the <code><a href="reference/inferP.html">inferP()</a></code> function this probabilistic inference problem is posed as follows:</p>
 <pre><code><span><span class="fu"><a href="reference/inferP.html">inferP</a></span><span class="op">(</span></span>
-<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">b</span>  <span class="op">|</span>  <span class="va">c</span><span class="op">)</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">c</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.2</span>,</span>
-<span>    <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">|</span>  <span class="va">c</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.7</span></span>
+<span>  target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">b</span>  <span class="op">|</span>  <span class="va">c</span><span class="op">)</span>,</span>
+<span>  <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">c</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.2</span>,</span>
+<span>  <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">|</span>  <span class="va">c</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.7</span></span>
 <span><span class="op">)</span></span></code></pre>
 <p>and yields the answer</p>
 <pre><code>min  max
 0.0  0.2</code></pre>
+<p>This function can also be used in propositional logic, to check whether a logical formula or sequent from <a href="https://encyclopediaofmath.org/wiki/Sequent_calculus" class="external-link">sequent calculus</a> follows from other formulae or sequents. For instance <em>modus ponens</em> (<code>&gt;</code> stands for if-then <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>⇒</mo><annotation encoding="application/x-tex">\Rightarrow</annotation></semantics></math>):</p>
+<pre><code>inferP(
+  target = P(b | I),
+  P(a &gt; b | I) == 1,
+  P(a | I) == 1
+)
+
+min max
+  1   1 </code></pre>
+<p>or the <em>cut rule</em> of sequent calculus:</p>
+<pre><code>inferP(
+  target = P(X + Y | I &amp; J),
+  P(A &amp; X | I) == 1,
+  P(Y | A &amp; J) == 1
+)
+
+min max
+  1   1 </code></pre>
 <p>More information about notation and constraints is available in the help function <code><a href="reference/inferP.html">help('inferP')</a></code>. More interesting examples are given in the package’s vignette.</p>
 <p>The package can be installed with</p>
 <pre><code><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'pglpm/Pinference'</span><span class="op">)</span></span></code></pre>

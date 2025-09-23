@@ -81,7 +81,7 @@
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>coin_lands_heads</span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="st">`</span><span class="at">tomorrow it rains</span><span class="st">`</span> <span class="co"># note the backticks</span></span></code></pre><p></p></div>
 <p>Available logical connectives are "not" (negation, "\(\lnot\)"), "and" (conjunction, "\(\land\)"), "or" (disjunction, "\(\lor\)"), "if-then" (implication, "\(\Rightarrow\)"). The first three follow the standard R syntax for logical operators (see <a href="https://rdrr.io/r/base/logical.html" class="external-link">base::logical</a>):</p><ul><li><p>Not: <code> !</code> or <code> -</code></p></li>
-<li><p>And: <code>&amp;</code> or <code>&amp;&amp;</code></p></li>
+<li><p>And: <code>&amp;</code> or <code>&amp;&amp;</code> or <code>*</code></p></li>
 <li><p>Or: <code>+</code>; if argument <code>solidus = FALSE</code>, also <code>||</code> or <code>|</code> are allowed.</p></li>
 </ul><p>The "if-then" connective is represented by the infix operator <code>&gt;</code>; internally <code>x &gt; y</code> is simply defined as <code>x or not-y</code>.</p>
 <p>Examples of logical expressions:</p>
@@ -100,11 +100,11 @@
 <p>can be entered in the following ways, among others (extra spaces added just for clarity):</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">P</span>(<span class="sc">!</span>a <span class="sc">+</span> b  <span class="sc">|</span>  c <span class="sc">&amp;</span> H)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">P</span>(<span class="sc">-</span>a <span class="sc">+</span> b  <span class="sc">|</span>  c <span class="sc">&amp;&amp;</span> H)</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">P</span>(<span class="sc">!</span>a <span class="sc">+</span> b  <span class="sc">|</span>  c <span class="sc">&amp;</span> H)</span></code></pre><p></p></div>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">P</span>(<span class="sc">!</span>a <span class="sc">+</span> b  <span class="sc">|</span>  c <span class="sc">*</span> H)</span></code></pre><p></p></div>
 <p>or, if argument  <code>solidus = FALSE</code>, in the following ways:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">P</span>(<span class="sc">!</span>a <span class="sc">|</span> b  <span class="sc">~</span>  c <span class="sc">&amp;</span> H)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">P</span>(<span class="sc">-</span>a <span class="sc">+</span> b  <span class="sc">~</span>  c <span class="sc">&amp;&amp;</span> H)</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">P</span>(<span class="sc">!</span>a <span class="sc">||</span> b  <span class="sc">~</span>  c <span class="sc">&amp;</span> H)</span></code></pre><p></p></div>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">P</span>(<span class="sc">!</span>a <span class="sc">||</span> b  <span class="sc">~</span>  c <span class="sc">*</span> H)</span></code></pre><p></p></div>
 <p>It is also possible to use <code>p</code> or <code>Pr</code> or <code>pr</code> instead of <code>P</code>.</p>
 </div>
 
@@ -134,7 +134,14 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## The probability of an "and" is always less</span></span></span>
+<span class="r-in"><span><span class="co">## No constraints</span></span></span>
+<span class="r-in"><span><span class="fu">inferP</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">|</span> <span class="va">h</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0   1 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#' ## The probability of an "and" is always less</span></span></span>
 <span class="r-in"><span><span class="co">## than the probabilities of the and-ed propositions:</span></span></span>
 <span class="r-in"><span><span class="fu">inferP</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">b</span> <span class="op">|</span> <span class="va">h</span><span class="op">)</span>,</span></span>
@@ -143,8 +150,6 @@
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> min max </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.0 0.3 </span>
-<span class="r-in"><span><span class="co">## min max</span></span></span>
-<span class="r-in"><span><span class="co">## 0.0 0.3</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## P(a &amp; b | h) is completely determined</span></span></span>
 <span class="r-in"><span><span class="co">## by P(a | h) and P(b | a &amp; h):</span></span></span>
@@ -155,8 +160,24 @@
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  min  max </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.06 0.06 </span>
-<span class="r-in"><span><span class="co">##  min  max</span></span></span>
-<span class="r-in"><span><span class="co">## 0.06 0.06</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Logical implication (modus ponens)</span></span></span>
+<span class="r-in"><span><span class="fu">inferP</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">b</span> <span class="op">|</span> <span class="va">I</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">|</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&gt;</span> <span class="va">b</span> <span class="op">|</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1   1 </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Cut rule of sequent calculus</span></span></span>
+<span class="r-in"><span><span class="fu">inferP</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">X</span> <span class="op">+</span> <span class="va">Y</span> <span class="op">|</span> <span class="va">I</span> <span class="op">&amp;</span> <span class="va">J</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">P</span><span class="op">(</span><span class="va">A</span> <span class="op">&amp;</span> <span class="va">X</span> <span class="op">|</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">P</span><span class="op">(</span><span class="va">Y</span> <span class="op">|</span> <span class="va">A</span> <span class="op">&amp;</span> <span class="va">J</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> min max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1   1 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Solution to the Monty Hall problem (see accompanying vignette):</span></span></span>
 <span class="r-in"><span><span class="fu">inferP</span><span class="op">(</span></span></span>
@@ -181,8 +202,6 @@
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       min       max </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.6666667 0.6666667 </span>
-<span class="r-in"><span><span class="co">##      min      max</span></span></span>
-<span class="r-in"><span><span class="co">## 0.666667 0.666667</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
