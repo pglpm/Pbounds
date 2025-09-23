@@ -18,7 +18,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="index.html">Pinference</a>
 
@@ -57,17 +57,17 @@
 </h1></div>
 <p>This R package offers a function, <code><a href="reference/inferP.html">inferP()</a></code>, that calculates the lower and upper bounds of the probability for a proposition conditional on another, given constraints on the conditional probabilities for other propositions.</p>
 <p>As a trivial example, suppose we want to know the bounds of the probability</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∧</mo><mi>b</mi><mo stretchy="false" form="postfix">|</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
-\mathrm{P}(a \land b  \vert  c)
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∧</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+\mathrm{P}(a \land b\  \vert\  c)
 </annotation></semantics></math></p>
 <p>under the assumption that</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo stretchy="false" form="postfix">|</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.2</mn><mo>,</mo><mspace width="0.5em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mo stretchy="false" form="postfix">|</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.7</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
-\mathrm{P}(a  \vert  c) = 0.2  ,\enspace
-\mathrm{P}(b  \vert  c) = 0.7  .
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.2</mn><mo>,</mo><mspace width="0.5em"></mspace><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0.7</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\mathrm{P}(a\  \vert\  c) = 0.2  ,\enspace
+\mathrm{P}(b\  \vert\  c) = 0.7  .
 </annotation></semantics></math></p>
 <p>The result, easy to find, is that the desired probability must be less than <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.2</mn><annotation encoding="application/x-tex">0.2</annotation></semantics></math>:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∧</mo><mi>b</mi><mo stretchy="false" form="postfix">|</mo><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>0</mn><mo>,</mo><mn>2</mn><mo stretchy="true" form="postfix">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
-\mathrm{P}(a \land b  \vert  c) \in [0, 0,2]  .
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∧</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mi>c</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>0</mn><mo>,</mo><mn>2</mn><mo stretchy="true" form="postfix">]</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\mathrm{P}(a \land b\  \vert\  c) \in [0, 0,2]  .
 </annotation></semantics></math></p>
 <p>With the <code><a href="reference/inferP.html">inferP()</a></code> function this probabilistic inference problem is posed as follows:</p>
 <pre><code><span><span class="fu"><a href="reference/inferP.html">inferP</a></span><span class="op">(</span></span>
