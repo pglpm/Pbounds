@@ -1,5 +1,14 @@
 # Pinference
 
+The package can be installed with
+```
+remotes::install_github('pglpm/Pinference')
+```
+
+It requires the [**lpSolve**](https://cran.r-project.org/package=lpSolve) package.
+
+    
+
 This R package offers a function, `inferP()`, that calculates the lower and upper bounds of the probability for a proposition conditional on another, given constraints on the conditional probabilities for other propositions.
 
 As a trivial example, suppose we want to know the bounds of the probability
@@ -60,11 +69,4 @@ min max
 
 
 More information about notation and constraints is available in the help function `help('inferP')`. More interesting examples are given in the package's vignette.
-
-The package can be installed with
-```
-remotes::install_github('pglpm/Pinference')
-```
-
-It requires the [**lpSolve**](https://cran.r-project.org/package=lpSolve) package.
 
