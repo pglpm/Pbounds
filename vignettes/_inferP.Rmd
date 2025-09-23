@@ -66,7 +66,7 @@ Then we can also assert that $b$ is true given the set of axioms $c \land I$. Th
 
 $$
 \frac{
-I \vdash a \quad,\quad c \land I \vdash b \lor \lnot a
+I \vdash a \quad\quad c \land I \vdash b \lor \lnot a
 }{
 I \land c \vdash b
 }
@@ -78,7 +78,7 @@ In the probability calculus the same inference can be expressed as follows:
 
 $$
 \frac{
-\P(a \| I) = 1\quad,\quad \P(b \lor \lnot a \| c \land I) = 1
+\P(a \| I) = 1\quad\quad \P(b \lor \lnot a \| c \land I) = 1
 }{
 \P(b \| c \land I) = 1
 }
@@ -100,7 +100,7 @@ Another example of a simple probability inference, which immediately follows by 
 
 $$
 \frac{
-\P(a \| I) = 0.3\enspace,\enspace \P(b \| a \land I) = 0.2
+\P(a \| I) = 0.3\quad\quad \P(b \| a \land I) = 0.2
 }{
 \P(a \land b \| I) = 0.06
 }
@@ -113,7 +113,7 @@ The probability rules effectively imply the rules of propositional logic as spec
 What's remarkable is that **the probability rules allow us to algorithmically determine the *lower* and *upper* values that a probability can have, under the assertion of the values of other probabilities**. It is well-known, for instance, that if
 
 $$
-\P(a \| I) = 0.2\,,\enspace
+\P(a \| I) = 0.2\,,\quad
 \P(b \| I) = 0.7
 $$
 
