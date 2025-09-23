@@ -17,6 +17,6 @@ Imports:
     lpSolve
 VignetteBuilder: knitr
 URL: https://pglpm.github.io/Pinference/, https://github.com/pglpm/Pinference/
-Suggests: 
+Suggests:
     knitr,
     rmarkdown
