@@ -198,6 +198,11 @@ cannot be larger than the minimum of the two above, that is,</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mo>∧</mo><mi>b</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>0.2</mn><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
 \mathrm{P}(a \land b \:\vert\:\mathopen{} I) \in [0, 0.2]
 </annotation></semantics></math></p>
+<p>In fact this is also possible with inequality constraints. As a very
+trivial example, if the probability
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≤</mo><mn>0.3</mn></mrow><annotation encoding="application/x-tex">\mathrm{P}(a \:\vert\:\mathopen{} I) \le 0.3</annotation></semantics></math>,
+then we must have
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>¬</mi><mi>a</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="postfix">|</mo><mspace width="0.222em"></mspace><mrow></mrow><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≥</mo><mn>0.3</mn></mrow><annotation encoding="application/x-tex">\mathrm{P}(\lnot a \:\vert\:\mathopen{} I) \ge 0.3</annotation></semantics></math>.</p>
 <p>Finding such bounds is equivalent to solving a linear-optimization
 problem. The most relevant texts about this equivalence are those by
 Hailperin 1965 and Hailperin 1996.</p>
@@ -210,15 +215,16 @@ probability by implementing the linear-optimization algorithm mentioned
 in the previous section.</p>
 <p>As a first argument,<code>target =</code>, it takes the conditional
 probability of two logical expressions; as optional subsequent arguments
-it takes constraints about the conditional probabilities of other
-logical expressions.</p>
+it takes equality or inequality constraints about the conditional
+probabilities of other logical expressions.</p>
 <p>The main notation used in the function (corresponding to the default
 argument <code>solidus = TRUE</code>) parallels the mathematical
 notation used above, with the following differences:</p>
 <ul>
 <li>Not: <code>!</code> or <code>-</code>
 </li>
-<li>And: <code>&amp;</code> or <code>&amp;&amp;</code>
+<li>And: <code>&amp;</code> or <code>&amp;&amp;</code> or
+<code>*</code>
 </li>
 <li>Or: <code>+</code>
 </li>
@@ -327,11 +333,22 @@ is undefined:</li>
 <span><span class="co"># min max </span></span>
 <span><span class="co"># 0.3 0.3</span></span></code></pre></div>
 <ul>
+<li>Same rule, but with an inequality constraint:</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">|</span>  <span class="va">a</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&amp;</span> <span class="va">b</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.06</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">0.2</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co"># min max </span></span>
+<span><span class="co"># 0.3 1.0</span></span></code></pre></div>
+<ul>
 <li>If we assert that two sentences have the same probability, and the
 sentences are mutually exclusive and exhaustive, then each must have 0.5
 probability:</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
 <span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
@@ -341,7 +358,7 @@ probability:</li>
 <span><span class="co"># min max </span></span>
 <span><span class="co"># 0.5 0.5</span></span></code></pre></div>
 <ul>
-<li>The logical rule of implication: if
+<li>The logical rule of implication (<em>modus ponens</em>): if
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>⇒</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a \Rightarrow b</annotation></semantics></math>
@@ -349,7 +366,7 @@ are true, then
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>b</mi><annotation encoding="application/x-tex">b</annotation></semantics></math>
 is true:</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
 <span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">b</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
@@ -360,13 +377,26 @@ is true:</li>
 <ul>
 <li>Under a false proposition, any implication is always true:</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
 <span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">a</span> <span class="op">&gt;</span> <span class="va">b</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="fu">P</span><span class="op">(</span><span class="va">a</span>  <span class="op">|</span>  <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># min max </span></span>
 <span><span class="co">#   1   1</span></span></code></pre></div>
+<ul>
+<li>A variant of the cut rule of <a href="https://encyclopediaofmath.org/wiki/Sequent_calculus" class="external-link">sequent
+calculus</a>:</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
+<span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">X</span> <span class="op">+</span> <span class="va">Y</span> <span class="op">|</span> <span class="va">I</span> <span class="op">&amp;</span> <span class="va">J</span><span class="op">)</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">A</span> <span class="op">&amp;</span> <span class="va">X</span> <span class="op">|</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>,</span>
+<span>    <span class="fu">P</span><span class="op">(</span><span class="va">Y</span> <span class="op">|</span> <span class="va">A</span> <span class="op">&amp;</span> <span class="va">J</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co"># min max </span></span>
+<span><span class="co">#   1   1</span></span></code></pre></div>
+<p><br></p>
 </div>
 <div class="section level3">
 <h3 id="combining-evidence">Combining evidence<a class="anchor" aria-label="anchor" href="#combining-evidence"></a>
@@ -380,7 +410,7 @@ and probability 0.8 given evidence
 What is its probability if two pieces of evidence are combined, that is,
 given their conjunction? An interesting result, proven in Hailperin
 2006, is that such probability can be anything:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
 <span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">H</span>  <span class="op">|</span>  <span class="va">E1</span> <span class="op">&amp;</span> <span class="va">E2</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="fu">P</span><span class="op">(</span><span class="va">H</span>  <span class="op">|</span>  <span class="va">E1</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.7</span>,</span>
@@ -463,7 +493,7 @@ behind the door you chose:<br><code>P(host2  |  you1 &amp; car1 &amp; I) == P(ho
 </h3>
 <p>We can finally input the desired target and the constraints into
 <code><a href="../reference/inferP.html">inferP()</a></code>:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
 <span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">car3</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="co">##</span></span>
@@ -502,7 +532,7 @@ we omit the constraint<br><code>P(host2  |  you1 &amp; car1 &amp; I) == P(host3 
 which states that we have no reason to believe the host would choose
 door No. 2 more than No. 3 or vice versa, when the car is behind door
 No. 1. The bounds of the target probability become</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
 <span>    target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">car3</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="co">##</span></span>
@@ -553,7 +583,7 @@ chose:<br><code>P(host2  |  you1 &amp; car1 &amp; fall &amp; I) == P(host3  |  y
 that you chose No. 1, the host fell and opened No. 3, but there was no
 car there:<br><code>P(car2  |  you1 &amp; host3 &amp; !car3 &amp; fall &amp; I)</code>.</p>
 <p>The result is</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/inferP.html">inferP</a></span><span class="op">(</span></span>
 <span>   target <span class="op">=</span> <span class="fu">P</span><span class="op">(</span><span class="va">car2</span>  <span class="op">|</span>  <span class="va">you1</span> <span class="op">&amp;</span> <span class="va">host3</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">car3</span> <span class="op">&amp;</span> <span class="va">fall</span> <span class="op">&amp;</span> <span class="va">I</span><span class="op">)</span>,</span>
 <span>    <span class="co">##</span></span>
@@ -594,21 +624,20 @@ probability constraints.</p>
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <p>Jaynes (2003): <em>Probability Theory: The Logic of Science</em>
-(Cambridge University Press) &lt;&gt;.</p>
+(Cambridge University Press) <a href="doi:10.1017/CBO9780511790423" class="uri">doi:10.1017/CBO9780511790423</a>.</p>
 <p>Jeffreys (1983): <em>Theory of Probability</em> (3rd ed. Oxford
-University Press) &lt;&gt;.</p>
+University Press) <a href="doi:10.1093/oso/9780198503682.001.0001" class="uri">doi:10.1093/oso/9780198503682.001.0001</a>.</p>
 <p>Johnson (1924): <em>Logic. Part III: The Logical Foundations of
 Science</em> (Cambridge University Press) <a href="https://archive.org/details/logic03john" class="external-link uri">https://archive.org/details/logic03john</a>.</p>
 <p>Johnson (1932): <em>Probability: The Relations of Proposal to
-Supposal</em> (Mind 41(161):1) &lt;&gt;.</p>
+Supposal</em> (Mind 41(161):1) <a href="doi:10.1093/mind/XLI.161.1" class="uri">doi:10.1093/mind/XLI.161.1</a>.</p>
 <p>Hailperin (1965): <em>Best Possible Inequalities for the Probability
-of a Logical Function of Events</em> (Am. Math. Monthly 72(4):343)
-&lt;&gt;.</p>
+of a Logical Function of Events</em> (Am. Math. Monthly 72(4):343) <a href="doi:10.1080/00029890.1965.11970533" class="uri">doi:10.1080/00029890.1965.11970533</a>.</p>
 <p>Hailperin (1996): <em>Sentential Probability Logic: Origins,
 Development, Current Status, and Technical Applications</em> (Associated
 University Presses) <a href="https://archive.org/details/hailperin1996-Sentential_probability_logic/" class="external-link uri">https://archive.org/details/hailperin1996-Sentential_probability_logic/</a>.</p>
 <p>Hailperin (2006): <em>Probability logic and combining evidence</em>
-(Hist. Philos. Log. 27(3):249) &lt;&gt;.</p>
+(Hist. Philos. Log. 27(3):249) <a href="doi:10.1080/01445340600616289" class="uri">doi:10.1080/01445340600616289</a>.</p>
 <p>Pelletier, Hazen 2023: <em>Natural Deduction Systems in Logic</em>
 (Stanford Encyclopedia of Philosophy) <a href="https://plato.stanford.edu/archives/spr2023/entries/natural-deduction/" class="external-link uri">https://plato.stanford.edu/archives/spr2023/entries/natural-deduction/</a>.</p>
 <p>Takeuti (1987): <em>Proof Theory</em> (2nd ed. North-Holland).</p>
