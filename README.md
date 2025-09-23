@@ -1,10 +1,10 @@
 # Pinference
 
-## An explanation of what the package is about
+## An explanation of what this package is about
 
 *[This explanation is taken from the [vignette](https://pglpm.github.io/Pinference/articles/inferP.html) accompanying the package.]*
 
-The probability calculus is an extension of the calculus of propositional logic. Besides the *truth* or *falsity* of propositions, the probability calculus also considers a continuum of degrees of credibility -- probabilities -- between those two extremes. Just as propositional logic gives a set of rules to derive the truth or falsity of some propositions from the truth or falsity of others, so the probability calculus gives a set of rules to derive the probability for some propositions from the probability for others; these rules include the logical ones as a special case.
+The probability calculus is an extension of the calculus of propositional logic. Besides the *truth* or *falsity* of propositions, the probability calculus also considers a continuum of degrees of credibility -- probabilities -- between those two extremes. Just as propositional logic gives a set of rules to derive the truth or falsity of some propositions from the truth or falsity of others, so the probability calculus gives a set of rules to derive the probability for some propositions from the probability for others; these rules include the logical ones as a special case. (See [vignette](https://pglpm.github.io/Pinference/articles/inferP.html) for references.)
 
 There are different [logical deduction systems](https://plato.stanford.edu/archives/spr2023/entries/natural-deduction/), each with many dialects, to express the rules of propositional logic. One of them is the [*sequent calculus*](https://encyclopediaofmath.org/wiki/Sequent_calculus). The probability calculus has many analogies with the sequent calculus.
 
@@ -20,7 +20,7 @@ $$
 \mathrm{P}(a \ \vert\  I) = 1
 $$
 
-but in this case we can also consider degrees of credibility different from $1$ (see [vignette](https://pglpm.github.io/Pinference/articles/inferP.html) for references).
+but in this case we can also consider degrees of credibility different from $1$.
 
     
 
