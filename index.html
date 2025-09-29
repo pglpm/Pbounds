@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Probability Inference for Propositional Logic">
-<meta name="description" content="Provides a function to calculate the lower and upper bounds of the probability for a propositional-logic expression, given constraints on the probabilities for other expressions. The function also works for truth-valuation in the style of sequent calculus. It requires the lpSolve package.">
-<meta property="og:description" content="Provides a function to calculate the lower and upper bounds of the probability for a propositional-logic expression, given constraints on the probabilities for other expressions. The function also works for truth-valuation in the style of sequent calculus. It requires the lpSolve package.">
+<meta name="description" content="Implementation of T. Hailperins procedure to calculate lower and upper bounds of the probability for a propositional-logic expression, given equality and inequality constraints on the probabilities for other expressions. Truth-valuation is included as a special case. Applications range from decision-making and probabilistic reasoning, to pedagogical for probability and logic courses. For more details see T. Hailperin (1965) &lt;doi:10.1080/00029890.1965.11970533&gt;, T. Hailperin (1996) &quot;Sentential Probability Logic&quot; ISBN:0-934223-45-9, and package documentation. Requires the lpSolve' package.">
+<meta property="og:description" content="Implementation of T. Hailperins procedure to calculate lower and upper bounds of the probability for a propositional-logic expression, given equality and inequality constraints on the probabilities for other expressions. Truth-valuation is included as a special case. Applications range from decision-making and probabilistic reasoning, to pedagogical for probability and logic courses. For more details see T. Hailperin (1965) &lt;doi:10.1080/00029890.1965.11970533&gt;, T. Hailperin (1996) &quot;Sentential Probability Logic&quot; ISBN:0-934223-45-9, and package documentation. Requires the lpSolve' package.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -141,7 +141,7 @@ min max
 
 min max
  NA  NA</code></pre>
-<p>Let’s check a variant of the <a href="https://ncatlab.org/nlab/show/cut+rule" class="external-link"><em>cut rule</em></a> of sequent calculus:</p>
+<p>Let’s check a variant of the <a href="https://ncatlab.org/nlab/show/cut+rule/" class="external-link"><em>cut rule</em></a> of sequent calculus:</p>
 <pre><code>inferP(
   target = P(X + Y | I &amp; J),
   P(A &amp; X | I) == 1,
@@ -170,8 +170,8 @@ min max
 <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>AGPL (&gt;= 3) + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small>AGPL (&gt;= 3)</small></li>
 </ul>
 </div>
 
