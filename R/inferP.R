@@ -153,6 +153,7 @@
 #'     P(host2  |  you1 & car1 & I) == P(host3  |  you1 & car1 & I)
 #' )
 #'
+#' @importFrom stats as.formula
 #' @export
 inferP <- function(target, ..., solidus = TRUE) {
     ## Logical connectives

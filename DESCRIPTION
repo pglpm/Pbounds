@@ -6,8 +6,8 @@ Authors@R: c(
   "pgl@portamana.org", role = c("aut", "cre", "cph"),
   comment = c(ORCID = "0000-0002-6070-0784"))
   )
-Description: Provides a function to calculate the lower and upper bounds of the probability for a propositional-logic expression, given constraints on the probabilities for other expressions. The function also works for truth-valuation in the style of sequent calculus. It requires the 'lpSolve' package.
-License: AGPL (>= 3) + file LICENSE
+Description: Implementation of T. Hailperin's procedure to calculate lower and upper bounds of the probability for a propositional-logic expression, given equality and inequality constraints on the probabilities for other expressions. Truth-valuation is included as a special case. Applications range from decision-making and probabilistic reasoning, to pedagogical for probability and logic courses. For more details see T. Hailperin (1965) <doi:10.1080/00029890.1965.11970533>, T. Hailperin (1996) "Sentential Probability Logic" ISBN:0-934223-45-9, and package documentation. Requires the 'lpSolve' package.
+License: AGPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3

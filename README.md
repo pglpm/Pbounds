@@ -122,7 +122,7 @@ min max
 ```
 
 
-Let's check a variant of the [*cut rule*](https://ncatlab.org/nlab/show/cut+rule) of sequent calculus:
+Let's check a variant of the [*cut rule*](https://ncatlab.org/nlab/show/cut+rule/) of sequent calculus:
 ```
 inferP(
   target = P(X + Y | I & J),

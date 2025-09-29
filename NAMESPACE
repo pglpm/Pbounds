@@ -2,3 +2,4 @@
 
 export(inferP)
 import(lpSolve)
+importFrom(stats,as.formula)

@@ -251,7 +251,7 @@ inferP(
 )
 ```
 
-- A variant of the [cut rule](https://ncatlab.org/nlab/show/cut+rule) of sequent calculus:
+- A variant of the [cut rule](https://ncatlab.org/nlab/show/cut+rule/) of sequent calculus:
 ```{r}
 inferP(
     target = P(X + Y | I & J),

@@ -268,7 +268,7 @@ inferP(
 #   1   1
 ```
 
-- A variant of the [cut rule](https://ncatlab.org/nlab/show/cut+rule) of sequent calculus:
+- A variant of the [cut rule](https://ncatlab.org/nlab/show/cut+rule/) of sequent calculus:
 
 ``` r
 inferP(
